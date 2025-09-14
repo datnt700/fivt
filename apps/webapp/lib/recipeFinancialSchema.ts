@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
 
 export const RecipeFinancialSchema = z.object({
     title: z.string().describe("Tiêu đề lời khuyên hoặc chiến lược tài chính"),
@@ -40,3 +41,6 @@ export const RecipeFinancialSchema = z.object({
         .optional()
         .describe("Các mẹo bổ sung hoặc gợi ý thêm"),
 });
+
+// Export the JSON schema for API usage
+export const RecipeFinancialJsonSchema = zodToJsonSchema(RecipeFinancialSchema);
