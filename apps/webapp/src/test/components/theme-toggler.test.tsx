@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, type MockedFunction } from 'vites
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useTheme } from 'next-themes';
 import * as React from 'react';
-import ThemeToggler from '@/app/components/theme-toggler';
+import ThemeToggler from '@/components/theme-toggler';
 
 // Mock next-themes
 vi.mock('next-themes', () => ({

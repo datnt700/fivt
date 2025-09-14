@@ -1,6 +1,6 @@
 import ChatBot from "@/app/chatbot/page";
 import { redirect } from 'next/navigation';
-import {auth} from "@/auth";
+import {auth} from "../../auth";
 
 const LandingPage = async () => {
     const session = await auth();

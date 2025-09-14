@@ -5,10 +5,10 @@ import {
     Send
 } from 'lucide-react';
 
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@/components/ui/button';
 import {z} from "zod";
-import {Loading} from "@/app/components/loading";
-import {RecipeCard} from "@/app/components/recipe-card";
+import {Loading} from "@/components/loading";
+import {RecipeCard} from "@/components/recipe-card";
 import {RecipeFinancialSchema} from "@/lib/recipeFinancialSchema";
 
 type QA = {

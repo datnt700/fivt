@@ -1,7 +1,7 @@
 import { z } from "zod";
 import Markdown from "react-markdown";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {RecipeFinancialSchema} from "@/lib/recipeFinancialSchema";
 
 export function RecipeCard({ data }: { data ?: z.infer<typeof RecipeFinancialSchema> | null}) {

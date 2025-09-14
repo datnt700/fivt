@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { signIn } from '@/auth';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { signIn } from '../../auth';
 import { MagicLinkSignIn } from './magic-link-signin';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {

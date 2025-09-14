@@ -1,13 +1,70 @@
-# Turborepo starter
+# FIVT Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern Turborepo monorepo with Next.js applications, comprehensive testing, and development automation.
 
-## Using this example
+## Quick Start
 
-Run the following command:
-
+1. Install dependencies:
 ```sh
-npx create-turbo@latest
+pnpm install
+```
+
+2. Start development (from webapp directory):
+```sh
+cd apps/webapp
+
+# Windows (PowerShell)
+.\scripts\dev.ps1 dev
+
+# Unix/Linux/macOS
+./scripts/dev.sh dev
+```
+
+3. Run full workflow validation:
+```sh
+# Windows (PowerShell)
+.\scripts\dev.ps1 all
+
+# Unix/Linux/macOS
+./scripts/dev.sh all
+```
+
+## Development Scripts
+
+The `webapp` includes convenient development scripts for common workflows:
+
+### Windows (PowerShell)
+```powershell
+# From apps/webapp directory
+.\scripts\dev.ps1 [command]
+
+# Available commands:
+.\scripts\dev.ps1 test        # Run unit tests
+.\scripts\dev.ps1 build       # Build application
+.\scripts\dev.ps1 dev         # Start dev server
+.\scripts\dev.ps1 lint        # Run ESLint
+.\scripts\dev.ps1 typecheck   # TypeScript check
+.\scripts\dev.ps1 clean       # Clean build artifacts
+.\scripts\dev.ps1 install     # Install dependencies
+.\scripts\dev.ps1 all         # Run full workflow
+.\scripts\dev.ps1 help        # Show help
+```
+
+### Unix/Linux/macOS
+```bash
+# From apps/webapp directory
+./scripts/dev.sh [command]
+
+# Available commands:
+./scripts/dev.sh test        # Run unit tests
+./scripts/dev.sh build       # Build application
+./scripts/dev.sh dev         # Start dev server
+./scripts/dev.sh lint        # Run ESLint
+./scripts/dev.sh typecheck   # TypeScript check
+./scripts/dev.sh clean       # Clean build artifacts
+./scripts/dev.sh install     # Install dependencies
+./scripts/dev.sh all         # Run full workflow
+./scripts/dev.sh help        # Show help
 ```
 
 ## What's inside?
@@ -16,11 +73,21 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `docs`: a [Next.js](https://nextjs.org/) documentation app
+- `webapp`: a [Next.js](https://nextjs.org/) application with authentication, testing, and modern architecture
+- `@repo/ui`: a shared React component library
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `@repo/typescript-config`: shared `tsconfig.json` configurations
+
+### Webapp Features
+
+- **Next.js 15**: App Router with `src/` directory structure
+- **Authentication**: NextAuth.js with magic link signin
+- **Database**: Prisma ORM with PostgreSQL
+- **Testing**: Vitest with 27+ comprehensive unit tests
+- **Styling**: Tailwind CSS with dark/light theme support
+- **Type Safety**: Full TypeScript with Zod schema validation
+- **Development**: Automated scripts for complete workflow management
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
