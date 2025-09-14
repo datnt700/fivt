@@ -53,12 +53,28 @@ const authConfig = {
   ],
 
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/login',
-    verifyRequest: '/auth/verify-request',
+    signIn: '/en/auth/login',
+    error: '/en/auth/login', 
+    verifyRequest: '/en/auth/verify-request',
   },
 
   callbacks: {
+  async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      // Handles the redirect after authentication
+      if (url.startsWith("/")) {
+        // If it's a relative URL, redirect to the default locale version
+        if (!url.startsWith("/en") && !url.startsWith("/vi") && !url.startsWith("/fr")) {
+          return `${baseUrl}/en${url}`;
+        }
+        return `${baseUrl}${url}`;
+      }
+      // Allow redirect to the same origin
+      if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+      // Default redirect to home page with default locale
+      return `${baseUrl}/en`;
+    },
     async session({ session, user }: {
       session: Session;
       user: AdapterUser;

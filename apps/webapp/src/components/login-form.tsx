@@ -4,12 +4,17 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MagicLinkSignIn } from './magic-link-signin';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { LanguageSwitcher } from './language-switcher';
 import { signInWithGoogle } from '@/lib/auth-actions';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const t = useTranslations('auth');
+  const locale = useLocale();
+  
+  const handleGoogleSignIn = () => {
+    signInWithGoogle(locale);
+  };
   
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -24,7 +29,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
         </CardHeader>
         <CardContent>
           <MagicLinkSignIn />
-          <form action={signInWithGoogle}>
+          <form action={handleGoogleSignIn}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
