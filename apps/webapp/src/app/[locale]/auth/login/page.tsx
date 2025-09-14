@@ -1,13 +1,13 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 
 import { LoginForm } from '@/components/login-form';
-import { auth } from '../../../../../auth';
+import { auth } from '../../../../../auth'; // Auth import fixed
 import { redirect } from 'next/navigation';
 
 export default async function LoginPage() {
   const session = await auth();
   if (session) {
-    return redirect('/');
+    return redirect('/en'); // Redirect to default locale
   }
 
   return (

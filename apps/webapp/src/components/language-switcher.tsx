@@ -21,11 +21,19 @@ export function LanguageSwitcher() {
   const currentLocale = locales.find(l => l.code === locale);
 
   const handleLocaleChange = (newLocale: string) => {
-    // Remove the current locale from the pathname
+    // Remove the current locale from the pathname to get the base path
     const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
     
-    // Add the new locale prefix (except for default locale 'en')
-    const newPath = newLocale === 'en' ? pathWithoutLocale : `/${newLocale}${pathWithoutLocale}`;
+    // Always add locale prefix since we're using localePrefix: 'always'
+    const newPath = `/${newLocale}${pathWithoutLocale}`;
+    
+    console.log('Switching locale:', { 
+      currentLocale: locale, 
+      newLocale, 
+      pathname, 
+      pathWithoutLocale, 
+      newPath 
+    });
     
     router.push(newPath);
     setIsOpen(false);

@@ -42,7 +42,7 @@ export default function ChatBot() {
         ]);
         setPrompt("");
 
-        const res = await fetch("/api/chat", {
+        const res = await fetch(`/${locale}/api/chat`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
