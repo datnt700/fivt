@@ -7,6 +7,11 @@ node_modules
 
 # Local env files
 apps/web/.env
+apps/web/.env.local
+apps/web/.env.development.local
+apps/web/.env.test.local
+apps/web/.env.production.local
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -14,6 +19,13 @@ apps/web/.env
 
 # Testing
 coverage
+test-results/
+playwright-report/
+playwright/.cache/
+.nyc_output
+*.lcov
+*.tgz
+*.tar.gz
 
 # Turbo
 .turbo
@@ -31,6 +43,8 @@ dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # IDE
 .idea/
@@ -41,3 +55,17 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+prisma/migrations/*_init/
+!prisma/migrations/migration_lock.toml

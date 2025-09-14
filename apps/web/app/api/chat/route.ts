@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { NextResponse } from 'next/server';
-import {z} from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import {RecipeFinancialSchema} from "@/lib/recipeFinancialSchema";
 const modelName = "gpt-5-nano";
 
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   try {
     const { prompt } = await req.json();
     const client = new OpenAI();
-    const jsonSchema = z.toJSONSchema(RecipeFinancialSchema);
+    const jsonSchema = zodToJsonSchema(RecipeFinancialSchema);
 
     const response = await client.chat.completions.create({
       model: modelName,
