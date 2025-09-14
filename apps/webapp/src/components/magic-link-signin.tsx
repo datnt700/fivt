@@ -7,8 +7,10 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { Mail, Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 export function MagicLinkSignIn() {
+  const t = useTranslations('auth');
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -17,14 +19,14 @@ export function MagicLinkSignIn() {
     e.preventDefault();
 
     if (!email.trim()) {
-      toast.error('Please enter your email address');
+      toast.error(t('invalidEmail'));
       return;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error('Please enter a valid email address');
+      toast.error(t('invalidEmail'));
       return;
     }
 
@@ -37,14 +39,14 @@ export function MagicLinkSignIn() {
       });
 
       if (result?.error) {
-        toast.error('Failed to send magic link. Please try again.');
+        toast.error(t('signInError'));
       } else {
         setIsEmailSent(true);
-        toast.success('Magic link sent! Check your email.');
+        toast.success(t('signInSuccess'));
       }
     } catch (error) {
       console.error('Sign in error:', error);
-      toast.error('An error occurred. Please try again.');
+      toast.error(t('signInError'));
     } finally {
       setIsLoading(false);
     }
@@ -57,19 +59,12 @@ export function MagicLinkSignIn() {
           <div className="mx-auto mb-4 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
             <Mail className="w-6 h-6 text-green-600" />
           </div>
-          <CardTitle>Check Your Email</CardTitle>
+          <CardTitle>{t('checkEmail')}</CardTitle>
           <CardDescription>
-            We've sent a magic link to <strong>{email}</strong>
+            {t('checkEmailDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-4">
-          <p className="text-sm text-gray-600">
-            Click the link in your email to sign in to Director Club.
-          </p>
-          <div className="text-xs text-gray-500 space-y-1">
-            <p>• The link will expire in 24 hours</p>
-            <p>• Check your spam folder if you don't see it</p>
-          </div>
           <Button
             variant="outline"
             onClick={() => {
@@ -90,11 +85,11 @@ export function MagicLinkSignIn() {
       <div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
+            <Label htmlFor="email">{t('emailLabel')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="your@email.com"
+              placeholder={t('emailPlaceholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
@@ -106,12 +101,12 @@ export function MagicLinkSignIn() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending Magic Link...
+                {t('signingIn')}
               </>
             ) : (
               <>
                 <Mail className="mr-2 h-4 w-4" />
-                Send Magic Link
+                {t('signInButton')}
               </>
             )}
           </Button>

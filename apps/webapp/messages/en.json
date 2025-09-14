@@ -1,0 +1,94 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "submit": "Submit",
+    "confirm": "Confirm"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "logout": "Logout",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "auth": {
+    "title": "Sign in to your account",
+    "subtitle": "Enter your email below to sign in to your account",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "signInButton": "Sign In with Email",
+    "signingIn": "Signing in...",
+    "checkEmail": "Check your email",
+    "checkEmailDescription": "We sent you a sign in link. Be sure to check your spam too.",
+    "signInSuccess": "Sign in link sent successfully",
+    "signInError": "Failed to send sign in link",
+    "invalidEmail": "Please enter a valid email address",
+    "signOut": "Sign Out",
+    "signedInAs": "Signed in as"
+  },
+  "chatbot": {
+    "title": "Financial AI Assistant",
+    "subtitle": "Get personalized financial advice and strategies",
+    "placeholder": "Ask me about your financial goals, budgeting, investing, or any money-related questions...",
+    "send": "Send",
+    "thinking": "AI is thinking...",
+    "error": "Sorry, I encountered an error. Please try again.",
+    "welcomeMessage": "Hello! I'm your financial AI assistant. How can I help you with your financial goals today?"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "french": "Français",
+    "selectLanguage": "Select language"
+  },
+  "home": {
+    "title": "Welcome to Financial AI",
+    "subtitle": "Your intelligent financial companion for better money management",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "features": {
+      "title": "Features",
+      "ai": {
+        "title": "AI-Powered Advice",
+        "description": "Get personalized financial recommendations powered by advanced AI"
+      },
+      "secure": {
+        "title": "Secure & Private",
+        "description": "Your financial data is encrypted and protected with industry-standard security"
+      },
+      "multilingual": {
+        "title": "Multilingual Support",
+        "description": "Available in English, Vietnamese, and French for global accessibility"
+      }
+    }
+  },
+  "errors": {
+    "pageNotFound": "Page not found",
+    "serverError": "Internal server error",
+    "unauthorized": "Unauthorized access",
+    "forbidden": "Access forbidden",
+    "tryAgain": "Try again",
+    "goHome": "Go to homepage"
+  }
+}

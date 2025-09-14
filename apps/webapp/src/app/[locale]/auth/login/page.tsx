@@ -1,13 +1,13 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 
 import { LoginForm } from '@/components/login-form';
-import { auth } from '../../../../auth';
+import { auth } from '../../../../../auth';
 import { redirect } from 'next/navigation';
 
 export default async function LoginPage() {
   const session = await auth();
   if (session) {
-    return redirect('/organizations');
+    return redirect('/');
   }
 
   return (
@@ -17,7 +17,7 @@ export default async function LoginPage() {
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          TrackStack
+          Financial AI
         </a>
         <LoginForm />
       </div>

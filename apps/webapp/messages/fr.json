@@ -1,0 +1,94 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "clear": "Effacer",
+    "submit": "Soumettre",
+    "confirm": "Confirmer"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "profile": "Profil",
+    "settings": "Paramètres"
+  },
+  "auth": {
+    "title": "Connectez-vous à votre compte",
+    "subtitle": "Entrez votre email ci-dessous pour vous connecter à votre compte",
+    "emailLabel": "Email",
+    "emailPlaceholder": "nom@exemple.com",
+    "signInButton": "Se connecter avec Email",
+    "signingIn": "Connexion en cours...",
+    "checkEmail": "Vérifiez votre email",
+    "checkEmailDescription": "Nous vous avons envoyé un lien de connexion. N'oubliez pas de vérifier vos spams aussi.",
+    "signInSuccess": "Lien de connexion envoyé avec succès",
+    "signInError": "Échec de l'envoi du lien de connexion",
+    "invalidEmail": "Veuillez entrer une adresse email valide",
+    "signOut": "Se déconnecter",
+    "signedInAs": "Connecté en tant que"
+  },
+  "chatbot": {
+    "title": "Assistant IA Financier",
+    "subtitle": "Obtenez des conseils et stratégies financières personnalisés",
+    "placeholder": "Posez-moi des questions sur vos objectifs financiers, la budgétisation, l'investissement, ou toute question liée à l'argent...",
+    "send": "Envoyer",
+    "thinking": "L'IA réfléchit...",
+    "error": "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
+    "welcomeMessage": "Bonjour ! Je suis votre assistant IA financier. Comment puis-je vous aider avec vos objectifs financiers aujourd'hui ?"
+  },
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "toggle": "Basculer le thème"
+  },
+  "language": {
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "french": "Français",
+    "selectLanguage": "Sélectionner la langue"
+  },
+  "home": {
+    "title": "Bienvenue sur Financial AI",
+    "subtitle": "Votre compagnon intelligent pour une meilleure gestion financière",
+    "getStarted": "Commencer",
+    "learnMore": "En savoir plus",
+    "features": {
+      "title": "Fonctionnalités",
+      "ai": {
+        "title": "Conseils alimentés par l'IA",
+        "description": "Obtenez des recommandations financières personnalisées alimentées par une IA avancée"
+      },
+      "secure": {
+        "title": "Sécurisé et Privé",
+        "description": "Vos données financières sont cryptées et protégées avec une sécurité standard de l'industrie"
+      },
+      "multilingual": {
+        "title": "Support Multilingue",
+        "description": "Disponible en anglais, vietnamien et français pour une accessibilité mondiale"
+      }
+    }
+  },
+  "errors": {
+    "pageNotFound": "Page introuvable",
+    "serverError": "Erreur interne du serveur",
+    "unauthorized": "Accès non autorisé",
+    "forbidden": "Accès interdit",
+    "tryAgain": "Réessayer",
+    "goHome": "Aller à l'accueil"
+  }
+}

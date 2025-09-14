@@ -1,0 +1,94 @@
+{
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "close": "Đóng",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "previous": "Trước",
+    "search": "Tìm kiếm",
+    "filter": "Lọc",
+    "clear": "Xóa",
+    "submit": "Gửi",
+    "confirm": "Xác nhận"
+  },
+  "navigation": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "profile": "Hồ sơ",
+    "settings": "Cài đặt"
+  },
+  "auth": {
+    "title": "Đăng nhập vào tài khoản của bạn",
+    "subtitle": "Nhập email của bạn bên dưới để đăng nhập vào tài khoản",
+    "emailLabel": "Email",
+    "emailPlaceholder": "ten@example.com",
+    "signInButton": "Đăng nhập bằng Email",
+    "signingIn": "Đang đăng nhập...",
+    "checkEmail": "Kiểm tra email của bạn",
+    "checkEmailDescription": "Chúng tôi đã gửi cho bạn một liên kết đăng nhập. Hãy nhớ kiểm tra thư mục spam.",
+    "signInSuccess": "Liên kết đăng nhập đã được gửi thành công",
+    "signInError": "Không thể gửi liên kết đăng nhập",
+    "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+    "signOut": "Đăng xuất",
+    "signedInAs": "Đã đăng nhập với tên"
+  },
+  "chatbot": {
+    "title": "Trợ lý AI Tài chính",
+    "subtitle": "Nhận lời khuyên và chiến lược tài chính cá nhân hóa",
+    "placeholder": "Hỏi tôi về mục tiêu tài chính, lập ngân sách, đầu tư hoặc bất kỳ câu hỏi nào liên quan đến tiền bạc...",
+    "send": "Gửi",
+    "thinking": "AI đang suy nghĩ...",
+    "error": "Xin lỗi, tôi gặp lỗi. Vui lòng thử lại.",
+    "welcomeMessage": "Xin chào! Tôi là trợ lý AI tài chính của bạn. Hôm nay tôi có thể giúp gì cho mục tiêu tài chính của bạn?"
+  },
+  "theme": {
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Hệ thống",
+    "toggle": "Chuyển đổi chủ đề"
+  },
+  "language": {
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "french": "Français",
+    "selectLanguage": "Chọn ngôn ngữ"
+  },
+  "home": {
+    "title": "Chào mừng đến với Financial AI",
+    "subtitle": "Người bạn đồng hành thông minh cho việc quản lý tài chính tốt hơn",
+    "getStarted": "Bắt đầu",
+    "learnMore": "Tìm hiểu thêm",
+    "features": {
+      "title": "Tính năng",
+      "ai": {
+        "title": "Lời khuyên được hỗ trợ bởi AI",
+        "description": "Nhận các khuyến nghị tài chính cá nhân hóa được hỗ trợ bởi AI tiên tiến"
+      },
+      "secure": {
+        "title": "An toàn & Riêng tư",
+        "description": "Dữ liệu tài chính của bạn được mã hóa và bảo vệ bằng bảo mật tiêu chuẩn ngành"
+      },
+      "multilingual": {
+        "title": "Hỗ trợ Đa ngôn ngữ",
+        "description": "Có sẵn bằng tiếng Anh, tiếng Việt và tiếng Pháp để truy cập toàn cầu"
+      }
+    }
+  },
+  "errors": {
+    "pageNotFound": "Không tìm thấy trang",
+    "serverError": "Lỗi máy chủ nội bộ",
+    "unauthorized": "Truy cập không được phép",
+    "forbidden": "Truy cập bị cấm",
+    "tryAgain": "Thử lại",
+    "goHome": "Về trang chủ"
+  }
+}

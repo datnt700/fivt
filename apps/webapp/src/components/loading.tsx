@@ -1,10 +1,16 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 export function Loading() {
+    const t = useTranslations('chatbot');
+    
     return (
-        <div>
-            <div role="status">
+        <div className="flex items-center justify-center p-4">
+            <div role="status" className="flex items-center gap-2">
                 <svg
                     aria-hidden="true"
-                    className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    className="w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +24,8 @@ export function Loading() {
                         fill="currentFill"
                     />
                 </svg>
-                <span className="sr-only">Loading...</span>
+                <span className="text-sm text-gray-600">{t('thinking')}</span>
+                <span className="sr-only">{t('thinking')}</span>
             </div>
         </div>
     );

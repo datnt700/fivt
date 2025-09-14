@@ -1,25 +1,30 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { signIn } from '../../auth';
 import { MagicLinkSignIn } from './magic-link-signin';
+import { useTranslations } from 'next-intl';
+import { LanguageSwitcher } from './language-switcher';
+import { signInWithGoogle } from '@/lib/auth-actions';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+  const t = useTranslations('auth');
+  
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Google account</CardDescription>
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex-1" />
+            <LanguageSwitcher />
+          </div>
+          <CardTitle className="text-xl">{t('title')}</CardTitle>
+          <CardDescription>{t('subtitle')}</CardDescription>
         </CardHeader>
         <CardContent>
           <MagicLinkSignIn />
-          <form
-            action={async () => {
-              'use server';
-              await signIn('google');
-            }}
-          >
+          <form action={signInWithGoogle}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
