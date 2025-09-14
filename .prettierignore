@@ -1,0 +1,18 @@
+# Ignore artifacts:
+build/
+coverage/
+dist/
+*.tsbuildinfo
+
+# Ignore generated files:
+.next/
+.turbo/
+node_modules/
+
+# Ignore specific file types:
+*.min.js
+*.bundle.js
+pnpm-lock.yaml
+
+# Ignore prisma generated files:
+prisma/migrations/
