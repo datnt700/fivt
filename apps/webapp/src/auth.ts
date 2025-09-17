@@ -1,11 +1,11 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth, { type NextAuthResult } from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { prisma } from './prisma';
+import { prisma } from '../prisma';
 import Resend from 'next-auth/providers/resend';
 import { render } from '@react-email/render';
 import React from 'react';
-import MagicLinkEmailTemplate from "@/components/emails/magic-link-email";
+import MagicLinkEmailTemplate from "./components/emails/magic-link-email";
 import type { Session } from "next-auth";
 import type { AdapterUser } from "next-auth/adapters";
 
