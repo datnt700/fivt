@@ -18,6 +18,7 @@ export default function MagicLinkEmailTemplate({
   magicLink,
   appName = 'MyApp',
 }: MagicLinkEmailTemplateProps) {
+  console.log('Rendering MagicLinkEmailTemplate with magicLink:', magicLink);
   return (
     <Html>
       <Head />
