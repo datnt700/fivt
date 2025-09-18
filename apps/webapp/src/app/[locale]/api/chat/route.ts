@@ -3,10 +3,37 @@ import { NextResponse } from 'next/server';
 import { RecipeFinancialJsonSchema } from "@/lib/recipeFinancialSchema";
 const modelName = "gpt-5-nano";
 
+const client = new OpenAI();
+
+const casualKeywords = ["hi", "hello", "hey", "bonjour", "salut", "xin chào", "chào", "cảm ơn", "thanks"];
+const financialKeywords = ["budget", "save", "saving", "invest", "money", "debt", "loan", "finance",
+  "épargne", "investissement", "dette", "argent", "ngân sách", "tiết kiệm", "đầu tư", "nợ"];
+
+function detectIntentRuleBased(prompt: string): "casual" | "financial" | "unsupported" {
+  const text = prompt.trim().toLowerCase();
+
+  // 1. Nhận diện chào hỏi casual
+  if (/^(hi|hello|hey|bonjour|salut|xin chào|chào|cảm ơn|thanks?)/i.test(text)) {
+    return "casual";
+  }
+
+  if (
+    /(budget|save|saving|invest|money|debt|loan|finance|épargne|investissement|dette|argent|ngân sách|tiết kiệm|đầu tư|nợ)/i.test(
+      text
+    )
+  ) {
+    return "financial";
+  }
+
+  return "unsupported";
+}
+
+
+
 export async function POST(req: Request) {
   try {
     const { prompt, locale } = await req.json();
-    const client = new OpenAI();
+
 
     // Language-specific instructions for GPT
     const languageInstructions = {
@@ -17,6 +44,31 @@ export async function POST(req: Request) {
 
     const languageInstruction = languageInstructions[locale as keyof typeof languageInstructions] 
       || languageInstructions.en;
+
+    const intent = detectIntentRuleBased(prompt);
+    if (intent === "casual") {
+      return NextResponse.json({
+        type: "casual",
+        content:
+          locale === "fr"
+            ? "Bonjour 👋 Comment puis-je vous aider ?"
+            : locale === "vi"
+              ? "Xin chào 👋 Tôi có thể giúp gì cho bạn?"
+              : "Hello 👋 How can I help you today?",
+      });
+    }
+
+    if (intent === "unsupported") {
+      return NextResponse.json({
+        type: "unsupported",
+        content:
+          locale === "fr"
+            ? "Désolé, je ne peux répondre qu'aux questions financières."
+            : locale === "vi"
+              ? "Xin lỗi, tôi chỉ hỗ trợ các câu hỏi liên quan đến tài chính."
+              : "Sorry, I can only answer finance-related questions.",
+      });
+    }
 
     const systemMessage = `${languageInstruction} 
 
