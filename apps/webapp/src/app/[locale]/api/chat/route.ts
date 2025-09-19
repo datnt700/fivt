@@ -105,7 +105,7 @@ export async function POST(req: Request) {
     if (intent === "unsupported") {
       return NextResponse.json({
         type: "unsupported",
-        content:getUnsupportedMessage(locale),
+        content: getUnsupportedMessage(locale),
       });
     }
 
