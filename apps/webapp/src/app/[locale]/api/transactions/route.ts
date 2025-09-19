@@ -22,6 +22,6 @@ export async function GET(req: Request) {
     include: { category: true },
     orderBy: { createdAt: "desc" },
   });
-
+  console.log(transactions);
   return NextResponse.json(transactions);
 }

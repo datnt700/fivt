@@ -1,23 +1,27 @@
 'use client';
 import { CreateTransitionForm } from './create/CreateTransactionForm';
-import { prisma } from '@/lib/prisma';
 import { Euro } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import { useEffect, useState } from 'react';
+import { useLocale } from 'next-intl';
+import 'react-datepicker/dist/react-datepicker.css';
+
 export default function Page() {
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<Date | null>(new Date());
   const [dataTransactions, setDataTransactions] = useState<any[]>([]);
+  const locale = useLocale();
 
   useEffect(() => {
-    dataTransactions;
-  }, [dataTransactions]);
+    console.log(date);
+  }, [date]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       const res = await fetch(
-        `/api/transactions?date=${(date || new Date()).toISOString()}`
+        `/${locale}/api/transactions?date=${date?.toISOString()}`
       );
       const json = await res.json();
+      console.log(json);
       setDataTransactions(json);
     };
     fetchTransactions();
@@ -26,15 +30,24 @@ export default function Page() {
   return (
     <>
       <CreateTransitionForm />
-      <DatePicker
-        selected={date}
-        onChange={date => setDate(date)}
-        showTimeSelect
-      />
+      <div className="relative z-50">
+        <DatePicker
+          showIcon
+          selected={date}
+          onChange={d => setDate(d)}
+          className="rounded-md border border-gray-200 p-2 bg-white"
+        />
+      </div>
       <div className="mt-4">
         {dataTransactions.map(transaction => (
           <div key={transaction.id}>
-            <h3>{transaction.createdAt.toLocaleDateString()}</h3>
+            <h3>
+              {new Date(transaction.createdAt).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </h3>
+
             <div className="border-b flex justify-between py-2">
               <span>{transaction.category?.name || 'No Category'}</span>
 
