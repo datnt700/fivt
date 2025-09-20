@@ -11,10 +11,11 @@ import type { AdapterUser } from "next-auth/adapters";
 
 const authConfig = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.AUTH_SECRET, 
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY!,
-      from: process.env.AUTH_RESEND_FROM || 'Director Club <noreply@directorclub.com.au>',
+      from: process.env.AUTH_RESEND_FROM || "datnt700@gmail.com",
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         try {
           // Render the email template
@@ -39,7 +40,6 @@ const authConfig = {
               html: html,
             }),
           });
-
           if (!result.ok) {
             throw new Error('Failed to send verification email');
           }
@@ -49,7 +49,10 @@ const authConfig = {
         }
       },
     }),
-    Google,
+     Google({
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    }),
   ],
 
   pages: {
