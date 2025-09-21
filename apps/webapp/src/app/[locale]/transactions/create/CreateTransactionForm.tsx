@@ -16,13 +16,14 @@ import type { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { useLocale } from 'next-intl';
 
 export function CreateTransitionForm() {
   const [result, setResult] = useState<any>(null);
   const [pending, startTransition] = useTransition();
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-
+  const locale = useLocale();
   const [formData, setFormData] = useState({
     amount: '',
     description: '',
@@ -30,12 +31,9 @@ export function CreateTransitionForm() {
     categoryId: '',
   });
 
-  useEffect(() => {
-    console.log(selectedCategory);
-  }, [selectedCategory]);
 
   useEffect(() => {
-    fetch('/api/category')
+    fetch(`/${locale}/api/category`)
       .then(res => res.json())
       .then(data => setCategories(data));
   }, []);
@@ -130,9 +128,8 @@ export function CreateTransitionForm() {
         <Textarea name="description" placeholder="description" />
         <div className="flex gap-4">
           <Button type="submit" disabled={pending}>
-            {pending ? 'Saving…' : 'Test createTransaction'}
+            {pending ? 'Saving…' : 'Save'}
           </Button>
-          <pre>{result ? JSON.stringify(result, null, 2) : null}</pre>
         </div>
       </div>
     </form>

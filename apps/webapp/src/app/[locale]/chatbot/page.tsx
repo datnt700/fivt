@@ -101,7 +101,7 @@ export default function ChatBot() {
                 )}
                 <div ref={bottomRef} />
             </div>
-            <div className="flex flex-col gap-2 rounded-2xl border bg-white p-4 m-4">
+            <div className="flex flex-col gap-2 rounded-2xl border bg-white p-4">
                 <textarea
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
