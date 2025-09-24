@@ -1,6 +1,15 @@
 import { Metadata } from 'next';
 import { Mail } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../../../../../components/ui/card';
+import { useLocale } from 'next-intl';
+import { redirect } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Check Your Email - Director Club',
@@ -8,6 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default function VerifyRequestPage() {
+  const locale = getLocale();
+  redirect(`/${locale}/auth/verify-request`);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md mx-auto">
@@ -16,7 +27,9 @@ export default function VerifyRequestPage() {
             <Mail className="w-6 h-6 text-green-600" />
           </div>
           <CardTitle>Check Your Email</CardTitle>
-          <CardDescription>We've sent you a magic link to sign in to Director Club</CardDescription>
+          <CardDescription>
+            We've sent you a magic link to sign in to Director Club
+          </CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-4">
           <p className="text-sm text-gray-600">

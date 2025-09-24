@@ -1,6 +1,14 @@
 'use client';
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles, User } from 'lucide-react';
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  Sparkles,
+  User,
+} from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
@@ -47,7 +55,8 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">
                   {' '}
                   {user.name.split('')[0]?.toUpperCase()}
-                  {user.name.split('')[1] && user.name.split('')[1]?.toUpperCase()}
+                  {user.name.split('')[1] &&
+                    user.name.split('')[1]?.toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -69,7 +78,8 @@ export function NavUser({
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg">
                     {user.name.split('')[0]?.toUpperCase()}
-                    {user.name.split('')[1] && user.name.split('')[1]?.toUpperCase()}
+                    {user.name.split('')[1] &&
+                      user.name.split('')[1]?.toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

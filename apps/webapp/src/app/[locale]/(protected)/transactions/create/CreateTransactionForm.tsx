@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
-import { createTransaction } from '../../../../actions/transaction';
+import { createTransaction } from '../../../../../actions/transaction';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../../../components/ui/select';
-import { Label } from '../../../../components/ui/label';
-import { createCategory } from '../../../../actions/category';
+} from '../../../../../components/ui/select';
+import { Label } from '../../../../../components/ui/label';
+import { createCategory } from '../../../../../actions/category';
 import { TransactionType } from '@prisma/client';
 import type { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
@@ -30,7 +30,6 @@ export function CreateTransitionForm() {
     type: 'INCOME',
     categoryId: '',
   });
-
 
   useEffect(() => {
     fetch(`/${locale}/api/category`)
