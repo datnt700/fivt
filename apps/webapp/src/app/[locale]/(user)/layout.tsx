@@ -1,0 +1,55 @@
+// app/[locale]/(protected)/layout.tsx
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from '@/components/ui/sidebar';
+import { AdminSidebar } from '@/components/app-sidebar';
+import ThemeToggler from '@/components/theme-toggler';
+import BottomNav from '@/components/bottom-nav';
+import ClientProviders from './client-provider';
+
+const locales = ['en', 'vi', 'fr'] as const;
+type Locale = (typeof locales)[number];
+
+export default async function UserLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { locale: Locale };
+}) {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect(`/auth/login`);
+  }
+
+  return (
+    <ClientProviders>
+      <SidebarProvider>
+        <AdminSidebar />
+        <SidebarInset>
+          <header className="flex h-16 items-center gap-2">
+            <div className="flex w-full items-center justify-between gap-4 px-4">
+              <div className="flex items-center gap-2">
+                <SidebarTrigger className="-ml-1" />
+                <h3 className="text-xl font-medium">FIVT</h3>
+              </div>
+              <ThemeToggler />
+            </div>
+          </header>
+
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min p-4">
+              {children}
+            </div>
+          </div>
+        </SidebarInset>
+        <BottomNav />
+      </SidebarProvider>
+    </ClientProviders>
+  );
+}

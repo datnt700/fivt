@@ -26,7 +26,8 @@ export default function MagicLinkEmailTemplate({
         <Container style={container}>
           <Heading style={heading}>Sign in to {appName}</Heading>
           <Text style={paragraph}>
-            Click the button below to securely sign in. This link will expire in 10 minutes.
+            Click the button below to securely sign in. This link will expire in
+            10 minutes.
           </Text>
           <Button href={magicLink} style={button}>
             Sign in to {appName}

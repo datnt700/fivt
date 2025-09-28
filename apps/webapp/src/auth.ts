@@ -5,16 +5,17 @@ import { prisma } from '../prisma';
 import Resend from 'next-auth/providers/resend';
 import { render } from '@react-email/render';
 import React from 'react';
-import MagicLinkEmailTemplate from "./components/emails/magic-link-email";
-import type { Session } from "next-auth";
-import type { AdapterUser } from "next-auth/adapters";
+import MagicLinkEmailTemplate from './components/emails/magic-link-email';
+import type { Session } from 'next-auth';
+import type { AdapterUser } from 'next-auth/adapters';
 
 const authConfig = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.AUTH_SECRET,
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY!,
-      from: process.env.AUTH_RESEND_FROM || 'Director Club <noreply@directorclub.com.au>',
+      from: process.env.AUTH_RESEND_FROM!,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         try {
           // Render the email template
@@ -22,7 +23,7 @@ const authConfig = {
             React.createElement(MagicLinkEmailTemplate, {
               //name: 'there',
               magicLink: url,
-            }),
+            })
           );
 
           // Send the email using Resend
@@ -39,8 +40,9 @@ const authConfig = {
               html: html,
             }),
           });
-
           if (!result.ok) {
+            const text = await result.text();
+            console.error('[Resend] send fail', result.status, text);
             throw new Error('Failed to send verification email');
           }
         } catch (error) {
@@ -49,7 +51,10 @@ const authConfig = {
         }
       },
     }),
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    }),
   ],
 
   pages: {
@@ -59,10 +64,7 @@ const authConfig = {
   },
 
   callbacks: {
-    async session({ session, user }: {
-      session: Session;
-      user: AdapterUser;
-    }) {
+    async session({ session, user }: { session: Session; user: AdapterUser }) {
       if (!user?.email || !user.id) return session;
 
       if (session.user) {
