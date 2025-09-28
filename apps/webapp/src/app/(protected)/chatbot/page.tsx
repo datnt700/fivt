@@ -6,10 +6,10 @@ import { useTranslations, useLocale } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { z } from 'zod';
-import { Loading } from '@/components/loading';
-import { RecipeCard } from '@/components/recipe-card';
+import { Loading } from '@/components/layout';
+import { RecipeCard } from '@/components/recipe';
 import { RecipeFinancialSchema } from '@/lib/recipeFinancialSchema';
-import { LanguageSwitcher } from '@/components/language-switcher';
+import { LanguageSwitcher } from '@/components/theme';
 
 type QA = {
   id: number;

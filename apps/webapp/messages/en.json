@@ -26,7 +26,8 @@
     "profile": "Profile",
     "settings": "Settings",
     "banking": "Banking",
-    "chatbot": "AI Assistant"
+    "chatbot": "AI Assistant",
+    "transactions": "Transactions"
   },
   "auth": {
     "title": "Sign in to your account",

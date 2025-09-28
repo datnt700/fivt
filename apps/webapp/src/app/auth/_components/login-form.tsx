@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { MagicLinkSignIn } from './magic-link-signin';
 import { useTranslations, useLocale } from 'next-intl';
-import { LanguageSwitcher } from '@/components/language-switcher';
+import { LanguageSwitcher } from '@/components/theme';
 import { signInWithGoogle } from '@/lib/auth-actions';
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {

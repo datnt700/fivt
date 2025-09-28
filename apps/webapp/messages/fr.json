@@ -26,7 +26,8 @@
     "profile": "Profil",
     "settings": "Paramètres",
     "banking": "Services Bancaires",
-    "chatbot": "Assistant IA"
+    "chatbot": "Assistant IA",
+    "transactions": "Transactions"
   },
   "auth": {
     "title": "Connectez-vous à votre compte",

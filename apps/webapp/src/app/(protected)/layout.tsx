@@ -5,9 +5,8 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { AdminSidebar } from '@/components/app-sidebar';
-import ThemeToggler from '@/components/theme-toggler';
-import BottomNav from '@/components/bottom-nav';
+import { AdminSidebar, BottomNav } from '@/components/navigation';
+import { ThemeToggler } from '@/components/theme';
 import ClientProviders from './client-provider';
 
 export default async function ProtectedLayout({

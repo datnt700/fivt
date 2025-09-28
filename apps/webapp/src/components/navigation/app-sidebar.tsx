@@ -2,8 +2,8 @@
 
 import * as React from 'react';
 import { Command, ArrowLeftRight, BotMessageSquare } from 'lucide-react';
-import { NavItems } from '@/components/nav-items';
-import { NavUser } from '@/components/nav-user';
+import { NavItems } from './nav-items';
+import { NavUser } from './nav-user';
 import {
   Sidebar,
   SidebarContent,

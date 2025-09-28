@@ -8,6 +8,7 @@ import React from 'react';
 import MagicLinkEmailTemplate from "@/lib/emails/magic-link-email";
 import type { Session } from "next-auth";
 import type { AdapterUser } from "next-auth/adapters";
+import { COMMON_ROUTES } from '@/config/routes';
 
 const authConfig = {
   adapter: PrismaAdapter(prisma),
@@ -58,27 +59,24 @@ const authConfig = {
   ],
 
   pages: {
-    signIn: '/en/auth/login',
-    error: '/en/auth/login', 
-    verifyRequest: '/en/auth/verify-request',
+    signIn: COMMON_ROUTES.AUTH.LOGIN,
+    error: COMMON_ROUTES.AUTH.LOGIN, 
+    verifyRequest: COMMON_ROUTES.AUTH.VERIFY_REQUEST,
   },
 
   callbacks: {
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       // Handles the redirect after authentication
       if (url.startsWith("/")) {
-        // If it's a relative URL, redirect to the default locale version
-        if (!url.startsWith("/en") && !url.startsWith("/vi") && !url.startsWith("/fr")) {
-          return `${baseUrl}/en${url}`;
-        }
+        // If it's a relative URL, let the middleware handle locale prefix
         return `${baseUrl}${url}`;
       }
       // Allow redirect to the same origin
       if (new URL(url).origin === baseUrl) {
         return url;
       }
-      // Default redirect to home page with default locale
-      return `${baseUrl}/en`;
+      // Default redirect to home page (middleware will add locale prefix)
+      return `${baseUrl}${COMMON_ROUTES.HOME}`;
     },
     async session({ session, user }: { session: Session; user: AdapterUser }) {
       if (!user?.email || !user.id) return session;

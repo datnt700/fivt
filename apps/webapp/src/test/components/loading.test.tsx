@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
-import { Loading } from '@/components/loading';
+import { Loading } from '@/components/layout';
 
 // Mock messages for the test
 const messages = {

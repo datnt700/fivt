@@ -3,12 +3,13 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import ThemeToggler from '@/components/theme-toggler';
-import { LanguageSwitcher } from '@/components/language-switcher';
+import { ThemeToggler } from '@/components/theme';
+import { LanguageSwitcher } from '@/components/theme';
 import { 
   Home, 
   MessageSquare, 
   CreditCard, 
+  Receipt,
   LogOut,
   Menu,
   X
@@ -16,32 +17,40 @@ import {
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { FLAT_ROUTES } from '@/config/routes';
 
 export function Navigation() {
   const t = useTranslations('navigation');
   const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navItems = [
     {
-      href: '/',
-      label: t('home'),
+      href: FLAT_ROUTES.HOME,
+      label: 'home',
       icon: Home,
     },
     {
-      href: '/chatbot',
-      label: t('chatbot'),
+      href: FLAT_ROUTES.CHATBOT,
+      label: 'chatbot',
       icon: MessageSquare,
     },
     {
-      href: '/banking',
-      label: t('banking'),
+      href: FLAT_ROUTES.BANKING,
+      label: 'banking',
       icon: CreditCard,
+    },
+    {
+      href: FLAT_ROUTES.TRANSACTIONS,
+      label: 'transactions',
+      icon: Receipt,
     },
   ];
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: '/' });
+    signOut({ callbackUrl: FLAT_ROUTES.HOME });
   };
 
   if (!session) {
@@ -54,7 +63,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <Link href="/" className="text-xl font-bold">
+            <Link href={FLAT_ROUTES.HOME} className="text-xl font-bold">
               Fivt
             </Link>
           </div>
@@ -67,10 +76,12 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center space-x-2 text-sm font-medium transition-colors hover:text-primary"
+                  className={`flex items-center space-x-2 text-sm font-medium transition-colors hover:text-primary ${
+                    pathname.startsWith(item.href === '/' ? '/dashboard' : item.href) ? 'text-primary' : ''
+                  }`}
                 >
                   <Icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <span>{t(item.label)}</span>
                 </Link>
               );
             })}
@@ -120,11 +131,13 @@ export function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="flex items-center space-x-2 text-sm font-medium py-2 px-4 rounded-md hover:bg-accent"
+                    className={`flex items-center space-x-2 text-sm font-medium py-2 px-4 rounded-md hover:bg-accent ${
+                      pathname.startsWith(item.href === '/' ? '/dashboard' : item.href) ? 'bg-accent' : ''
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <Icon className="h-4 w-4" />
-                    <span>{item.label}</span>
+                    <span>{t(item.label)}</span>
                   </Link>
                 );
               })}
