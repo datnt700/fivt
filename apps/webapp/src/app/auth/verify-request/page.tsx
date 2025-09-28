@@ -7,15 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Check Your Email - Director Club',
   description: "We've sent you a magic link to sign in to Director Club",
 };
 
-export default function VerifyRequestPage() {
-  const t = useTranslations('auth');
+export default async function VerifyRequestPage() {
+  const t = await getTranslations('auth');
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md mx-auto">
