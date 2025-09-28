@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CalendarDays, CreditCard, TrendingDown, TrendingUp, AlertCircle, RefreshCw } from 'lucide-react';
-import { CreateTransitionForm } from './create/CreateTransactionForm';
+import { CreateTransactionForm } from './_components';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface Transaction {
@@ -288,7 +288,7 @@ export default function TransactionsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <CreateTransitionForm />
+          <CreateTransactionForm />
         </CardContent>
       </Card>
     </div>

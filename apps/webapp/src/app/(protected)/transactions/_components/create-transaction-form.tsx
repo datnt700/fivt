@@ -9,50 +9,35 @@ import {
 } from '@/components/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '@/components/ui/label';
-import type { Category } from '@prisma/client';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { z } from 'zod';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
+import { createTransactionSchema, type CreateTransactionFormValues } from '../_validations/transaction-schema';
+import { useCategories, useCreateCategory } from '../_hooks/use-categories';
+import { useCreateTransaction } from '../_hooks/use-transaction';
 
-const formSchema = z.object({
-  date: z.string().min(1, 'Select date'),
-  amount: z.coerce.number().positive('Amount must be > 0'),
-  type: z.enum(['INCOME', 'EXPENSE']),
-  categoryId: z.string().min(1, 'Choose a category'),
-  description: z.string().trim().max(200).optional(),
-});
-type FormValues = z.infer<typeof formSchema>;
-
-function useCategories(locale: string) {
-  return useQuery({
-    queryKey: ['categories', locale],
-    queryFn: async () => {
-      const r = await fetch('/api/category', { cache: 'no-store' });
-      if (!r.ok) throw new Error('Failed to load categories');
-      return r.json() as Promise<Array<{ id: string; name: string }>>;
-    },
-    staleTime: 5 * 60 * 1000,
-  });
+interface CreateTransactionFormProps {
+  onSuccess?: () => void;
 }
 
-export function CreateTransitionForm() {
-  const locale = useLocale();
-  const qc = useQueryClient();
-  const { data: categories, isLoading } = useCategories(locale);
+export function CreateTransactionForm({ onSuccess }: CreateTransactionFormProps) {
+  const { data: categories, isLoading } = useCategories();
+  const createTransaction = useCreateTransaction();
+  const createCategory = useCreateCategory();
+  
   const tCategory = useTranslations('category');
   const tTransaction = useTranslations('transactions');
+  
   const {
     register,
     handleSubmit,
     control,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  } = useForm<CreateTransactionFormValues>({
+    resolver: zodResolver(createTransactionSchema),
     defaultValues: {
       date: new Date().toISOString().slice(0, 10),
       amount: 0,
@@ -62,38 +47,16 @@ export function CreateTransitionForm() {
     },
   });
 
-  const createTx = useMutation({
-    mutationFn: async (values: FormValues) => {
-      const r = await fetch('/api/transactions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      });
-      if (!r.ok) throw new Error('Create failed');
-      return r.json();
-    },
-    onSuccess: () => {
+  const onSubmit = async (values: CreateTransactionFormValues) => {
+    try {
+      await createTransaction.mutateAsync(values);
       reset();
-      qc.invalidateQueries({ queryKey: ['transactions', locale] });
-    },
-  });
-
-  const createCategory = useMutation({
-    mutationFn: async (name: string) => {
-      const r = await fetch('/api/category', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name }),
-      });
-      if (!r.ok) throw new Error('Create category failed');
-      return (await r.json()) as Category;
-    },
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['categories', locale] });
-    },
-  });
-
-  const onSubmit = (values: FormValues) => createTx.mutate(values);
+      onSuccess?.();
+    } catch (error) {
+      // Error is handled by the mutation
+      console.error('Failed to create transaction:', error);
+    }
+  };
 
   if (isLoading) return <p>{tCategory('noCategories')}</p>;
 
@@ -102,6 +65,7 @@ export function CreateTransitionForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center gap-4"
     >
+      {/* Date */}
       <div className="w-full">
         <Label className="mb-3" htmlFor="date">
           {tTransaction('dateFilter')}
@@ -147,9 +111,12 @@ export function CreateTransitionForm() {
             </Select>
           )}
         />
+        {errors.type && (
+          <p className="text-red-500 text-sm">{errors.type.message}</p>
+        )}
       </div>
 
-      {/* Category (with create new) */}
+      {/* Category */}
       <div className="w-full">
         <Label className="mb-3" htmlFor="categoryId">
           {tTransaction('category')}
@@ -160,12 +127,16 @@ export function CreateTransitionForm() {
           render={({ field }) => (
             <Select
               value={field.value}
-              onValueChange={async val => {
+              onValueChange={async (val) => {
                 if (val === '__new__') {
-                  const name = '';
-                  if (name) {
-                    const created = await createCategory.mutateAsync(name);
-                    field.onChange(created.id);
+                  const name = prompt('Enter category name:');
+                  if (name?.trim()) {
+                    try {
+                      const created = await createCategory.mutateAsync(name.trim());
+                      field.onChange(created.id);
+                    } catch (error) {
+                      console.error('Failed to create category:', error);
+                    }
                   }
                 } else {
                   field.onChange(val);
@@ -176,7 +147,7 @@ export function CreateTransitionForm() {
                 <SelectValue placeholder={tCategory('selected')} />
               </SelectTrigger>
               <SelectContent>
-                {categories?.map(c => (
+                {categories?.map((c) => (
                   <SelectItem key={c.id} value={c.id}>
                     {c.name}
                   </SelectItem>
@@ -205,14 +176,17 @@ export function CreateTransitionForm() {
       </div>
 
       <div className="flex gap-4">
-        <Button type="submit" disabled={isSubmitting || createTx.isPending}>
+        <Button 
+          type="submit" 
+          disabled={isSubmitting || createTransaction.isPending}
+        >
           {tTransaction('addTransaction')}
         </Button>
       </div>
 
-      {createTx.isError && (
+      {createTransaction.isError && (
         <p className="text-red-500 text-sm">
-          ⚠️ {(createTx.error as Error).message}
+          ⚠️ {(createTransaction.error as Error).message}
         </p>
       )}
     </form>

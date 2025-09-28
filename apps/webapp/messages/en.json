@@ -48,6 +48,16 @@
       "expire": "The link will expire in {hours} hours.",
       "spam": "Check your spam folder if you don't see it.",
       "checkEmail": "Make sure to check the email address you entered."
+    },
+    "email": {
+      "subject": "Your magic link to sign in to {appName}",
+      "preview": "Your magic link to sign in to {appName}",
+      "heading": "Sign in to {appName}",
+      "description": "Click the button below to securely sign in. This link will expire in 10 minutes.",
+      "buttonText": "Sign in to {appName}",
+      "fallbackText": "Or copy and paste this link into your browser:",
+      "expiry": "This link will expire in {minutes} minutes for security reasons.",
+      "noReply": "This is an automated email. Please do not reply to this message."
     }
   },
   "chatbot": {

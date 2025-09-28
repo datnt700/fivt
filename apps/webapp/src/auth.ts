@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import Resend from 'next-auth/providers/resend';
 import { render } from '@react-email/render';
 import React from 'react';
-import MagicLinkEmailTemplate from "@/lib/emails/magic-link-email";
+import MagicLinkEmailTemplate from "@/app/auth/_templates/magic-link-email";
 import type { Session } from "next-auth";
 import type { AdapterUser } from "next-auth/adapters";
 import { COMMON_ROUTES } from '@/config/routes';
@@ -19,11 +19,13 @@ const authConfig = {
       from: process.env.AUTH_RESEND_FROM!,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         try {
-          // Render the email template
+          // Render the email template with proper configuration
           const html = await render(
             React.createElement(MagicLinkEmailTemplate, {
-              //name: 'there',
               magicLink: url,
+              locale: 'en', // TODO: Get locale from request headers or user preference
+              appName: 'FIVT',
+              expiryMinutes: 10,
             })
           );
 
@@ -37,7 +39,7 @@ const authConfig = {
             body: JSON.stringify({
               from: provider.from,
               to: identifier,
-              subject: 'Sign In to Director Club',
+              subject: 'Sign In to FIVT',
               html: html,
             }),
           });

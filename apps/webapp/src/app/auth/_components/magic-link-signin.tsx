@@ -1,13 +1,25 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Mail, Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
+import {
+  StyledContainer,
+  StyledSuccessCard,
+  StyledSuccessHeader,
+  IconWrapper,
+  StyledSuccessTitle,
+  StyledSuccessDescription,
+  StyledSuccessContent,
+  StyledForm,
+  FormGroup,
+  StyledLabel,
+  StyledInput,
+  StyledSubmitButton,
+  StyledOutlineButton,
+  spin,
+} from './magic-link-signin.styles';
 
 export function MagicLinkSignIn() {
   const t = useTranslations('auth');
@@ -54,64 +66,60 @@ export function MagicLinkSignIn() {
 
   if (isEmailSent) {
     return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-            <Mail className="w-6 h-6 text-green-600" />
-          </div>
-          <CardTitle>{t('checkEmail')}</CardTitle>
-          <CardDescription>
+      <StyledSuccessCard>
+        <StyledSuccessHeader>
+          <IconWrapper>
+            <Mail style={{ width: '1.5rem', height: '1.5rem', color: '#16a34a' }} />
+          </IconWrapper>
+          <StyledSuccessTitle>{t('checkEmail')}</StyledSuccessTitle>
+          <StyledSuccessDescription>
             {t('checkEmailDescription')}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-center space-y-4">
-          <Button
-            variant="outline"
+          </StyledSuccessDescription>
+        </StyledSuccessHeader>
+        <StyledSuccessContent>
+          <StyledOutlineButton
             onClick={() => {
               setIsEmailSent(false);
               setEmail('');
             }}
-            className="w-full"
           >
             Try a different email
-          </Button>
-        </CardContent>
-      </Card>
+          </StyledOutlineButton>
+        </StyledSuccessContent>
+      </StyledSuccessCard>
     );
   }
 
   return (
-    <div className="w-full max-w-md mx-auto mb-6">
-      <div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">{t('emailLabel')}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t('emailPlaceholder')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={isLoading}
-              required
-            />
-          </div>
+    <StyledContainer>
+      <StyledForm onSubmit={handleSubmit}>
+        <FormGroup>
+          <StyledLabel htmlFor="email">{t('emailLabel')}</StyledLabel>
+          <StyledInput
+            id="email"
+            type="email"
+            placeholder={t('emailPlaceholder')}
+            value={email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+            disabled={isLoading}
+            required
+          />
+        </FormGroup>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('signingIn')}
-              </>
-            ) : (
-              <>
-                <Mail className="mr-2 h-4 w-4" />
-                {t('signInButton')}
-              </>
-            )}
-          </Button>
-        </form>
-      </div>
-    </div>
+        <StyledSubmitButton type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 style={{ width: '1rem', height: '1rem', animation: `${spin} 1s linear infinite` }} />
+              {t('signingIn')}
+            </>
+          ) : (
+            <>
+              <Mail style={{ width: '1rem', height: '1rem' }} />
+              {t('signInButton')}
+            </>
+          )}
+        </StyledSubmitButton>
+      </StyledForm>
+    </StyledContainer>
   );
 }

@@ -48,6 +48,16 @@
       "expire": "Liên kết sẽ hết hạn sau {hours} giờ.",
       "spam": "Nếu không thấy, hãy kiểm tra thư mục spam.",
       "checkEmail": "Đảm bảo bạn đã nhập đúng địa chỉ email."
+    },
+    "email": {
+      "subject": "Liên kết đăng nhập của bạn cho {appName}",
+      "preview": "Liên kết đăng nhập của bạn cho {appName}",
+      "heading": "Đăng nhập vào {appName}",
+      "description": "Nhấp vào nút bên dưới để đăng nhập an toàn. Liên kết này sẽ hết hạn sau 10 phút.",
+      "buttonText": "Đăng nhập vào {appName}",
+      "fallbackText": "Hoặc sao chép và dán liên kết này vào trình duyệt của bạn:",
+      "expiry": "Liên kết này sẽ hết hạn sau {minutes} phút vì lý do bảo mật.",
+      "noReply": "Đây là email tự động. Vui lòng không trả lời tin nhắn này."
     }
   },
   "chatbot": {
