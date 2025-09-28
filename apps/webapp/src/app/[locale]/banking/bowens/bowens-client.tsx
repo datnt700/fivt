@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { BowensLink } from '@/app/components/bowens-link';
+import { PowensLink } from '@/app/components/powens-link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, CreditCard, TrendingUp, AlertCircle } from 'lucide-react';
 
-export default function BowensBankingClient() {
+export default function PowensBankingClient() {
   const t = useTranslations('banking');
   const searchParams = useSearchParams();
   
@@ -14,13 +14,13 @@ export default function BowensBankingClient() {
   const error = searchParams.get('error');
 
   const handleConnectionSuccess = (data: any) => {
-    console.log('Bowens connection successful:', data);
+    console.log('Powens connection successful:', data);
     // Refresh the page or update state to show connected accounts
     window.location.reload();
   };
 
   const handleConnectionError = (error: string) => {
-    console.error('Bowens connection failed:', error);
+    console.error('Powens connection failed:', error);
   };
 
   return (
@@ -29,10 +29,10 @@ export default function BowensBankingClient() {
         {/* Header */}
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            {t('title')} - Bowens
+            {t('title')} - Powens
           </h1>
           <p className="text-lg text-gray-600">
-            {t('subtitle_bowens')}
+            {t('subtitle_powens')}
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function BowensBankingClient() {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 text-green-800">
                 <Shield className="h-5 w-5" />
-                <span>{t('connection.success', { provider: 'Bowens' })}</span>
+                <span>{t('connection.success', { provider: 'Powens' })}</span>
               </div>
             </CardContent>
           </Card>
@@ -62,7 +62,7 @@ export default function BowensBankingClient() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Connection Card */}
           <div className="space-y-6">
-            <BowensLink 
+            <PowensLink 
               onSuccess={handleConnectionSuccess}
               onError={handleConnectionError}
             />
@@ -77,7 +77,7 @@ export default function BowensBankingClient() {
                   {t('security.title')}
                 </CardTitle>
                 <CardDescription>
-                  {t('security.description_bowens')}
+                  {t('security.description_powens')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -97,7 +97,7 @@ export default function BowensBankingClient() {
                   {t('features.title')}
                 </CardTitle>
                 <CardDescription>
-                  {t('features.description_bowens')}
+                  {t('features.description_powens')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -117,7 +117,7 @@ export default function BowensBankingClient() {
                   {t('benefits.title')}
                 </CardTitle>
                 <CardDescription>
-                  {t('benefits.description_bowens')}
+                  {t('benefits.description_powens')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -134,7 +134,7 @@ export default function BowensBankingClient() {
 
         {/* Footer */}
         <div className="text-center text-sm text-gray-500">
-          <p>{t('footer.powered_by')} Bowens • {t('footer.secure')} • {t('footer.compliant')}</p>
+          <p>{t('footer.powered_by')} Powens • {t('footer.secure')} • {t('footer.compliant')}</p>
         </div>
       </div>
     </div>
