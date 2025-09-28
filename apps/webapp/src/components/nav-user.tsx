@@ -19,9 +19,20 @@ import {
   useSidebar,
 } from './ui/sidebar';
 import { signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import router from 'next/router';
+
+function getInitials(name: string, max = 2) {
+  if (!name) return '';
+  return name
+    .trim()
+    .split(/\s+/)
+    .map(w => w[0] || '')
+    .join('')
+    .toUpperCase()
+    .slice(0, max);
+}
 
 export function NavUser({
   user,
@@ -48,9 +59,7 @@ export function NavUser({
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">
                   {' '}
-                  {user.name.split('')[0]?.toUpperCase()}
-                  {user.name.split('')[1] &&
-                    user.name.split('')[1]?.toUpperCase()}
+                  {getInitials(user.name)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -96,8 +105,8 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={async () => {
-                await signOut();
-                redirect('/auth/login');
+                await signOut({ redirect: false });
+                router.push('/auth/login'); // hoặc `/${locale}/auth/login`
               }}
             >
               <LogOut />
