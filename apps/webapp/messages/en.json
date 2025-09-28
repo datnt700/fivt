@@ -98,8 +98,9 @@
     "goHome": "Go to homepage"
   },
   "transactions": {
+    "name": "Transaction",
     "title": "Transactions",
-    "date": "Date",
+    "dateFilter": "Filter by date",
     "amount": "Amount",
     "description": "Description",
     "category": "Category",

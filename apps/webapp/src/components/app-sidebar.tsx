@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Command, DollarSign, LayoutDashboard, Users, CreditCard, Building2,ArrowLeftRight, BotMessageSquare} from 'lucide-react';
+import { Command, ArrowLeftRight, BotMessageSquare } from 'lucide-react';
 import { NavItems } from '@/components/nav-items';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -14,8 +14,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
-
+import { useLocale, useTranslations } from 'next-intl';
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   name?: string;
@@ -23,13 +22,17 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   email?: string;
 }
 
-export function AdminSidebar({ image, name, email, ...props }: AppSidebarProps) {
-
+export function AdminSidebar({
+  image,
+  name,
+  email,
+  ...props
+}: AppSidebarProps) {
   const locale = useLocale();
-
-  const data = [
+  const tTransaction = useTranslations('transactions');
+  const navItems = [
     {
-      name: 'Transaction',
+      name: tTransaction('title'),
       url: `/${locale}/transactions`,
       icon: ArrowLeftRight,
     },
@@ -46,13 +49,12 @@ export function AdminSidebar({ image, name, email, ...props }: AppSidebarProps) 
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="#">
+              <Link href={`/${locale}`}>
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Admin Panel</span>
-                  <span className="truncate text-xs">TrackStack</span>
+                  <span className="truncate font-medium">FIVT</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -60,7 +62,7 @@ export function AdminSidebar({ image, name, email, ...props }: AppSidebarProps) 
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavItems items={data} />
+        <NavItems items={navItems} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser

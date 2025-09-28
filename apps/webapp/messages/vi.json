@@ -98,9 +98,11 @@
     "goHome": "Về trang chủ"
   },
   "transactions": {
+    "name": "Giao dịch",
     "title": "Giao dịch của bạn",
     "datePickerLabel": "Chọn ngày",
     "nameType": "Loại",
+    "selectType": "Chọn loại",
     "type": {
       "income": "Thu nhập",
       "expense": "Chi tiêu"

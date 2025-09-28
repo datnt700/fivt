@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { redirect } from 'next/navigation';
-import { getLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 
 export const metadata: Metadata = {
@@ -17,7 +16,6 @@ export const metadata: Metadata = {
 };
 
 export default function VerifyRequestPage() {
-  const locale = getLocale();
   const t = useTranslations('auth');
   redirect(`/auth/verify-request`);
   return (

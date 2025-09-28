@@ -1,40 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { usePathname } from 'next/navigation';
 
 const useNavigation = () => {
   const pathname = usePathname();
-  const [isHomeActive, setIsHomeActive] = useState(false);
-  const [isExploreActive, setIsExploreActive] = useState(false);
-  const [isNotificationsActive, setIsNotificationsActive] = useState(false);
-  const [isMessagesActive, setIsMessagesActive] = useState(false);
 
-  useEffect(() => {
-    setIsHomeActive(false);
-    setIsExploreActive(false);
-    setIsNotificationsActive(false);
-    setIsMessagesActive(false);
+  const raw = pathname.replace(/^\/(en|vi|fr)(?=\/|$)/, '');
 
-    switch (pathname) {
-      case '/':
-        setIsHomeActive(true);
-        break;
-      case '/explore':
-        setIsExploreActive(true);
-        break;
-      case '/notifications':
-        setIsNotificationsActive(true);
-        break;
-      case '/messages':
-        setIsMessagesActive(true);
-        break;
-      default:
-        // Handle any other cases here
-        break;
-    }
-  }, [pathname]);
+  const isHomeActive = raw === '' || raw === '/';
+  const isExploreActive = raw.startsWith('/explore');
+  const isNotificationsActive = raw.startsWith('/notifications');
+  const isMessagesActive = raw.startsWith('/messages');
 
   return {
     isHomeActive,

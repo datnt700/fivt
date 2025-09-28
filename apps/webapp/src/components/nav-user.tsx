@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-  User,
-} from 'lucide-react';
+import { ChevronsUpDown, LogOut, User } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
@@ -29,6 +21,7 @@ import {
 import { signOut } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export function NavUser({
   user,
@@ -40,6 +33,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const t = useTranslations('navigation');
 
   return (
     <SidebarMenu>
@@ -94,7 +88,7 @@ export function NavUser({
               <DropdownMenuItem asChild>
                 <Link href="/profile">
                   <User className="mr-2 h-4 w-4" />
-                  Profile Settings
+                  {t('settings')}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -107,7 +101,7 @@ export function NavUser({
               }}
             >
               <LogOut />
-              Log out
+              {t('logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

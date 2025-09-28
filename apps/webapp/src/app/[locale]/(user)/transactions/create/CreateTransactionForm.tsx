@@ -104,7 +104,7 @@ export function CreateTransitionForm() {
     >
       <div className="w-full">
         <Label className="mb-3" htmlFor="date">
-          {tTransaction('date')}
+          {tTransaction('dateFilter')}
         </Label>
         <Input type="date" id="date" {...register('date')} />
         {errors.date && (

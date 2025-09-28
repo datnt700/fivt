@@ -34,11 +34,7 @@ const LandingPage = () => {
   const locale = useLocale();
   const tTransaction = useTranslations('transactions');
   const tCategory = useTranslations('category');
-  const {
-    data: transactions,
-    isLoading,
-    error,
-  } = useTransactions(date, locale);
+  const { data: transactions, isLoading } = useTransactions(date, locale);
 
   if (isLoading) return <p>{tTransaction('loadingTransactions')}</p>;
 
@@ -61,12 +57,10 @@ const LandingPage = () => {
                 minute: '2-digit',
               })}
             </h3>
-
             <div className="border-b flex justify-between py-2">
               <span>
                 {transaction.category?.name || `${tCategory('noCategory')}`}
               </span>
-
               {transaction.type === 'INCOME' ? (
                 <span className="flex items-center text-green-500">
                   {transaction.amount.toString()}
