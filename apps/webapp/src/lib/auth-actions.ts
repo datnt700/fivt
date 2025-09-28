@@ -2,8 +2,8 @@
 
 import { signIn } from '@/auth';
 
-export async function signInWithGoogle(locale: string = 'en') {
+export async function signInWithGoogle() {
   await signIn('google', { 
-    redirectTo: `/${locale}` 
+    redirectTo: `/` 
   });
 }

@@ -30,45 +30,9 @@ export function PowensLink({ onSuccess, onError }: PowensLinkProps) {
 
       const data = await response.json();
       
-      // Open popup window for Powens connect
-      const popup = window.open(
-        data.connect_url,
-        'powens-connect',
-        'width=500,height=700,scrollbars=yes,resizable=yes'
-      );
-
-      if (!popup) {
-        throw new Error(t('connection.popup_blocked'));
-      }
-
-      // Listen for popup messages
-      const handleMessage = (event: MessageEvent) => {
-        if (event.data.type === 'POWENS_SUCCESS') {
-          console.log('Powens connection successful');
-          toast.success(t('connection.success', { provider: 'Powens' }));
-          onSuccess?.(event.data);
-          window.removeEventListener('message', handleMessage);
-          setIsConnecting(false);
-        } else if (event.data.type === 'POWENS_ERROR') {
-          console.error('Powens connection error:', event.data.error);
-          toast.error(t('connection.error', { error: event.data.error }));
-          onError?.(event.data.error);
-          window.removeEventListener('message', handleMessage);
-          setIsConnecting(false);
-        }
-      };
-
-      window.addEventListener('message', handleMessage);
-
-      // Check if popup is closed manually
-      const checkClosed = setInterval(() => {
-        if (popup.closed) {
-          clearInterval(checkClosed);
-          window.removeEventListener('message', handleMessage);
-          setIsConnecting(false);
-          toast.info(t('connection.cancelled'));
-        }
-      }, 1000);
+      // Redirect to Powens connection URL in the same window
+      // This will work even if it's a webview URL
+      window.location.href = data.connect_url;
 
     } catch (error) {
       console.error('Error connecting to Powens:', error);

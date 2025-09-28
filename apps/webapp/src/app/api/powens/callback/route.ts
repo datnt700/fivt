@@ -61,32 +61,13 @@ export async function GET(request: NextRequest) {
         console.log('Connection established for existing Powens user');
       }
 
-      // Close popup and redirect
-      const successPage = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Powens Connection Successful</title>
-        </head>
-        <body>
-          <script>
-            // Close popup and refresh parent
-            if (window.opener) {
-              window.opener.postMessage({ type: 'POWENS_SUCCESS', connection_id: '${connectionId}' }, '*');
-              window.close();
-            } else {
-              // Fallback redirect
-              window.location.href = '/banking?success=true';
-            }
-          </script>
-          <p>Connection successful! This window will close automatically.</p>
-        </body>
-        </html>
-      `;
-
-      return new NextResponse(successPage, {
-        headers: { 'Content-Type': 'text/html' },
-      });
+      // Redirect back to banking page with success parameter
+      const successUrl = new URL(`${process.env.NEXTAUTH_URL}/banking`);
+      successUrl.searchParams.set('success', 'true');
+      successUrl.searchParams.set('provider', 'powens');
+      successUrl.searchParams.set('connection_id', connectionId);
+      
+      return NextResponse.redirect(successUrl.toString());
 
     } catch (fetchError) {
       console.error('Error fetching Powens accounts:', fetchError);

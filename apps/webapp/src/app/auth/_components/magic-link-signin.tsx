@@ -4,22 +4,10 @@ import { toast } from 'sonner';
 import { Mail, Loader2 } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import {
-  StyledContainer,
-  StyledSuccessCard,
-  StyledSuccessHeader,
-  IconWrapper,
-  StyledSuccessTitle,
-  StyledSuccessDescription,
-  StyledSuccessContent,
-  StyledForm,
-  FormGroup,
-  StyledLabel,
-  StyledInput,
-  StyledSubmitButton,
-  StyledOutlineButton,
-  spin,
-} from './magic-link-signin.styles';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export function MagicLinkSignIn() {
   const t = useTranslations('auth');
@@ -66,36 +54,38 @@ export function MagicLinkSignIn() {
 
   if (isEmailSent) {
     return (
-      <StyledSuccessCard>
-        <StyledSuccessHeader>
-          <IconWrapper>
-            <Mail style={{ width: '1.5rem', height: '1.5rem', color: '#16a34a' }} />
-          </IconWrapper>
-          <StyledSuccessTitle>{t('checkEmail')}</StyledSuccessTitle>
-          <StyledSuccessDescription>
+      <Card className="w-full max-w-sm mx-auto">
+        <CardHeader className="text-center">
+          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Mail className="w-6 h-6 text-green-600" />
+          </div>
+          <CardTitle>{t('checkEmail')}</CardTitle>
+          <CardDescription>
             {t('checkEmailDescription')}
-          </StyledSuccessDescription>
-        </StyledSuccessHeader>
-        <StyledSuccessContent>
-          <StyledOutlineButton
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center">
+          <Button
+            variant="outline"
             onClick={() => {
               setIsEmailSent(false);
               setEmail('');
             }}
+            className="w-full"
           >
             Try a different email
-          </StyledOutlineButton>
-        </StyledSuccessContent>
-      </StyledSuccessCard>
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <StyledContainer>
-      <StyledForm onSubmit={handleSubmit}>
-        <FormGroup>
-          <StyledLabel htmlFor="email">{t('emailLabel')}</StyledLabel>
-          <StyledInput
+    <div className="w-full max-w-sm mx-auto mb-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="email">{t('emailLabel')}</Label>
+          <Input
             id="email"
             type="email"
             placeholder={t('emailPlaceholder')}
@@ -104,22 +94,22 @@ export function MagicLinkSignIn() {
             disabled={isLoading}
             required
           />
-        </FormGroup>
+        </div>
 
-        <StyledSubmitButton type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="w-full">
           {isLoading ? (
             <>
-              <Loader2 style={{ width: '1rem', height: '1rem', animation: `${spin} 1s linear infinite` }} />
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
               {t('signingIn')}
             </>
           ) : (
             <>
-              <Mail style={{ width: '1rem', height: '1rem' }} />
+              <Mail className="w-4 h-4 mr-2" />
               {t('signInButton')}
             </>
           )}
-        </StyledSubmitButton>
-      </StyledForm>
-    </StyledContainer>
+        </Button>
+      </form>
+    </div>
   );
 }

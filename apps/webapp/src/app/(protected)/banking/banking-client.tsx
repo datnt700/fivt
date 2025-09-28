@@ -2,11 +2,30 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
-import { Banknote, Shield, AlertCircle } from 'lucide-react';
+import { Banknote, Shield, AlertCircle, CheckCircle } from 'lucide-react';
 import { PowensLink } from './_components';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 export function BankingPageClient() {
   const t = useTranslations('banking');
+  const searchParams = useSearchParams();
+
+  // Handle success callback from Powens
+  useEffect(() => {
+    const success = searchParams.get('success');
+    const provider = searchParams.get('provider');
+    const connectionId = searchParams.get('connection_id');
+
+    if (success === 'true' && provider === 'powens') {
+      toast.success(t('connection.success', { provider: 'Powens' }));
+      console.log('Powens connection successful, connection_id:', connectionId);
+      
+      // Clean up URL parameters
+      window.history.replaceState({}, '', '/banking');
+    }
+  }, [searchParams, t]);
 
   const handlePowensSuccess = (data: { webviewUrl: string; userId: string }) => {
     console.log('Powens connection successful:', data);
@@ -25,6 +44,24 @@ export function BankingPageClient() {
           <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
           <p className="text-muted-foreground">{t('subtitle_powens')}</p>
         </div>
+
+        {/* Success Notice - Show if connection was successful */}
+        {searchParams.get('success') === 'true' && (
+          <Card className="mb-6 border-l-4 border-l-green-500">
+            <CardHeader className="flex flex-row items-center space-y-0 pb-2">
+              <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+              <CardTitle className="text-lg">Connection Successful!</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-2">
+                Your bank account has been successfully connected via Powens.
+              </p>
+              <p className="text-xs text-muted-foreground italic">
+                You can now access your account data and transactions.
+              </p>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Security Notice */}
         <Card className="mb-6 border-l-4 border-l-blue-500">
