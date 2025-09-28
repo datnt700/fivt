@@ -6,8 +6,13 @@ import { useTranslations } from 'next-intl';
 import { Loader2, CreditCard } from 'lucide-react';
 import { toast } from 'sonner';
 
+interface BridgeConnectionData {
+  redirectUrl: string;
+  userUuid: string;
+}
+
 interface BridgeLinkProps {
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: BridgeConnectionData) => void;
 }
 
 export function BridgeLink({ onSuccess }: BridgeLinkProps) {

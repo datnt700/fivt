@@ -14,6 +14,39 @@ interface BridgeAuthResponse {
   user: BridgeUser;
 }
 
+interface BridgeItem {
+  id: string;
+  name: string;
+  status: string;
+  bank_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface BridgeAccount {
+  id: string;
+  name: string;
+  balance: number;
+  type: string;
+  currency_code: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  provider_id: string;
+  item_id: string;
+  data_access?: string;
+  last_refresh_status?: string;
+  pro?: boolean;
+}
+
+interface BridgeAccountsResponse {
+  resources: BridgeAccount[];
+}
+
+interface BridgeItemsResponse {
+  resources: BridgeItem[];
+}
+
 interface BridgeConnectSessionResponse {
   id: string;
   url: string;
@@ -116,7 +149,7 @@ class BridgeApiClient {
     }
   }
 
-  async getItems(accessToken: string): Promise<any> {
+  async getItems(accessToken: string): Promise<BridgeItemsResponse> {
     try {
       const response = await axios.get(
         `${BRIDGE_API_BASE}/aggregation/items`,
@@ -131,7 +164,7 @@ class BridgeApiClient {
     }
   }
 
-  async getAccounts(accessToken: string, itemId?: string): Promise<any> {
+  async getAccounts(accessToken: string, itemId?: string): Promise<BridgeAccountsResponse> {
     try {
       const url = itemId 
         ? `${BRIDGE_API_BASE}/aggregation/accounts?item_id=${itemId}`

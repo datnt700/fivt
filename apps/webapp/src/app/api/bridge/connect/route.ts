@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { bridgeApi } from '@/lib/bridge-api';
 import { prisma } from '@/lib/prisma';
 
-export async function POST(_request: NextRequest) {
+export async function POST() {
   try {
     const session = await auth();
     
@@ -27,7 +27,7 @@ export async function POST(_request: NextRequest) {
     });
 
     // Step 1: Check if Bridge user already exists in our database
-    let existingBridgeUser = await prisma.bridgeUser.findUnique({
+    const existingBridgeUser = await prisma.bridgeUser.findUnique({
       where: { userId: session.user.id }
     });
 

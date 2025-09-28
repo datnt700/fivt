@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { powensApi } from '@/lib/powens-api';
 import { prisma } from '@/lib/prisma';
 import { randomInt } from 'crypto';
 
-export async function POST(_request: NextRequest) {
+export async function POST() {
   try {
     const session = await auth();
     
@@ -28,7 +28,7 @@ export async function POST(_request: NextRequest) {
     });
 
     // Step 1: Check if Powens user already exists in our database
-    let existingPowensUser = await prisma.powensUser.findUnique({
+    const existingPowensUser = await prisma.powensUser.findUnique({
       where: { userId: session.user.id }
     });
 

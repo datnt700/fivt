@@ -2,7 +2,6 @@ import OpenAI from "openai";
 import { NextResponse } from 'next/server';
 import { RecipeFinancialJsonSchema } from "@/lib/recipeFinancialSchema";
 const modelNano = "gpt-5-nano";
-const modelMini = "gpt-5-mini";
 const client = new OpenAI();
 
 function getUnsupportedMessage(locale: string) {

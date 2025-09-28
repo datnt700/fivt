@@ -6,13 +6,15 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET"]
+      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
     },
     "test": {
       "dependsOn": ["^test"],
@@ -41,7 +43,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["PORT", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET"]
+      "env": ["PORT", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
     }
   },
   "globalEnv": [

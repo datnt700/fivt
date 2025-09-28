@@ -7,12 +7,12 @@ import Link from 'next/link';
 import useNavigation from '@/hooks/use-navigation';
 import useScrollingEffect from '@/hooks/use-scroll';
 import { House, Globe, ArrowLeftRight, BotMessageSquare } from 'lucide-react';
-import { useLocale } from 'next-intl';
+
 
 const BottomNav = () => {
   const scrollDirection = useScrollingEffect(); // Use the custom hook
   const navClass = scrollDirection === 'up' ? '' : 'opacity-25 duration-500';
-  const locale = useLocale();
+
   const {
     isHomeActive,
     isExploreActive,
@@ -29,10 +29,10 @@ const BottomNav = () => {
           {isHomeActive && <House />}
           {/* <span className="h-2 w-2 rounded-full bg-sky-500 absolute -top-0.5 right-[3px]"></span> */}
         </Link>
-        <Link href={`/${locale}/transactions`} className="flex items-center">
+        <Link href="/transactions" className="flex items-center">
           {isExploreActive && <ArrowLeftRight />}
         </Link>
-        <Link href={`/${locale}/chatbot`} className="flex items-center">
+        <Link href="/chatbot" className="flex items-center">
           {isNotificationsActive && <BotMessageSquare />}
         </Link>
         <Link href="/messages" className="flex items-center">
