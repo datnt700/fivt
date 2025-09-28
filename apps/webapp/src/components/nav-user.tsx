@@ -45,6 +45,7 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const t = useTranslations('navigation');
+  const router = useRouter();
 
   return (
     <SidebarMenu>

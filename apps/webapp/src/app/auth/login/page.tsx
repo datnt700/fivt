@@ -1,6 +1,6 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 
-import { LoginForm } from '@/components/login-form';
+import { LoginForm } from '../_components';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
@@ -19,7 +19,7 @@ export default async function LoginPage() {
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          Financial AI
+          Fivt
         </a>
         <LoginForm />
       </div>

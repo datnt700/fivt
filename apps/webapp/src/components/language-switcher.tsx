@@ -1,10 +1,12 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Globe } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { setUserLocale } from '@/services/locale';
+import { Locale } from '@/i18n/config';
 
 const locales = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -15,28 +17,17 @@ const locales = [
 export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [, startTransition] = useTransition();
 
   const currentLocale = locales.find(l => l.code === locale);
 
   const handleLocaleChange = (newLocale: string) => {
-    // Remove the current locale from the pathname to get the base path
-    const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
-    
-    // Always add locale prefix since we're using localePrefix: 'always'
-    const newPath = `/${newLocale}${pathWithoutLocale}`;
-    
-    console.log('Switching locale:', { 
-      currentLocale: locale, 
-      newLocale, 
-      pathname, 
-      pathWithoutLocale, 
-      newPath 
-    });
-    
-    router.push(newPath);
     setIsOpen(false);
+    startTransition(() => {
+      setUserLocale(newLocale as Locale);
+      router.refresh();
+    });
   };
 
   return (

@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   name?: string;
@@ -28,17 +28,16 @@ export function AdminSidebar({
   email,
   ...props
 }: AppSidebarProps) {
-  const locale = useLocale();
   const tTransaction = useTranslations('transactions');
   const navItems = [
     {
       name: tTransaction('title'),
-      url: `/${locale}/transactions`,
+      url: '/transactions',
       icon: ArrowLeftRight,
     },
     {
       name: 'Chatbot',
-      url: `/${locale}/chatbot`,
+      url: '/chatbot',
       icon: BotMessageSquare,
     },
   ];
@@ -49,7 +48,7 @@ export function AdminSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href={`/${locale}`}>
+              <Link href="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>

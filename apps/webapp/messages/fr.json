@@ -24,7 +24,9 @@
     "login": "Connexion",
     "logout": "Déconnexion",
     "profile": "Profil",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "banking": "Services Bancaires",
+    "chatbot": "Assistant IA"
   },
   "auth": {
     "title": "Connectez-vous à votre compte",
@@ -69,7 +71,7 @@
     "selectLanguage": "Sélectionner la langue"
   },
   "home": {
-    "title": "Bienvenue sur Financial AI",
+    "title": "Bienvenue sur Fivt",
     "subtitle": "Votre compagnon intelligent pour une meilleure gestion financière",
     "getStarted": "Commencer",
     "learnMore": "En savoir plus",
@@ -86,6 +88,132 @@
       "multilingual": {
         "title": "Support Multilingue",
         "description": "Disponible en anglais, vietnamien et français pour une accessibilité mondiale"
+      }
+    }
+  },
+  "banking": {
+    "title": "Connexions Bancaires",
+    "subtitle": "Connectez votre compte bancaire pour obtenir des analyses financières personnalisées",
+    "subtitle_powens": "Connectez votre compte bancaire européen avec Powens pour des informations financières personnalisées",
+    "connectBank": "Connecter Compte Bancaire",
+    "connectedAccounts": "Comptes Connectés",
+    "noAccountsConnected": "Aucun compte bancaire connecté pour le moment",
+    "connectFirstAccount": "Connectez votre premier compte bancaire pour commencer à obtenir des informations financières.",
+    "connectDescription": "Connectez en toute sécurité votre compte bancaire pour analyser vos transactions et recevoir des conseils financiers personnalisés.",
+    "securityNote": "Vos informations bancaires sont cryptées et sécurisées. Nous ne stockons jamais vos identifiants de connexion.",
+    "loading": "Connexion à votre banque...",
+    "success": "Compte bancaire connecté avec succès !",
+    "error": "Échec de la connexion du compte bancaire. Veuillez réessayer.",
+    "disconnect": "Déconnecter",
+    "accountName": "Nom du Compte",
+    "accountType": "Type de Compte",
+    "balance": "Solde",
+    "lastUpdated": "Dernière Mise à Jour",
+    "transactions": "Transactions Récentes",
+    "viewAllTransactions": "Voir Toutes les Transactions",
+    "bridgeDisclaimer": "Services bancaires fournis par Bridge API. Vos données sont protégées par une sécurité de niveau bancaire.",
+    "providers": {
+      "powens": {
+        "title": "Powens Banking",
+        "description": "Connectez-vous aux banques européennes avec la plateforme bancaire sécurisée Powens"
+      }
+    },
+    "connection": {
+      "connect": "Se connecter à {provider}",
+      "connecting": "Connexion en cours...",
+      "success": "{provider} connecté avec succès !",
+      "error": "Échec de la connexion : {error}",
+      "cancelled": "Connexion annulée",
+      "popup_blocked": "Popup bloquée. Veuillez autoriser les popups pour ce site."
+    },
+    "security": {
+      "title": "Sécurité et Confidentialité",
+      "description_powens": "Powens utilise une sécurité de niveau bancaire pour protéger vos données financières",
+      "encryption": "Chiffrement 256 bits de niveau bancaire",
+      "no_storage": "Aucun stockage d'identifiants",
+      "compliance": "Conforme au RGPD européen",
+      "audit": "Audits de sécurité réguliers"
+    },
+    "features": {
+      "title": "Fonctionnalités Bancaires",
+      "description_powens": "Accédez à des données bancaires complètes avec l'intégration Powens",
+      "account_balance": "Soldes de compte en temps réel",
+      "transaction_history": "Historique complet des transactions",
+      "categorization": "Catégorisation automatique des transactions",
+      "real_time_sync": "Synchronisation des données en temps réel",
+      "secure_connection": "Connexion bancaire sécurisée",
+      "real_time_data": "Données de transaction en temps réel",
+      "european_banks": "Plus de 2000 banques européennes supportées"
+    },
+    "benefits": {
+      "title": "Avantages Financiers",
+      "description_powens": "Obtenez des informations à partir de vos données bancaires avec Powens",
+      "financial_overview": "Vue d'ensemble financière complète",
+      "expense_tracking": "Suivi automatisé des dépenses",
+      "budgeting": "Outils de budgétisation intelligents",
+      "insights": "Informations financières alimentées par l'IA"
+    },
+    "footer": {
+      "powered_by": "Alimenté par",
+      "secure": "Sécurité de Niveau Bancaire",
+      "compliant": "Conforme à la Réglementation"
+    },
+    "errors": {
+      "page_title": "Erreur de Connexion",
+      "page_description": "Nous avons rencontré un problème lors de la connexion à votre compte bancaire.",
+      "back_to_banking": "Retour aux Services Bancaires",
+      "technical_details": "Détails techniques :",
+      "what_to_do": "Que faire ensuite ?",
+      "try_again": "Réessayer",
+      "access_denied": {
+        "title": "Connexion Annulée",
+        "description": "Vous avez annulé le processus de connexion bancaire.",
+        "suggestion": "Si vous souhaitez connecter votre compte bancaire, veuillez réessayer et terminer le processus d'autorisation."
+      },
+      "ssl_error": {
+        "title": "Erreur de Connexion Sécurisée",
+        "description": "Il y a eu un problème pour établir une connexion sécurisée avec le service bancaire.",
+        "suggestion": "Cela arrive souvent en développement. Essayez d'actualiser la page ou d'utiliser un autre navigateur. En production, assurez-vous que HTTPS est correctement configuré."
+      },
+      "callback_failed": {
+        "title": "Échec de la Connexion",
+        "description": "Nous n'avons pas pu terminer la connexion bancaire à cause d'une erreur technique.",
+        "suggestion": "Veuillez essayer de vous reconnecter. Si le problème persiste, contactez le support."
+      },
+      "user_not_found": {
+        "title": "Erreur de Session Utilisateur",
+        "description": "Votre session a expiré pendant le processus de connexion.",
+        "suggestion": "Veuillez vous reconnecter et essayer de connecter votre compte bancaire."
+      },
+      "fetch_failed": {
+        "title": "Erreur de Récupération des Données",
+        "description": "Nous n'avons pas pu récupérer les informations de votre compte depuis la banque.",
+        "suggestion": "Il s'agit peut-être d'un problème temporaire. Veuillez réessayer dans quelques minutes."
+      },
+      "popup_blocked": {
+        "title": "Popup Bloquée",
+        "description": "Votre navigateur a bloqué la popup de connexion bancaire.",
+        "suggestion": "Veuillez autoriser les popups pour ce site dans les paramètres de votre navigateur et réessayer."
+      },
+      "unknown": {
+        "title": "Erreur Inconnue",
+        "description": "Une erreur inattendue s'est produite pendant le processus de connexion.",
+        "suggestion": "Veuillez réessayer. Si le problème persiste, contactez le support."
+      },
+      "common_solutions": {
+        "title": "Solutions Communes",
+        "allow_popups": {
+          "title": "Activer les Popups",
+          "description": "Assurez-vous que les popups sont autorisées pour ce site web dans les paramètres de votre navigateur."
+        },
+        "check_connection": {
+          "title": "Vérifiez Votre Connexion Internet",
+          "description": "Assurez-vous d'avoir une connexion internet stable et réessayez."
+        },
+        "try_different_browser": {
+          "title": "Essayez un Navigateur Différent",
+          "description": "Certains navigateurs gèrent mieux les connexions bancaires que d'autres. Essayez Chrome, Firefox ou Safari."
+        }
       }
     }
   },

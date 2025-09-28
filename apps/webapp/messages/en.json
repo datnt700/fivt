@@ -24,7 +24,9 @@
     "login": "Login",
     "logout": "Logout",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "banking": "Banking",
+    "chatbot": "AI Assistant"
   },
   "auth": {
     "title": "Sign in to your account",
@@ -48,13 +50,13 @@
     }
   },
   "chatbot": {
-    "title": "Financial AI Assistant",
+    "title": "Fivt Assistant",
     "subtitle": "Get personalized financial advice and strategies",
     "placeholder": "Ask me about your financial goals, budgeting, investing, or any money-related questions...",
     "send": "Send",
     "thinking": "AI is thinking...",
     "error": "Sorry, I encountered an error. Please try again.",
-    "welcomeMessage": "Hello! I'm your financial AI assistant. How can I help you with your financial goals today?"
+    "welcomeMessage": "Hello! I'm your Fivt assistant. How can I help you with your financial goals today?"
   },
   "theme": {
     "light": "Light",
@@ -69,7 +71,7 @@
     "selectLanguage": "Select language"
   },
   "home": {
-    "title": "Welcome to Financial AI",
+    "title": "Welcome to Fivt",
     "subtitle": "Your intelligent financial companion for better money management",
     "getStarted": "Get Started",
     "learnMore": "Learn More",
@@ -86,6 +88,132 @@
       "multilingual": {
         "title": "Multilingual Support",
         "description": "Available in English, Vietnamese, and French for global accessibility"
+      }
+    }
+  },
+  "banking": {
+    "title": "Bank Connections",
+    "subtitle": "Connect your bank account to get personalized financial insights",
+    "subtitle_powens": "Connect your European bank account using Powens for personalized financial insights",
+    "connectBank": "Connect Bank Account",
+    "connectedAccounts": "Connected Accounts",
+    "noAccountsConnected": "No bank accounts connected yet",
+    "connectFirstAccount": "Connect your first bank account to get started with financial insights.",
+    "connectDescription": "Securely connect your bank account to analyze your transactions and provide personalized financial advice.",
+    "securityNote": "Your banking information is encrypted and secure. We never store your login credentials.",
+    "loading": "Connecting to your bank...",
+    "success": "Bank account connected successfully!",
+    "error": "Failed to connect bank account. Please try again.",
+    "disconnect": "Disconnect",
+    "accountName": "Account Name",
+    "accountType": "Account Type",
+    "balance": "Balance",
+    "lastUpdated": "Last Updated",
+    "transactions": "Recent Transactions",
+    "viewAllTransactions": "View All Transactions",
+    "bridgeDisclaimer": "Banking services provided by Bridge API. Your data is protected by bank-level security.",
+    "providers": {
+      "powens": {
+        "title": "Powens Banking",
+        "description": "Connect to European banks with Powens secure banking platform"
+      }
+    },
+    "connection": {
+      "connect": "Connect to {provider}",
+      "connecting": "Connecting...",
+      "success": "{provider} connected successfully!",
+      "error": "Connection failed: {error}",
+      "cancelled": "Connection cancelled",
+      "popup_blocked": "Popup blocked. Please allow popups for this site."
+    },
+    "security": {
+      "title": "Security & Privacy",
+      "description_powens": "Powens uses bank-level security to protect your financial data",
+      "encryption": "Bank-level 256-bit encryption",
+      "no_storage": "No credential storage",
+      "compliance": "EU GDPR compliant",
+      "audit": "Regular security audits"
+    },
+    "features": {
+      "title": "Banking Features",
+      "description_powens": "Access comprehensive banking data with Powens integration",
+      "account_balance": "Real-time account balances",
+      "transaction_history": "Complete transaction history",
+      "categorization": "Automatic transaction categorization",
+      "real_time_sync": "Real-time data synchronization",
+      "secure_connection": "Secure bank connection",
+      "real_time_data": "Real-time transaction data",
+      "european_banks": "2000+ European banks supported"
+    },
+    "benefits": {
+      "title": "Financial Benefits",
+      "description_powens": "Get insights from your banking data with Powens",
+      "financial_overview": "Complete financial overview",
+      "expense_tracking": "Automated expense tracking",
+      "budgeting": "Smart budgeting tools",
+      "insights": "AI-powered financial insights"
+    },
+    "footer": {
+      "powered_by": "Powered by",
+      "secure": "Bank-level Security",
+      "compliant": "Regulatory Compliant"
+    },
+    "errors": {
+      "page_title": "Connection Error",
+      "page_description": "We encountered an issue while connecting to your bank account.",
+      "back_to_banking": "Back to Banking",
+      "technical_details": "Technical Details:",
+      "what_to_do": "What to do next?",
+      "try_again": "Try Again",
+      "access_denied": {
+        "title": "Connection Cancelled",
+        "description": "You cancelled the bank connection process.",
+        "suggestion": "If you want to connect your bank account, please try again and complete the authorization process."
+      },
+      "ssl_error": {
+        "title": "Secure Connection Error",
+        "description": "There was a problem establishing a secure connection with the banking service.",
+        "suggestion": "This often happens in development. Try refreshing the page or using a different browser. For production, ensure HTTPS is properly configured."
+      },
+      "callback_failed": {
+        "title": "Connection Failed",
+        "description": "We couldn't complete the bank connection due to a technical error.",
+        "suggestion": "Please try connecting again. If the problem persists, contact support."
+      },
+      "user_not_found": {
+        "title": "User Session Error",
+        "description": "Your session expired during the connection process.",
+        "suggestion": "Please log in again and try connecting your bank account."
+      },
+      "fetch_failed": {
+        "title": "Data Retrieval Error",
+        "description": "We couldn't retrieve your account information from the bank.",
+        "suggestion": "This might be a temporary issue. Please try again in a few minutes."
+      },
+      "popup_blocked": {
+        "title": "Popup Blocked",
+        "description": "Your browser blocked the banking connection popup.",
+        "suggestion": "Please allow popups for this site in your browser settings and try again."
+      },
+      "unknown": {
+        "title": "Unknown Error",
+        "description": "An unexpected error occurred during the connection process.",
+        "suggestion": "Please try again. If the problem persists, contact support."
+      },
+      "common_solutions": {
+        "title": "Common Solutions",
+        "allow_popups": {
+          "title": "Enable Popups",
+          "description": "Make sure popups are allowed for this website in your browser settings."
+        },
+        "check_connection": {
+          "title": "Check Your Internet Connection",
+          "description": "Ensure you have a stable internet connection and try again."
+        },
+        "try_different_browser": {
+          "title": "Try a Different Browser",
+          "description": "Some browsers handle banking connections better than others. Try Chrome, Firefox, or Safari."
+        }
       }
     }
   },
