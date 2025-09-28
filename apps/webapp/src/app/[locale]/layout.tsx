@@ -1,48 +1,24 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+// app/[locale]/layout.tsx
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import '@/app/globals.css';
-const geistSans = localFont({
-  src: '../../fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-});
-const geistMono = localFont({
-  src: '../../fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-});
 
-export const metadata: Metadata = {
-  title: 'Financial AI - Your Intelligent Financial Companion',
-  description: 'Get personalized financial advice and strategies powered by AI',
-};
+const locales = ['en', 'vi', 'fr'] as const;
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return locales.map(locale => ({ locale }));
+}
 
-const locales = ['en', 'vi', 'fr'];
-
-export default async function LocaleLayout({
+export default async function LocaleRootLayout({
   children,
-  params,
+  params: { locale },
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: 'en' | 'vi' | 'fr' };
 }) {
-  const { locale } = await params;
-
-  // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale)) notFound();
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
-
+  const messages = await getMessages({ locale });
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 }

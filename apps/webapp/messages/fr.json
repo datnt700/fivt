@@ -39,7 +39,12 @@
     "signInError": "Échec de l'envoi du lien de connexion",
     "invalidEmail": "Veuillez entrer une adresse email valide",
     "signOut": "Se déconnecter",
-    "signedInAs": "Connecté en tant que"
+    "signedInAs": "Connecté en tant que",
+    "bullets": {
+      "expire": "Le lien expirera dans {hours} heures.",
+      "spam": "Vérifiez votre dossier spam si vous ne le voyez pas.",
+      "checkEmail": "Assurez-vous d’avoir saisi la bonne adresse e-mail."
+    }
   },
   "chatbot": {
     "title": "Assistant IA Financier",
@@ -90,5 +95,28 @@
     "forbidden": "Accès interdit",
     "tryAgain": "Réessayer",
     "goHome": "Aller à l'accueil"
+  },
+  "transactions": {
+    "title": "Vos Transactions",
+    "dateFilter": "Filtrer par date",
+    "type": {
+      "income": "Revenus",
+      "expense": "Dépenses"
+    },
+    "amount": "Montant",
+    "description": "Description",
+    "category": "Catégorie",
+    "noTransactions": "Aucune transaction trouvée pour cette date.",
+    "loadingTransactions": "Chargement des transactions...",
+    "errorLoading": "Erreur lors du chargement des transactions. Veuillez réessayer."
+  },
+  "category": {
+    "title": "Vos Catégories",
+    "noCategories": "Aucune catégorie disponible.",
+    "loadingCategories": "Chargement des catégories...",
+    "errorLoadingCategories": "Erreur lors du chargement des catégories. Veuillez réessayer.",
+    "addCategory": "Ajouter une catégorie",
+    "editCategory": "Modifier la catégorie",
+    "deleteCategory": "Supprimer la catégorie"
   }
 }

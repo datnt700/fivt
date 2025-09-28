@@ -1,25 +1,34 @@
+// app/[locale]/(protected)/layout.tsx
 import { auth } from '@/auth';
-import { AdminSidebar } from '@/components/app-sidebar';
-import BottomNav from '@/components/bottom-nav';
-import ThemeToggler from '@/components/theme-toggler';
+import { redirect } from 'next/navigation';
 import {
   SidebarProvider,
   SidebarInset,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { redirect } from 'next/navigation';
-import Providers from './providers';
+import { AdminSidebar } from '@/components/app-sidebar';
+import ThemeToggler from '@/components/theme-toggler';
+import BottomNav from '@/components/bottom-nav';
+import ClientProviders from './client-provider';
 
-export default async function ProtectedLayout({
+const locales = ['en', 'vi', 'fr'] as const;
+type Locale = (typeof locales)[number];
+
+export default async function UserLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { locale: Locale };
 }) {
   const session = await auth();
-  if (!session?.user) redirect('/auth/login');
+
+  if (!session?.user) {
+    redirect(`/auth/login`);
+  }
 
   return (
-    <Providers>
+    <ClientProviders>
       <SidebarProvider>
         <AdminSidebar />
         <SidebarInset>
@@ -32,6 +41,7 @@ export default async function ProtectedLayout({
               <ThemeToggler />
             </div>
           </header>
+
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
             <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min p-4">
               {children}
@@ -40,6 +50,6 @@ export default async function ProtectedLayout({
         </SidebarInset>
         <BottomNav />
       </SidebarProvider>
-    </Providers>
+    </ClientProviders>
   );
 }
