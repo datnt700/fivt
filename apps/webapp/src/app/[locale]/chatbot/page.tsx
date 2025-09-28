@@ -3,7 +3,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import { parse } from "partial-json";
 import { Send } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-
 import { Button } from '@/components/ui/button';
 import {z} from "zod";
 import {Loading} from "@/components/loading";
@@ -12,7 +11,7 @@ import {RecipeFinancialSchema} from "@/lib/recipeFinancialSchema";
 import {LanguageSwitcher} from "@/components/language-switcher";
 
 type QA = {
-    id: number;
+    id: string;
     question: string;
     loading: boolean;
     answer: z.infer<typeof RecipeFinancialSchema> | null;
@@ -24,52 +23,52 @@ export default function ChatBot() {
     const [prompt, setPrompt] = useState("");
     const [response, setResponse] = useState<QA[]>([]);
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
-        // mỗi khi response thay đổi -> scroll xuống cuối
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [response]);
 
-    useEffect(() => {
-       console.log(response)
-    }, [response]);
 
     async function handleSubmit() {
-        const id = Date.now();
-        setResponse(prev => [
-            ...prev,
-            { id, loading: true, question: prompt, answer: null }
-        ]);
+        if (submitting || !prompt.trim()) return;
+        setSubmitting(true);
+        const id = crypto.randomUUID();
+        const currentPrompt = prompt;
         setPrompt("");
+        setResponse(prev => [...prev, { id, loading: true, question: currentPrompt, answer: null }]);
+        try {
+            const res = await fetch(`/${locale}/api/chat`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ prompt, locale }),
+            });
 
-        const res = await fetch(`/${locale}/api/chat`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ prompt, locale }),
-        });
+            const reader = res.body?.getReader();
+            if (!reader) {
+                return {};
+            }
 
-        const reader = res.body?.getReader();
-        if (!reader) {
-            return {};
-        }
-
-        const decoder = new TextDecoder();
-        let data = "";
-        let parsed = {};
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            data += decoder.decode(value);
-            parsed = parse(data);
-            setResponse(prev =>
-                prev.map(item =>
+            const decoder = new TextDecoder();
+            let data = "";
+            let parsed = {};
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                data += decoder.decode(value);
+                parsed = parse(data);
+                setResponse(prev =>
+                  prev.map(item =>
                     item.id === id
-                        ? { ...item,loading:false, answer: parsed as z.infer<typeof RecipeFinancialSchema> }
-                        : item
-                )
-            );
+                      ? { ...item, loading: false, answer: parsed as z.infer<typeof RecipeFinancialSchema> }
+                      : item
+                  )
+                );
+            }
+        }finally {
+            setSubmitting(false);
         }
     }
     return (
@@ -92,8 +91,8 @@ export default function ChatBot() {
                         </div>
                     </div>
                 )}
-                {response.map((data, index) =>
-                    <div key={index} className="flex flex-col gap-4">
+                {response.map((data) =>
+                    <div key={data.id} className="flex flex-col gap-4">
                         <span className="text-sm text-black-500 self-end border rounded-xl bg-gray-200 p-3 m-3">{data.question}</span>
                         {data.loading && <Loading />}
                         <RecipeCard data={data.answer} />
@@ -108,7 +107,7 @@ export default function ChatBot() {
                     onKeyDown={async (e) => {
                         if (e.key === "Enter" && !e.shiftKey) {
                             e.preventDefault();
-                            await handleSubmit();
+                            handleSubmit();
                         }
                     }}
                     onInput={(e) => {
@@ -120,7 +119,7 @@ export default function ChatBot() {
                     placeholder={t('placeholder')}
                 />
                 <Button
-                    type="submit"
+                    type="button"
                     size="icon"
                     className="h-10 w-10 rounded-full flex justify-center items-center self-end"
                     aria-label={t('send')}

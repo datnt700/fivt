@@ -1,8 +1,9 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 
 import { LoginForm } from '@/components/login-form';
-import { auth } from '../../../../../auth'; // Auth import fixed
+import { auth } from '../../../../auth'; // Auth import fixed
 import { redirect } from 'next/navigation';
+import React from "react"
 
 export default async function LoginPage() {
   const session = await auth();
