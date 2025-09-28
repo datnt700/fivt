@@ -142,8 +142,12 @@ class PowensApiClient {
       console.log('Creating Powens webview connect URL');
       console.log('Using callback URL:', callbackUrl);
       
-      // Extract domain from API base URL
-      const domain = POWENS_API_BASE.match(/https:\/\/(.+)\.biapi\.pro/)?.[1] || 'your-domain-sandbox';
+      // Extract domain from API base URL with validation
+      const domainMatch = POWENS_API_BASE.match(/^https:\/\/([^.]+)\.biapi\.pro/);
+      if (!domainMatch || !domainMatch[1]) {
+        throw new Error(`Failed to extract domain from POWENS_API_BASE: "${POWENS_API_BASE}". Please check your configuration.`);
+      }
+      const domain = domainMatch[1];
       
       const connectUrl = `https://webview.powens.com/connect?domain=${domain}&client_id=${process.env.POWENS_CLIENT_ID}&redirect_uri=${encodeURIComponent(callbackUrl)}&code=${temporaryCode}`;
       
