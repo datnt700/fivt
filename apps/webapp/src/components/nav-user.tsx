@@ -21,7 +21,7 @@ import {
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 
 function getInitials(name: string, max = 2) {
   if (!name) return '';
