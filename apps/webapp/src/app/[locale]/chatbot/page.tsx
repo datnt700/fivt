@@ -8,7 +8,8 @@ import {z} from "zod";
 import {Loading} from "@/components/loading";
 import {RecipeCard} from "@/components/recipe-card";
 import {RecipeFinancialSchema} from "@/lib/recipeFinancialSchema";
-import {LanguageSwitcher} from "@/components/language-switcher";
+
+import { Navigation } from '@/components/navigation';
 
 type QA = {
     id: string;
@@ -72,15 +73,16 @@ export default function ChatBot() {
         }
     }
     return (
-        <section className="chat flex flex-col min-h-dvh">
-            {/* Header with title and language switcher */}
-            <div className="flex justify-between items-center p-4 border-b bg-white">
-                <div>
-                    <h1 className="text-xl font-semibold text-gray-900">{t('title')}</h1>
-                    <p className="text-sm text-gray-600">{t('subtitle')}</p>
+        <div className="min-h-screen bg-background">
+            <Navigation />
+            <section className="chat flex flex-col min-h-[calc(100vh-4rem)]">
+                {/* Header with title */}
+                <div className="flex justify-between items-center p-4 border-b bg-white">
+                    <div>
+                        <h1 className="text-xl font-semibold text-gray-900">{t('title')}</h1>
+                        <p className="text-sm text-gray-600">{t('subtitle')}</p>
+                    </div>
                 </div>
-                <LanguageSwitcher />
-            </div>
             
             <div className="flex-1 min-h-0 overflow-y-auto">
                 {response.length === 0 && (
@@ -129,5 +131,6 @@ export default function ChatBot() {
                 </Button>
             </div>
         </section>
+        </div>
     );
 };

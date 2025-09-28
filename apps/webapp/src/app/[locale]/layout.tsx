@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Financial AI - Your Intelligent Financial Companion",
+  title: "Fivt - Your Intelligent Financial Companion",
   description: "Get personalized financial advice and strategies powered by AI",
 };
 

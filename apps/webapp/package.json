@@ -15,7 +15,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "clean": "rimraf .next .turbo",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
@@ -35,6 +36,7 @@
     "@repo/ui": "workspace:*",
     "@tailwindcss/postcss": "^4.1.13",
     "@tanstack/react-query": "^5.87.4",
+    "axios": "^1.12.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",

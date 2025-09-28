@@ -6,7 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
-  "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM"]
+      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -36,7 +36,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["PORT"]
+      "env": ["PORT", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET"]
     }
   }
 }
