@@ -16,7 +16,12 @@
     },
     "test": {
       "dependsOn": ["^test"],
-      "inputs": ["$TURBO_DEFAULT$", "src/**/*.test.*", "src/**/*.spec.*", "tests/**/*"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "src/**/*.test.*",
+        "src/**/*.spec.*",
+        "tests/**/*"
+      ]
     },
     "test:unit": {
       "dependsOn": ["^test:unit"],
@@ -38,5 +43,15 @@
       "persistent": true,
       "env": ["PORT", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET"]
     }
-  }
+  },
+  "globalEnv": [
+    "NODE_ENV",
+    "NEXTAUTH_URL",
+    "AUTH_SECRET",
+    "RESEND_API_KEY",
+    "AUTH_RESEND_FROM",
+    "AUTH_GOOGLE_ID",
+    "AUTH_GOOGLE_SECRET",
+    "DATABASE_URL"
+  ]
 }

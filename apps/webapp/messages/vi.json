@@ -41,7 +41,13 @@
     "signInError": "Không thể gửi liên kết đăng nhập",
     "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
     "signOut": "Đăng xuất",
-    "signedInAs": "Đã đăng nhập với tên"
+    "signedInAs": "Đã đăng nhập với tên",
+    "hint": "Hãy bấm vào liên kết trong email để đăng nhập an toàn vào tài khoản của bạn.",
+    "bullets": {
+      "expire": "Liên kết sẽ hết hạn sau {hours} giờ.",
+      "spam": "Nếu không thấy, hãy kiểm tra thư mục spam.",
+      "checkEmail": "Đảm bảo bạn đã nhập đúng địa chỉ email."
+    }
   },
   "chatbot": {
     "title": "Trợ lý AI Tài chính",
@@ -218,5 +224,31 @@
     "forbidden": "Truy cập bị cấm",
     "tryAgain": "Thử lại",
     "goHome": "Về trang chủ"
+  },
+  "transactions": {
+    "name": "Giao dịch",
+    "title": "Giao dịch của bạn",
+    "datePickerLabel": "Chọn ngày",
+    "nameType": "Loại",
+    "selectType": "Chọn loại",
+    "type": {
+      "income": "Thu nhập",
+      "expense": "Chi tiêu"
+    },
+    "amount": "Số tiền",
+    "description": "Mô tả",
+    "category": "Danh mục",
+    "noTransactions": "Không có giao dịch nào để hiển thị.",
+    "loadingTransactions": "Đang tải giao dịch...",
+    "errorLoadingTransactions": "Lỗi khi tải giao dịch. Vui lòng thử lại."
+  },
+  "category": {
+    "selected": "Chọn hoặc tạo danh mục",
+    "noCategory": "Không có danh mục",
+    "loadingCategories": "Đang tải danh mục...",
+    "errorLoadingCategories": "Lỗi khi tải danh mục. Vui lòng thử lại.",
+    "addCategory": "Thêm danh mục",
+    "editCategory": "Chỉnh sửa danh mục",
+    "deleteCategory": "Xóa danh mục"
   }
 }

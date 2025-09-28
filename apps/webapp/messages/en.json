@@ -41,7 +41,13 @@
     "signInError": "Failed to send sign in link",
     "invalidEmail": "Please enter a valid email address",
     "signOut": "Sign Out",
-    "signedInAs": "Signed in as"
+    "signedInAs": "Signed in as",
+    "hint": "Click the link in your email to securely sign in to your account.",
+    "bullets": {
+      "expire": "The link will expire in {hours} hours.",
+      "spam": "Check your spam folder if you don't see it.",
+      "checkEmail": "Make sure to check the email address you entered."
+    }
   },
   "chatbot": {
     "title": "Fivt Assistant",
@@ -218,5 +224,34 @@
     "forbidden": "Access forbidden",
     "tryAgain": "Try again",
     "goHome": "Go to homepage"
+  },
+  "transactions": {
+    "name": "Transaction",
+    "title": "Transactions",
+    "dateFilter": "Filter by date",
+    "amount": "Amount",
+    "description": "Description",
+    "category": "Category",
+    "nameType": "Type",
+    "selectType": "Select type",
+    "type": {
+      "income": "Income",
+      "expense": "Expense"
+    },
+    "addTransaction": "Add Transaction",
+    "editTransaction": "Edit Transaction",
+    "deleteTransaction": "Delete Transaction",
+    "noTransactions": "No transactions found for the selected date.",
+    "loadingTransactions": "Loading transactions...",
+    "errorLoadingTransactions": "Error loading transactions. Please try again."
+  },
+  "category": {
+    "noCategories": "No categories available.",
+    "loadingCategories": "Loading categories...",
+    "errorLoadingCategories": "Error loading categories. Please try again.",
+    "addCategory": "Add Category",
+    "editCategory": "Edit Category",
+    "deleteCategory": "Delete Category",
+    "selected": "Select or create category"
   }
 }

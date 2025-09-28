@@ -9,6 +9,7 @@ export const createTransaction = async (input : {
     categoryId: string,
     type: TransactionType,
     description: string,
+    date?: string,
 })=> {
     try {
         const session = await auth();
