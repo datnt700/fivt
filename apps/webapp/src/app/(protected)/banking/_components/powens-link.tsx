@@ -5,16 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-
-interface PowensConnectionData {
-  webviewUrl: string;
-  userId: string;
-}
-
-interface PowensLinkProps {
-  onSuccess?: (data: PowensConnectionData) => void;
-  onError?: (error: string) => void;
-}
+import type { PowensLinkProps } from '../_types';
 
 export function PowensLink({ onSuccess, onError }: PowensLinkProps) {
   const [isConnecting, setIsConnecting] = useState(false);

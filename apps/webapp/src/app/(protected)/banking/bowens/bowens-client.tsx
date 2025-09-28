@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { PowensLink } from '@/components/powens-link';
+import { PowensLink } from '../_components';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, CreditCard, TrendingUp, AlertCircle } from 'lucide-react';
 

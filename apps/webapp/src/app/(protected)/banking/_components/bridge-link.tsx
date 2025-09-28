@@ -5,15 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
 import { Loader2, CreditCard } from 'lucide-react';
 import { toast } from 'sonner';
-
-interface BridgeConnectionData {
-  redirectUrl: string;
-  userUuid: string;
-}
-
-interface BridgeLinkProps {
-  onSuccess?: (data: BridgeConnectionData) => void;
-}
+import type { BridgeLinkProps } from '../_types';
 
 export function BridgeLink({ onSuccess }: BridgeLinkProps) {
   const [loading, setLoading] = useState(false);

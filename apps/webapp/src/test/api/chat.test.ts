@@ -1,38 +1,42 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { POST } from '@/app/api/chat/route';
 import { NextRequest } from 'next/server';
-import OpenAI from 'openai';
 
-// Mock OpenAI
+// Create hoisted mock
+const mockChatCompletionsCreate = vi.hoisted(() => vi.fn());
+
 vi.mock('openai', () => {
   return {
-    default: vi.fn(),
+    default: vi.fn().mockImplementation(() => ({
+      chat: {
+        completions: {
+          create: mockChatCompletionsCreate,
+        },
+      },
+    })),
   };
 });
 
-const mockOpenAI = vi.mocked(OpenAI);
+// Import after mocking
+import { POST } from '@/app/api/chat/route';
 
 describe('/api/chat POST route', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockChatCompletionsCreate.mockClear();
   });
 
   it('should handle valid request with prompt', async () => {
-    // Mock OpenAI client
-    const mockClient = {
-      chat: {
-        completions: {
-          create: vi.fn().mockResolvedValue({
-            async *[Symbol.asyncIterator]() {
-              yield { choices: [{ delta: { content: 'Mock' } }] };
-              yield { choices: [{ delta: { content: ' response' } }] };
-            },
-          }),
+    // Mock the detectIntent call first (returns "financial")
+    mockChatCompletionsCreate
+      .mockResolvedValueOnce({
+        choices: [{ message: { content: 'financial' } }],
+      })
+      .mockReturnValueOnce({
+        async *[Symbol.asyncIterator]() {
+          yield { choices: [{ delta: { content: 'Mock' } }] };
+          yield { choices: [{ delta: { content: ' response' } }] };
         },
-      },
-    };
-
-    mockOpenAI.mockImplementation(() => mockClient as unknown as OpenAI);
+      });
 
     // Create mock request with locale
     const mockRequest = {
@@ -45,7 +49,10 @@ describe('/api/chat POST route', () => {
     const response = await POST(mockRequest);
 
     expect(mockRequest.json).toHaveBeenCalled();
-    expect(mockClient.chat.completions.create).toHaveBeenCalledWith(
+    expect(mockChatCompletionsCreate).toHaveBeenCalledTimes(2); // Once for intent detection, once for response
+    
+    // Check the second call (the actual financial advice call)
+    expect(mockChatCompletionsCreate).toHaveBeenCalledWith(
       expect.objectContaining({
         model: 'gpt-5-nano',
         messages: [
@@ -80,15 +87,8 @@ describe('/api/chat POST route', () => {
   });
 
   it('should handle OpenAI API errors', async () => {
-    const mockClient = {
-      chat: {
-        completions: {
-          create: vi.fn().mockRejectedValue(new Error('OpenAI API Error')),
-        },
-      },
-    };
-
-    mockOpenAI.mockImplementation(() => mockClient as unknown as OpenAI);
+    // Mock the detectIntent call to fail
+    mockChatCompletionsCreate.mockRejectedValue(new Error('OpenAI API Error'));
 
     const mockRequest = {
       json: vi.fn().mockResolvedValue({

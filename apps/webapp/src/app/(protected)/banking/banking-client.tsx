@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
 import { Banknote, Shield, AlertCircle } from 'lucide-react';
-import { PowensLink } from '@/components/powens-link';
+import { PowensLink } from './_components';
 
 export function BankingPageClient() {
   const t = useTranslations('banking');

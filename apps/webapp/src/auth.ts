@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import Resend from 'next-auth/providers/resend';
 import { render } from '@react-email/render';
 import React from 'react';
-import MagicLinkEmailTemplate from "@/components/emails/magic-link-email";
+import MagicLinkEmailTemplate from "@/lib/emails/magic-link-email";
 import type { Session } from "next-auth";
 import type { AdapterUser } from "next-auth/adapters";
 
