@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { redirect } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 export const metadata: Metadata = {
@@ -17,7 +16,6 @@ export const metadata: Metadata = {
 
 export default function VerifyRequestPage() {
   const t = useTranslations('auth');
-  redirect(`/auth/verify-request`);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md mx-auto">

@@ -80,9 +80,7 @@ export function NavUser({
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg">
-                    {user.name.split('')[0]?.toUpperCase()}
-                    {user.name.split('')[1] &&
-                      user.name.split('')[1]?.toUpperCase()}
+                    {getInitials(user.name)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -106,7 +104,7 @@ export function NavUser({
             <DropdownMenuItem
               onClick={async () => {
                 await signOut({ redirect: false });
-                router.push('/auth/login'); // hoặc `/${locale}/auth/login`
+                router.push('/auth/login');
               }}
             >
               <LogOut />

@@ -162,7 +162,7 @@ export function CreateTransitionForm() {
               value={field.value}
               onValueChange={async val => {
                 if (val === '__new__') {
-                  const name = prompt('Nhập tên category mới:');
+                  const name = '';
                   if (name) {
                     const created = await createCategory.mutateAsync(name);
                     field.onChange(created.id);
