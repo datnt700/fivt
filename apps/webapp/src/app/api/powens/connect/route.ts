@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { powensApi } from '@/lib/powens-api';
 import { prisma } from '@/lib/prisma';
+import { randomInt } from 'crypto';
 
 export async function POST(_request: NextRequest) {
   try {
@@ -49,7 +50,7 @@ export async function POST(_request: NextRequest) {
         await prisma.powensUser.create({
           data: {
             userId: session.user.id,
-            powensId: Math.floor(Math.random() * 1000000), // Temporary ID
+            powensId: randomInt(1000000, 999999999), // Secure random temporary ID
             email: session.user.email,
           },
         });
