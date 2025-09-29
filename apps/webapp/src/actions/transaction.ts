@@ -1,7 +1,7 @@
 "use server";
-import { prisma } from "../lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { TransactionType } from "@prisma/client";
-import {auth} from "../auth";
+import { auth } from "@/auth";
 
 
 export const createTransaction = async (input : {
@@ -9,6 +9,7 @@ export const createTransaction = async (input : {
     categoryId: string,
     type: TransactionType,
     description: string,
+    date?: string,
 })=> {
     try {
         const session = await auth();

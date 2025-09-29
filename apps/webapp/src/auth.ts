@@ -1,28 +1,32 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth, { type NextAuthResult } from 'next-auth';
 import Google from 'next-auth/providers/google';
-import { prisma } from '../prisma';
+import { prisma } from '@/lib/prisma';
 import Resend from 'next-auth/providers/resend';
 import { render } from '@react-email/render';
 import React from 'react';
-import MagicLinkEmailTemplate from "./components/emails/magic-link-email";
+import MagicLinkEmailTemplate from "@/app/auth/_templates/magic-link-email";
 import type { Session } from "next-auth";
 import type { AdapterUser } from "next-auth/adapters";
+import { COMMON_ROUTES } from '@/config/routes';
 
 const authConfig = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.AUTH_SECRET,
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY!,
-      from: process.env.AUTH_RESEND_FROM || 'Director Club <noreply@directorclub.com.au>',
+      from: process.env.AUTH_RESEND_FROM!,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         try {
-          // Render the email template
+          // Render the email template with proper configuration
           const html = await render(
             React.createElement(MagicLinkEmailTemplate, {
-              //name: 'there',
               magicLink: url,
-            }),
+              locale: 'en', // TODO: Get locale from request headers or user preference
+              appName: 'FIVT',
+              expiryMinutes: 10,
+            })
           );
 
           // Send the email using Resend
@@ -35,12 +39,13 @@ const authConfig = {
             body: JSON.stringify({
               from: provider.from,
               to: identifier,
-              subject: 'Sign In to Director Club',
+              subject: 'Sign In to FIVT',
               html: html,
             }),
           });
-
           if (!result.ok) {
+            const text = await result.text();
+            console.error('[Resend] send fail', result.status, text);
             throw new Error('Failed to send verification email');
           }
         } catch (error) {
@@ -49,20 +54,33 @@ const authConfig = {
         }
       },
     }),
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    }),
   ],
 
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/login',
-    verifyRequest: '/auth/verify-request',
+    signIn: COMMON_ROUTES.AUTH.LOGIN,
+    error: COMMON_ROUTES.AUTH.LOGIN, 
+    verifyRequest: COMMON_ROUTES.AUTH.VERIFY_REQUEST,
   },
 
   callbacks: {
-    async session({ session, user }: {
-      session: Session;
-      user: AdapterUser;
-    }) {
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      // Handles the redirect after authentication
+      if (url.startsWith("/")) {
+        // If it's a relative URL, let the middleware handle locale prefix
+        return `${baseUrl}${url}`;
+      }
+      // Allow redirect to the same origin
+      if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+      // Default redirect to home page (middleware will add locale prefix)
+      return `${baseUrl}${COMMON_ROUTES.HOME}`;
+    },
+    async session({ session, user }: { session: Session; user: AdapterUser }) {
       if (!user?.email || !user.id) return session;
 
       if (session.user) {

@@ -1,11 +1,28 @@
-import {ReactNode} from 'react';
+import clsx from 'clsx';
+import { Inter } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
+import { ReactNode } from 'react';
+import '@/app/globals.css';
+
+const inter = Inter({ subsets: ['latin'] });
 
 type Props = {
   children: ReactNode;
 };
 
-// Since we have a `not-found.tsx` page on the root, a layout file
-// is required, even if it's just passing children through.
-export default function RootLayout({children}: Props) {
-  return children;
+export default async function RootLayout({ children }: Props) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
+  return (
+    <html lang={locale} className={clsx('mdl-js', inter.className)} suppressHydrationWarning>
+      <head />
+      <body>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
 }

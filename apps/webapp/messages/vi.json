@@ -24,7 +24,10 @@
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
     "profile": "Hồ sơ",
-    "settings": "Cài đặt"
+    "settings": "Cài đặt",
+    "banking": "Ngân hàng",
+    "chatbot": "Trợ lý AI",
+    "transactions": "Giao dịch"
   },
   "auth": {
     "title": "Đăng nhập vào tài khoản của bạn",
@@ -39,7 +42,23 @@
     "signInError": "Không thể gửi liên kết đăng nhập",
     "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
     "signOut": "Đăng xuất",
-    "signedInAs": "Đã đăng nhập với tên"
+    "signedInAs": "Đã đăng nhập với tên",
+    "hint": "Hãy bấm vào liên kết trong email để đăng nhập an toàn vào tài khoản của bạn.",
+    "bullets": {
+      "expire": "Liên kết sẽ hết hạn sau {hours} giờ.",
+      "spam": "Nếu không thấy, hãy kiểm tra thư mục spam.",
+      "checkEmail": "Đảm bảo bạn đã nhập đúng địa chỉ email."
+    },
+    "email": {
+      "subject": "Liên kết đăng nhập của bạn cho {appName}",
+      "preview": "Liên kết đăng nhập của bạn cho {appName}",
+      "heading": "Đăng nhập vào {appName}",
+      "description": "Nhấp vào nút bên dưới để đăng nhập an toàn. Liên kết này sẽ hết hạn sau 10 phút.",
+      "buttonText": "Đăng nhập vào {appName}",
+      "fallbackText": "Hoặc sao chép và dán liên kết này vào trình duyệt của bạn:",
+      "expiry": "Liên kết này sẽ hết hạn sau {minutes} phút vì lý do bảo mật.",
+      "noReply": "Đây là email tự động. Vui lòng không trả lời tin nhắn này."
+    }
   },
   "chatbot": {
     "title": "Trợ lý AI Tài chính",
@@ -63,7 +82,7 @@
     "selectLanguage": "Chọn ngôn ngữ"
   },
   "home": {
-    "title": "Chào mừng đến với Financial AI",
+    "title": "Chào mừng đến với Fivt",
     "subtitle": "Người bạn đồng hành thông minh cho việc quản lý tài chính tốt hơn",
     "getStarted": "Bắt đầu",
     "learnMore": "Tìm hiểu thêm",
@@ -83,6 +102,132 @@
       }
     }
   },
+  "banking": {
+    "title": "Kết nối Ngân hàng",
+    "subtitle": "Kết nối tài khoản ngân hàng để nhận thông tin tài chính cá nhân hóa",
+    "subtitle_powens": "Kết nối tài khoản ngân hàng châu Âu của bạn bằng Powens để có thông tin tài chính cá nhân hóa",
+    "connectBank": "Kết nối Tài khoản Ngân hàng",
+    "connectedAccounts": "Tài khoản Đã kết nối",
+    "noAccountsConnected": "Chưa có tài khoản ngân hàng nào được kết nối",
+    "connectFirstAccount": "Kết nối tài khoản ngân hàng đầu tiên của bạn để bắt đầu nhận thông tin tài chính.",
+    "connectDescription": "Kết nối an toàn tài khoản ngân hàng của bạn để phân tích giao dịch và cung cấp lời khuyên tài chính cá nhân hóa.",
+    "securityNote": "Thông tin ngân hàng của bạn được mã hóa và bảo mật. Chúng tôi không bao giờ lưu trữ thông tin đăng nhập của bạn.",
+    "loading": "Đang kết nối với ngân hàng của bạn...",
+    "success": "Tài khoản ngân hàng đã được kết nối thành công!",
+    "error": "Không thể kết nối tài khoản ngân hàng. Vui lòng thử lại.",
+    "disconnect": "Ngắt kết nối",
+    "accountName": "Tên Tài khoản",
+    "accountType": "Loại Tài khoản",
+    "balance": "Số dư",
+    "lastUpdated": "Cập nhật Lần cuối",
+    "transactions": "Giao dịch Gần đây",
+    "viewAllTransactions": "Xem Tất cả Giao dịch",
+    "bridgeDisclaimer": "Dịch vụ ngân hàng được cung cấp bởi Bridge API. Dữ liệu của bạn được bảo vệ bằng bảo mật cấp ngân hàng.",
+    "providers": {
+      "powens": {
+        "title": "Powens Banking",
+        "description": "Kết nối với các ngân hàng châu Âu thông qua nền tảng ngân hàng bảo mật Powens"
+      }
+    },
+    "connection": {
+      "connect": "Kết nối với {provider}",
+      "connecting": "Đang kết nối...",
+      "success": "{provider} đã kết nối thành công!",
+      "error": "Kết nối thất bại: {error}",
+      "cancelled": "Kết nối đã bị hủy",
+      "popup_blocked": "Popup bị chặn. Vui lòng cho phép popup cho trang web này."
+    },
+    "security": {
+      "title": "Bảo mật và Quyền riêng tư",
+      "description_powens": "Powens sử dụng bảo mật cấp ngân hàng để bảo vệ dữ liệu tài chính của bạn",
+      "encryption": "Mã hóa 256-bit cấp ngân hàng",
+      "no_storage": "Không lưu trữ thông tin đăng nhập",
+      "compliance": "Tuân thủ GDPR châu Âu",
+      "audit": "Kiểm toán bảo mật định kỳ"
+    },
+    "features": {
+      "title": "Tính năng Ngân hàng",
+      "description_powens": "Truy cập dữ liệu ngân hàng toàn diện với tích hợp Powens",
+      "account_balance": "Số dư tài khoản thời gian thực",
+      "transaction_history": "Lịch sử giao dịch đầy đủ",
+      "categorization": "Phân loại giao dịch tự động",
+      "real_time_sync": "Đồng bộ dữ liệu thời gian thực",
+      "secure_connection": "Kết nối ngân hàng bảo mật",
+      "real_time_data": "Dữ liệu giao dịch thời gian thực",
+      "european_banks": "Hỗ trợ hơn 2000 ngân hàng châu Âu"
+    },
+    "benefits": {
+      "title": "Lợi ích Tài chính",
+      "description_powens": "Nhận thông tin chi tiết từ dữ liệu ngân hàng của bạn với Powens",
+      "financial_overview": "Tổng quan tài chính toàn diện",
+      "expense_tracking": "Theo dõi chi phí tự động",
+      "budgeting": "Công cụ lập ngân sách thông minh",
+      "insights": "Thông tin tài chính được hỗ trợ bởi AI"
+    },
+    "footer": {
+      "powered_by": "Được hỗ trợ bởi",
+      "secure": "Bảo mật Cấp Ngân hàng",
+      "compliant": "Tuân thủ Quy định"
+    },
+    "errors": {
+      "page_title": "Lỗi Kết nối",
+      "page_description": "Chúng tôi gặp sự cố khi kết nối với tài khoản ngân hàng của bạn.",
+      "back_to_banking": "Quay lại Dịch vụ Ngân hàng",
+      "technical_details": "Chi tiết kỹ thuật:",
+      "what_to_do": "Làm gì tiếp theo?",
+      "try_again": "Thử lại",
+      "access_denied": {
+        "title": "Kết nối Bị Hủy",
+        "description": "Bạn đã hủy quá trình kết nối ngân hàng.",
+        "suggestion": "Nếu bạn muốn kết nối tài khoản ngân hàng, vui lòng thử lại và hoàn thành quá trình ủy quyền."
+      },
+      "ssl_error": {
+        "title": "Lỗi Kết nối Bảo mật",
+        "description": "Có vấn đề khi thiết lập kết nối bảo mật với dịch vụ ngân hàng.",
+        "suggestion": "Điều này thường xảy ra trong môi trường phát triển. Hãy thử làm mới trang hoặc sử dụng trình duyệt khác. Đối với sản xuất, đảm bảo HTTPS được cấu hình đúng cách."
+      },
+      "callback_failed": {
+        "title": "Kết nối Thất bại",
+        "description": "Chúng tôi không thể hoàn thành kết nối ngân hàng do lỗi kỹ thuật.",
+        "suggestion": "Vui lòng thử kết nối lại. Nếu vấn đề vẫn tiếp tục, hãy liên hệ hỗ trợ."
+      },
+      "user_not_found": {
+        "title": "Lỗi Phiên Người dùng",
+        "description": "Phiên của bạn đã hết hạn trong quá trình kết nối.",
+        "suggestion": "Vui lòng đăng nhập lại và thử kết nối tài khoản ngân hàng của bạn."
+      },
+      "fetch_failed": {
+        "title": "Lỗi Truy xuất Dữ liệu",
+        "description": "Chúng tôi không thể truy xuất thông tin tài khoản của bạn từ ngân hàng.",
+        "suggestion": "Đây có thể là sự cố tạm thời. Vui lòng thử lại sau vài phút."
+      },
+      "popup_blocked": {
+        "title": "Popup Bị chặn",
+        "description": "Trình duyệt của bạn đã chặn popup kết nối ngân hàng.",
+        "suggestion": "Vui lòng cho phép popup cho trang web này trong cài đặt trình duyệt và thử lại."
+      },
+      "unknown": {
+        "title": "Lỗi Không xác định",
+        "description": "Đã xảy ra lỗi không mong muốn trong quá trình kết nối.",
+        "suggestion": "Vui lòng thử lại. Nếu vấn đề vẫn tiếp tục, hãy liên hệ hỗ trợ."
+      },
+      "common_solutions": {
+        "title": "Giải pháp Thường gặp",
+        "allow_popups": {
+          "title": "Bật Popup",
+          "description": "Đảm bảo popup được cho phép cho trang web này trong cài đặt trình duyệt của bạn."
+        },
+        "check_connection": {
+          "title": "Kiểm tra Kết nối Internet",
+          "description": "Đảm bảo bạn có kết nối internet ổn định và thử lại."
+        },
+        "try_different_browser": {
+          "title": "Thử Trình duyệt Khác",
+          "description": "Một số trình duyệt xử lý kết nối ngân hàng tốt hơn những trình duyệt khác. Hãy thử Chrome, Firefox hoặc Safari."
+        }
+      }
+    }
+  },
   "errors": {
     "pageNotFound": "Không tìm thấy trang",
     "serverError": "Lỗi máy chủ nội bộ",
@@ -90,5 +235,31 @@
     "forbidden": "Truy cập bị cấm",
     "tryAgain": "Thử lại",
     "goHome": "Về trang chủ"
+  },
+  "transactions": {
+    "name": "Giao dịch",
+    "title": "Giao dịch của bạn",
+    "datePickerLabel": "Chọn ngày",
+    "nameType": "Loại",
+    "selectType": "Chọn loại",
+    "type": {
+      "income": "Thu nhập",
+      "expense": "Chi tiêu"
+    },
+    "amount": "Số tiền",
+    "description": "Mô tả",
+    "category": "Danh mục",
+    "noTransactions": "Không có giao dịch nào để hiển thị.",
+    "loadingTransactions": "Đang tải giao dịch...",
+    "errorLoadingTransactions": "Lỗi khi tải giao dịch. Vui lòng thử lại."
+  },
+  "category": {
+    "selected": "Chọn hoặc tạo danh mục",
+    "noCategory": "Không có danh mục",
+    "loadingCategories": "Đang tải danh mục...",
+    "errorLoadingCategories": "Lỗi khi tải danh mục. Vui lòng thử lại.",
+    "addCategory": "Thêm danh mục",
+    "editCategory": "Chỉnh sửa danh mục",
+    "deleteCategory": "Xóa danh mục"
   }
 }

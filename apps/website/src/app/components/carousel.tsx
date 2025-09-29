@@ -67,20 +67,24 @@ const Carousel = ({
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
     >
-      <div className="relative min-w-[300px]rounded-lg overflow-hidden">
+      <div className="relative min-w-[300px] rounded-lg overflow-hidden">
         <button
           onClick={prev}
           className="min-w-[30px] h-[30px] rounded-full grid place-items-center text-white bg-black/20 hover:bg-black/60 duration-200 absolute top-1/2 -translate-y-1/2 left-2 z-10"
         >
           <ChevronLeft />
         </button>
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          className="object-cover"
-          priority
-        />
+        <div className="relative h-[400px] md:h-[600px] lg:h-[700]  w-full">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw,
+               (max-width: 1200px) 50vw,
+               33vw"
+          />
+        </div>
         <button
           onClick={next}
           className="min-w-[30px] h-[30px] rounded-full grid place-items-center text-white bg-black/20 hover:bg-black/60 duration-200 absolute top-1/2 -translate-y-1/2 right-2 z-10"

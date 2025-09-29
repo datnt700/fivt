@@ -24,7 +24,10 @@
     "login": "Connexion",
     "logout": "Déconnexion",
     "profile": "Profil",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "banking": "Services Bancaires",
+    "chatbot": "Assistant IA",
+    "transactions": "Transactions"
   },
   "auth": {
     "title": "Connectez-vous à votre compte",
@@ -39,56 +42,22 @@
     "signInError": "Échec de l'envoi du lien de connexion",
     "invalidEmail": "Veuillez entrer une adresse email valide",
     "signOut": "Se déconnecter",
-    "signedInAs": "Connecté en tant que"
-  },
-  "chatbot": {
-    "title": "Assistant IA Financier",
-    "subtitle": "Obtenez des conseils et stratégies financières personnalisés",
-    "placeholder": "Posez-moi des questions sur vos objectifs financiers, la budgétisation, l'investissement, ou toute question liée à l'argent...",
-    "send": "Envoyer",
-    "thinking": "L'IA réfléchit...",
-    "error": "Désolé, j'ai rencontré une erreur. Veuillez réessayer.",
-    "welcomeMessage": "Bonjour ! Je suis votre assistant IA financier. Comment puis-je vous aider avec vos objectifs financiers aujourd'hui ?"
-  },
-  "theme": {
-    "light": "Clair",
-    "dark": "Sombre",
-    "system": "Système",
-    "toggle": "Basculer le thème"
-  },
-  "language": {
-    "english": "English",
-    "vietnamese": "Tiếng Việt",
-    "french": "Français",
-    "selectLanguage": "Sélectionner la langue"
-  },
-  "home": {
-    "title": "Bienvenue sur Financial AI",
-    "subtitle": "Votre compagnon intelligent pour une meilleure gestion financière",
-    "getStarted": "Commencer",
-    "learnMore": "En savoir plus",
-    "features": {
-      "title": "Fonctionnalités",
-      "ai": {
-        "title": "Conseils alimentés par l'IA",
-        "description": "Obtenez des recommandations financières personnalisées alimentées par une IA avancée"
-      },
-      "secure": {
-        "title": "Sécurisé et Privé",
-        "description": "Vos données financières sont cryptées et protégées avec une sécurité standard de l'industrie"
-      },
-      "multilingual": {
-        "title": "Support Multilingue",
-        "description": "Disponible en anglais, vietnamien et français pour une accessibilité mondiale"
-      }
+    "signedInAs": "Connecté en tant que",
+    "hint": "Cliquez sur le lien dans votre e-mail pour vous connecter en toute sécurité à votre compte.",
+    "bullets": {
+      "expire": "Le lien expirera dans {hours} heures.",
+      "spam": "Vérifiez votre dossier spam si vous ne le voyez pas.",
+      "checkEmail": "Assurez-vous d'avoir saisi la bonne adresse e-mail."
+    },
+    "email": {
+      "subject": "Votre lien magique pour vous connecter à {appName}",
+      "preview": "Votre lien magique pour vous connecter à {appName}",
+      "heading": "Se connecter à {appName}",
+      "description": "Cliquez sur le bouton ci-dessous pour vous connecter en toute sécurité. Ce lien expirera dans 10 minutes.",
+      "buttonText": "Se connecter à {appName}",
+      "fallbackText": "Ou copiez et collez ce lien dans votre navigateur :",
+      "expiry": "Ce lien expirera dans {minutes} minutes pour des raisons de sécurité.",
+      "noReply": "Ceci est un email automatisé. Veuillez ne pas répondre à ce message."
     }
-  },
-  "errors": {
-    "pageNotFound": "Page introuvable",
-    "serverError": "Erreur interne du serveur",
-    "unauthorized": "Accès non autorisé",
-    "forbidden": "Accès interdit",
-    "tryAgain": "Réessayer",
-    "goHome": "Aller à l'accueil"
   }
 }

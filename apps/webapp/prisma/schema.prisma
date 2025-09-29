@@ -22,6 +22,10 @@ model User {
   sessions      Session[]
   categories    Category[]
   transactions  Transaction[]
+  bridgeUser     BridgeUser?
+  bridgeAccounts BridgeAccount[]
+  powensUser     PowensUser?
+  powensAccounts PowensAccount[]
 }
 
 model Account {
@@ -100,4 +104,68 @@ model Transaction {
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+model BridgeUser {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bridgeUuid     String   @unique // Bridge user UUID
+  externalUserId String?  // Our user ID as stored in Bridge
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  @@map("bridge_users")
+}
+
+model BridgeAccount {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bridgeAccountId  String   @unique // Bridge account ID
+  itemId           String   // Bridge item ID
+  name             String   // Account name from Bridge
+  type             String   // Account type (checking, savings, etc.)
+  balance          Float?   // Account balance
+  currencyCode     String?  // Currency code (EUR, USD, etc.)
+  providerId       Int?     // Bridge provider ID
+  dataAccess       String   @default("enabled") // enabled/disabled
+  lastRefreshStatus String? // successful/failed
+  pro              Boolean  @default(false) // Business account flag
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  @@map("bridge_accounts")
+}
+
+model PowensUser {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  powensId  Int      @unique // Powens user ID
+  email     String   // Email used with Powens
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("powens_users")
+}
+
+model PowensAccount {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  powensAccountId  Int      @unique // Powens account ID
+  name             String   // Account name from Powens
+  type             String   // Account type (checking, savings, etc.)
+  balance          Float?   // Account balance
+  currency         String?  // Currency code (EUR, USD, etc.)
+  accountNumber    String?  // Account number if available
+  iban             String?  // IBAN if available
+  bic              String?  // BIC if available
+  bankName         String   // Name of the bank
+  bankCountryCode  String   // Bank country code
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  @@map("powens_accounts")
 }
