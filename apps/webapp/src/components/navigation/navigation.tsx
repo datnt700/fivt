@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ThemeToggler } from '@/components/theme';
 import { LanguageSwitcher } from '@/components/theme';
+import { ProfileStatusIndicator } from '@/components/financial-profile-widgets';
 import { 
   Home, 
   MessageSquare, 
@@ -12,7 +13,8 @@ import {
   Receipt,
   LogOut,
   Menu,
-  X
+  X,
+  User
 } from 'lucide-react';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
@@ -31,6 +33,11 @@ export function Navigation() {
       href: FLAT_ROUTES.HOME,
       label: 'home',
       icon: Home,
+    },
+    {
+      href: FLAT_ROUTES.PROFILE_SETUP,
+      label: 'profile',
+      icon: User,
     },
     {
       href: FLAT_ROUTES.CHATBOT,
@@ -89,6 +96,7 @@ export function Navigation() {
 
           {/* Right side controls */}
           <div className="hidden md:flex items-center space-x-4">
+            <ProfileStatusIndicator />
             <ThemeToggler />
             <LanguageSwitcher />
             {session.user && (
@@ -141,22 +149,27 @@ export function Navigation() {
                   </Link>
                 );
               })}
-              <div className="flex items-center justify-between px-4 py-2">
-                <div className="flex items-center space-x-2">
-                  <ThemeToggler />
-                  <LanguageSwitcher />
+              <div className="px-4 py-2 space-y-2">
+                <div className="flex items-center justify-center">
+                  <ProfileStatusIndicator />
                 </div>
-                {session.user && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleSignOut}
-                    className="flex items-center space-x-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>{t('logout')}</span>
-                  </Button>
-                )}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <ThemeToggler />
+                    <LanguageSwitcher />
+                  </div>
+                  {session.user && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleSignOut}
+                      className="flex items-center space-x-2"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span>{t('logout')}</span>
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

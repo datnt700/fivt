@@ -7,14 +7,17 @@ const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
   // Skip API routes, protected routes, and static files
-  if (isApiRoute(request.nextUrl.pathname) || 
-      request.nextUrl.pathname.startsWith('/banking') ||
-      request.nextUrl.pathname.startsWith('/dashboard') ||
-      request.nextUrl.pathname.startsWith('/transactions') ||
-      request.nextUrl.pathname.startsWith('/chatbot') ||
-      request.nextUrl.pathname.startsWith('/_next') ||
-      request.nextUrl.pathname.startsWith('/_vercel') ||
-      request.nextUrl.pathname.includes('.')) {
+  if (
+    isApiRoute(request.nextUrl.pathname) ||
+    request.nextUrl.pathname.startsWith('/banking') ||
+    request.nextUrl.pathname.startsWith('/dashboard') ||
+    request.nextUrl.pathname.startsWith('/transactions') ||
+    request.nextUrl.pathname.startsWith('/profile') ||
+    request.nextUrl.pathname.startsWith('/chatbot') ||
+    request.nextUrl.pathname.startsWith('/_next') ||
+    request.nextUrl.pathname.startsWith('/_vercel') ||
+    request.nextUrl.pathname.includes('.')
+  ) {
     return;
   }
 
@@ -24,5 +27,7 @@ export default function middleware(request: NextRequest) {
 
 export const config = {
   // Match all routes except API, protected routes, and static files
-  matcher: ['/((?!api|banking|dashboard|transactions|chatbot|_next|_vercel|.*\\..*).*)']
+  matcher: [
+    '/((?!api|banking|dashboard|transactions|chatbot|_next|_vercel|.*\\..*).*)',
+  ],
 };
