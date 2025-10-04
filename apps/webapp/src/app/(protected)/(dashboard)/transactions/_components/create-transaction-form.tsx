@@ -18,11 +18,17 @@ import {
   createTransactionSchema,
   type CreateTransactionFormValues,
 } from '../_validations/transaction-schema';
-import { useCategories } from '../_hooks/use-categories';
+import { useCategories, useCreateCategory } from '../_hooks/use-categories';
 import { useCreateTransaction } from '../_hooks/use-transaction';
 import { useState } from 'react';
-import PopUpCategory from './popup-category';
 import { useQueryClient } from '@tanstack/react-query';
+import {
+  Dialog,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogContent,
+} from '@/components/ui/dialog';
 
 interface CreateTransactionFormProps {
   onSuccess?: () => void;
@@ -34,12 +40,15 @@ export function CreateTransactionForm({
   const { data: categories, isLoading } = useCategories();
   const createTransaction = useCreateTransaction();
   const locale = useLocale();
+  const [cateValue, setCateValue] = useState<string>('');
 
   const tCategory = useTranslations('category');
   const tTransaction = useTranslations('transactions');
-  const [openPopup, setOpenPopup] = useState(false);
+  const tCommon = useTranslations('common');
 
-  const HandleRemovePopUp = () => setOpenPopup(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const createCategory = useCreateCategory();
+
   const qc = useQueryClient();
   const {
     register,
@@ -59,24 +68,21 @@ export function CreateTransactionForm({
     },
   });
 
-  const handleCategoryCreated = (cat: {
-    id: string | number;
-    name: string;
-  }) => {
+  const handleCategoryCreated = async () => {
+    const created = await createCategory.mutateAsync(cateValue.trim());
     qc.setQueryData<Array<{ id: string; name: string }>>(
       ['categories', locale],
       old => {
         const prev = old ?? [];
-        const id = String(cat.id);
+        const id = String(created.id);
         if (prev.some(x => String(x.id) === id)) return prev;
-        return [...prev, { id, name: cat.name }];
+        return [...prev, { id, name: created.name }];
       }
     );
-    setValue('categoryId', String(cat.id), {
+    setValue('categoryId', String(created.id), {
       shouldDirty: true,
       shouldValidate: true,
     });
-    setOpenPopup(false);
   };
 
   const onSubmit = async (values: CreateTransactionFormValues) => {
@@ -150,7 +156,7 @@ export function CreateTransactionForm({
 
       {/* Category */}
       <div className="w-full">
-        <div className=" flex gap-3">
+        <div className=" flex items-end gap-3">
           <div className="w-full">
             <Label className="mb-3" htmlFor="categoryId">
               {tTransaction('category')}
@@ -187,16 +193,36 @@ export function CreateTransactionForm({
           </div>
           <Button
             type="button"
-            onClick={() => setOpenPopup(true)}
-            className="bg-blue-300 text-blue-500 border border-blue-400 rounded-md px-5 py-2 hover:bg-blue-100 self-end"
+            onClick={() => setIsOpen(true)}
+            variant="outline"
+            size="sm"
           >
-            Add Category
+            {tCategory('addCategory')}
           </Button>
-          <PopUpCategory
-            openPopUp={openPopup}
-            closePopUp={HandleRemovePopUp}
-            onCreated={handleCategoryCreated}
-          />
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{tTransaction('category')}</DialogTitle>
+              </DialogHeader>
+              <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-orange-500 ">
+                <input
+                  id="category"
+                  type="text"
+                  name="category"
+                  onChange={e => setCateValue(e.target.value)}
+                  className="block min-w-0 grow bg-white py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                />
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsOpen(false)}>
+                  {tCommon('cancel')}
+                </Button>
+                <Button onClick={handleCategoryCreated}>
+                  {tCommon('save')}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
