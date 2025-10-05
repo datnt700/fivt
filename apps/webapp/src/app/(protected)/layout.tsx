@@ -1,7 +1,6 @@
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import ClientProviders from './client-provider';
-
 export default async function ProtectedLayout({
   children,
 }: {
@@ -9,7 +8,7 @@ export default async function ProtectedLayout({
 }) {
   const session = await auth();
   if (!session?.user) {
-    redirect('/auth/login');
+    redirect(`auth/login`);
   }
 
   return <ClientProviders>{children}</ClientProviders>;

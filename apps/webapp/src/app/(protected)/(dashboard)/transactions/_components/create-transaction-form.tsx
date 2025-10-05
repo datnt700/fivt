@@ -13,28 +13,49 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Controller, useForm } from 'react-hook-form';
-import { useTranslations } from 'next-intl';
-import { createTransactionSchema, type CreateTransactionFormValues } from '../_validations/transaction-schema';
+import { useLocale, useTranslations } from 'next-intl';
+import {
+  createTransactionSchema,
+  type CreateTransactionFormValues,
+} from '../_validations/transaction-schema';
 import { useCategories, useCreateCategory } from '../_hooks/use-categories';
 import { useCreateTransaction } from '../_hooks/use-transaction';
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  Dialog,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogContent,
+} from '@/components/ui/dialog';
 
 interface CreateTransactionFormProps {
   onSuccess?: () => void;
 }
 
-export function CreateTransactionForm({ onSuccess }: CreateTransactionFormProps) {
+export function CreateTransactionForm({
+  onSuccess,
+}: CreateTransactionFormProps) {
   const { data: categories, isLoading } = useCategories();
   const createTransaction = useCreateTransaction();
-  const createCategory = useCreateCategory();
-  
+  const locale = useLocale();
+  const [cateValue, setCateValue] = useState<string>('');
+
   const tCategory = useTranslations('category');
   const tTransaction = useTranslations('transactions');
-  
+  const tCommon = useTranslations('common');
+
+  const [isOpen, setIsOpen] = useState(false);
+  const createCategory = useCreateCategory();
+
+  const qc = useQueryClient();
   const {
     register,
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<CreateTransactionFormValues>({
     resolver: zodResolver(createTransactionSchema),
@@ -46,6 +67,24 @@ export function CreateTransactionForm({ onSuccess }: CreateTransactionFormProps)
       description: '',
     },
   });
+
+  const handleCategoryCreated = async () => {
+    const created = await createCategory.mutateAsync(cateValue.trim());
+    qc.setQueryData<Array<{ id: string; name: string }>>(
+      ['categories', locale],
+      old => {
+        const prev = old ?? [];
+        const id = String(created.id);
+        if (prev.some(x => String(x.id) === id)) return prev;
+        return [...prev, { id, name: created.name }];
+      }
+    );
+    setValue('categoryId', String(created.id), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setIsOpen(false);
+  };
 
   const onSubmit = async (values: CreateTransactionFormValues) => {
     try {
@@ -118,50 +157,74 @@ export function CreateTransactionForm({ onSuccess }: CreateTransactionFormProps)
 
       {/* Category */}
       <div className="w-full">
-        <Label className="mb-3" htmlFor="categoryId">
-          {tTransaction('category')}
-        </Label>
-        <Controller
-          control={control}
-          name="categoryId"
-          render={({ field }) => (
-            <Select
-              value={field.value}
-              onValueChange={async (val) => {
-                if (val === '__new__') {
-                  const name = prompt('Enter category name:');
-                  if (name?.trim()) {
-                    try {
-                      const created = await createCategory.mutateAsync(name.trim());
-                      field.onChange(created.id);
-                    } catch (error) {
-                      console.error('Failed to create category:', error);
-                    }
-                  }
-                } else {
-                  field.onChange(val);
-                }
-              }}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={tCategory('selected')} />
-              </SelectTrigger>
-              <SelectContent>
-                {categories?.map((c) => (
-                  <SelectItem key={c.id} value={c.id}>
-                    {c.name}
-                  </SelectItem>
-                ))}
-                <SelectItem value="__new__">
-                  {tCategory('addCategory')}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        />
-        {errors.categoryId && (
-          <p className="text-red-500 text-sm">{errors.categoryId.message}</p>
-        )}
+        <div className=" flex items-end gap-3">
+          <div className="w-full">
+            <Label className="mb-3" htmlFor="categoryId">
+              {tTransaction('category')}
+            </Label>
+            <Controller
+              control={control}
+              name="categoryId"
+              render={({ field }) => (
+                <Select
+                  key={`${categories?.length}-${field.value ?? ''}`}
+                  value={field.value ?? ''}
+                  onValueChange={async val => {
+                    field.onChange(val);
+                  }}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={tCategory('selected')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories?.map(c => (
+                      <SelectItem key={c.id} value={String(c.id)}>
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.categoryId && (
+              <p className="text-red-500 text-sm">
+                {errors.categoryId.message}
+              </p>
+            )}
+          </div>
+          <Button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            variant="outline"
+            size="sm"
+          >
+            {tCategory('addCategory')}
+          </Button>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{tTransaction('category')}</DialogTitle>
+              </DialogHeader>
+              <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-orange-500 ">
+                <input
+                  id="category"
+                  type="text"
+                  name="category"
+                  onChange={e => setCateValue(e.target.value)}
+                  className="block min-w-0 grow bg-white py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                />
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsOpen(false)}>
+                  {tCommon('cancel')}
+                </Button>
+                <Button onClick={handleCategoryCreated}>
+                  {tCommon('save')}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Description */}
@@ -176,8 +239,8 @@ export function CreateTransactionForm({ onSuccess }: CreateTransactionFormProps)
       </div>
 
       <div className="flex gap-4">
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           disabled={isSubmitting || createTransaction.isPending}
         >
           {tTransaction('addTransaction')}
