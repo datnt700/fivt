@@ -18,12 +18,10 @@ export default function Providers({
 
   return (
     <QueryClientProvider client={queryClient}>
-      {locale && messages ? (
+      {locale && messages && (
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
-      ) : (
-        children
       )}
       <Toaster richColors position="top-center" />
     </QueryClientProvider>

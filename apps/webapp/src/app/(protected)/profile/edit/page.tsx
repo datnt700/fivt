@@ -122,7 +122,7 @@ function ProfileEditPage({
                               placeholder="you@domain.com"
                               {...field}
                               readOnly
-                              aria-readonly
+                              disabled
                             />
                           </FormControl>
                         </div>
