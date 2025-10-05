@@ -1,21 +1,30 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { cn } from '../lib/utils';
 
-type CardProps = { title: string; icon: React.ReactNode; className?: string };
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  header?: React.ReactNode;
+  className?: string;
+  wrapperClassName?: string;
+}
 
-export const Card = ({ title, icon, className, ...props }: CardProps) => {
+export const Card = ({
+  children,
+  className,
+  header,
+  wrapperClassName,
+  ...other
+}: CardProps) => {
   return (
     <div
       className={cn(
-        'rounded-xl bg-white text-card-foreground shadow w-full h-full shadow-[inset_0px_2px_4px_0px_rgba(0,_0,_0,_0.3)]',
-        className
+        `bg-white shadow-[0px 4px 24.9px rgba(0, 109, 189, 0.1)] rounded-2xl border-gray-500`,
+        wrapperClassName
       )}
-      {...props}
+      {...other}
     >
-      <div className="m-4 flex flex-col justify-center items-center">
-        <div>{icon}</div>
-        <h3>{title}</h3>
-      </div>
+      {header && <div className="p-1 border">{header}</div>}
+      <div className={cn('p1', className)}>{children}</div>
     </div>
   );
 };

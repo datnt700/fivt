@@ -1,15 +1,15 @@
 'use client';
 
-import { Header } from './components/header';
-import herobanner from './assets/images/herobanner.jpg';
-import example from './assets/images/example.jpg';
-import superman from './assets/images/superman.jpg';
-import { Footer } from './components/footer';
+import herobanner from '@/app/_assets/images/herobanner.jpg';
+import example from '@/app/_assets/images/example.jpg';
+import superman from '@/app/_assets/images/superman.jpg';
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Carousel from './components/carousel';
 import { KeyRound } from 'lucide-react';
 import { Card } from './components/card';
+import Footer from './[locale]/_components/Footer';
+import { Header } from './[locale]/_components/Header';
 
 export default function Home() {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
@@ -107,7 +107,7 @@ export default function Home() {
           {benefitItem.map((item, i) => {
             const even = i % 2 === 0;
             return (
-              <div className="grid lg:grid-cols-2 gap-5">
+              <div key={item.title} className="grid lg:grid-cols-2 gap-5">
                 <div
                   className={even ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}
                 >
@@ -147,7 +147,7 @@ export default function Home() {
           <div className="grid grid-cols-2 place-items-center">
             {featureItem.map((item, i) => (
               <div key={i} className="flex flex-col text-center items-center">
-                <div className=" rounded-4xl p-5 bg-white rounded-4xl shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)]">
+                <div className=" rounded-4xl p-5 bg-white shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)]">
                   {item.icon}
                 </div>
                 <h4>{item.title}</h4>
