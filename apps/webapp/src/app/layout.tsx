@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { Inter } from 'next/font/google';
 import { getLocale, getMessages } from 'next-intl/server';
 import { ReactNode } from 'react';
-import Providers from './providers';
 import '@/app/globals.css';
+import { NextIntlClientProvider } from 'next-intl';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,14 +18,14 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html
       lang={locale}
-      className={clsx('mdl-js', inter.className)}
+      className={clsx('mdl-js h-full', inter.className)}
       suppressHydrationWarning
     >
       <head />
-      <body>
-        <Providers locale={locale} messages={messages}>
-          {children}
-        </Providers>
+      <body className="h-full overflow-hidden">
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <div className="h-full">{children}</div>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

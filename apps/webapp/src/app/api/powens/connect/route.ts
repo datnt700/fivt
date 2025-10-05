@@ -4,9 +4,19 @@ import { powensApi } from '@/lib/powens-api';
 import { prisma } from '@/lib/prisma';
 import { randomInt } from 'crypto';
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
     const session = await auth();
+    
+    // Get platform information from request to optimize webview experience
+    let platformInfo;
+    try {
+      const body = await request.json();
+      platformInfo = body;
+    } catch {
+      // Body is optional, continue without platform info
+      platformInfo = {};
+    }
     
     if (!session?.user?.id || !session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -22,6 +32,7 @@ export async function POST() {
     }
 
     console.log('Powens API connect request for user:', session.user.email);
+    console.log('Platform information:', platformInfo);
     console.log('Powens credentials configured:', {
       hasClientId: !!process.env.POWENS_CLIENT_ID,
       hasClientSecret: !!process.env.POWENS_CLIENT_SECRET,
