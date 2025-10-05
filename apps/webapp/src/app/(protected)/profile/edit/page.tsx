@@ -24,13 +24,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Copy } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -48,6 +41,8 @@ function ProfileEditPage({
 }) {
   const [isPending, startTransition] = useTransition();
   const tCommon = useTranslations('common');
+  const tAuth = useTranslations('auth');
+  const tUser = useTranslations('userProfile');
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -81,7 +76,7 @@ function ProfileEditPage({
                 {defaultName || 'User'}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Manage your account settings
+                {tUser('underName')}
               </p>
             </div>
           </div>
@@ -89,10 +84,8 @@ function ProfileEditPage({
 
         <Card>
           <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Update your public profile information
-            </CardDescription>
+            <CardTitle>{tUser('account')}</CardTitle>
+            <CardDescription>{tUser('description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -107,7 +100,7 @@ function ProfileEditPage({
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Your Name</FormLabel>
+                        <FormLabel>{tAuth('nameLabel')}</FormLabel>
                         <FormControl>
                           <Input placeholder="John Doe" {...field} />
                         </FormControl>
@@ -122,7 +115,7 @@ function ProfileEditPage({
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Your Email</FormLabel>
+                        <FormLabel>{tAuth('emailLabel')}</FormLabel>
                         <div className="flex items-center gap-2">
                           <FormControl className="flex-1">
                             <Input
@@ -134,7 +127,7 @@ function ProfileEditPage({
                           </FormControl>
                         </div>
                         <p className="mt-1 text-sm text-muted-foreground">
-                          Your email is primary and cannot be changed here.
+                          {tUser('canChange')}
                         </p>
                         <FormMessage />
                       </FormItem>

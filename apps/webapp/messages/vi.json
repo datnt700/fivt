@@ -33,6 +33,7 @@
     "title": "Đăng nhập vào tài khoản của bạn",
     "subtitle": "Nhập email của bạn bên dưới để đăng nhập vào tài khoản",
     "emailLabel": "Email",
+    "nameLabel": "Tên",
     "emailPlaceholder": "ten@example.com",
     "signInButton": "Đăng nhập bằng Email",
     "signingIn": "Đang đăng nhập...",
@@ -402,10 +403,16 @@
       "quickMetrics": "Chỉ số Tài chính Nhanh",
       "profileOverview": "Tổng quan Hồ sơ",
       "currentStage": "Giai đoạn Hiện tại",
-      "annualSavings": "Tiết kiệm Hàng năm",  
+      "annualSavings": "Tiết kiệm Hàng năm",
       "netWorth": "Tài sản Ròng",
       "monthlyExpenses": "Chi phí Hàng tháng",
       "noDataAvailable": "Không có dữ liệu"
+    },
+    "userProfile": {
+      "account": "Tài khoản",
+      "underName": "Quản lý cài đặt tài khoản của bạn",
+      "canChange": "Email của bạn là email chính và không thể thay đổi tại đây.",
+      "description": "Cập nhật thông tin hồ sơ công khai của bạn"
     }
   }
 }

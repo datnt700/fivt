@@ -33,6 +33,7 @@
     "title": "Sign in to your account",
     "subtitle": "Enter your email below to sign in to your account",
     "emailLabel": "Email",
+    "nameLabel": "Name",
     "emailPlaceholder": "name@example.com",
     "signInButton": "Sign In with Email",
     "signingIn": "Signing in...",
@@ -361,7 +362,7 @@
     },
     "stages": {
       "survival": "Survival",
-      "stability": "Stability", 
+      "stability": "Stability",
       "growth": "Growth",
       "freedom": "Freedom",
       "legacy": "Legacy"
@@ -406,5 +407,11 @@
       "monthlyExpenses": "Monthly Expenses",
       "noDataAvailable": "No data available"
     }
+  },
+  "userProfile": {
+    "account": "Account",
+    "underName": "Manage your account settings",
+    "canChange": "Your email is primary and cannot be changed here.",
+    "description": "Update your public profile information"
   }
 }
