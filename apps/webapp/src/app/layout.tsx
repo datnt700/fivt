@@ -16,11 +16,13 @@ export default async function RootLayout({ children }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={clsx('mdl-js', inter.className)} suppressHydrationWarning>
+    <html lang={locale} className={clsx('mdl-js h-full', inter.className)} suppressHydrationWarning>
       <head />
-      <body>
+      <body className="h-full overflow-hidden">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <div className="h-full">
+            {children}
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

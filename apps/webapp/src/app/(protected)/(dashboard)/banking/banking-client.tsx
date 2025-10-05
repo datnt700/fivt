@@ -38,8 +38,8 @@ export function BankingPageClient() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="max-w-4xl mx-auto p-4">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
           <p className="text-muted-foreground">{t('subtitle_powens')}</p>

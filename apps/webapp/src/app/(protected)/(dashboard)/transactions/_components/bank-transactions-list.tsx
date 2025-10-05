@@ -66,7 +66,7 @@ export function BankTransactionsList({
             {transactions.map((transaction) => (
               <div
                 key={transaction.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors w-full overflow-hidden"
               >
                 <div className="flex items-center space-x-4">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -80,8 +80,8 @@ export function BankTransactionsList({
                       <TrendingDown className="h-4 w-4" />
                     )}
                   </div>
-                  <div className="flex-1">
-                    <div className="font-medium">{transaction.simplified_wording || transaction.original_wording}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium truncate">{transaction.simplified_wording || transaction.original_wording}</div>
                     <div className="text-sm text-muted-foreground flex items-center gap-2">
                       <span>{formatDate(transaction.date)}</span>
                       {transaction.accountName && (

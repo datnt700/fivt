@@ -63,7 +63,7 @@ export function CreateTransactionForm({ onSuccess }: CreateTransactionFormProps)
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col items-center gap-4"
+      className="w-full max-w-md mx-auto flex flex-col gap-4"
     >
       {/* Date */}
       <div className="w-full">

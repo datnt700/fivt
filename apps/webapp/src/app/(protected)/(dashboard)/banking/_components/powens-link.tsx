@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,16 +11,34 @@ export function PowensLink({ onSuccess, onError }: PowensLinkProps) {
   const [isConnecting, setIsConnecting] = useState(false);
   const t = useTranslations('banking');
 
+  // Cleanup message listener on unmount  
+  useEffect(() => {
+    return () => {
+      // Cleanup is handled in the handleConnect function
+    };
+  }, []);
+
   const handleConnect = async () => {
     setIsConnecting(true);
 
     try {
+      // Get platform info to help optimize Powens connection experience
+      const { isPlatformMobile, getPowensWebviewRecommendations } = await import('../_utils/platform-utils');
+      const platformInfo = getPowensWebviewRecommendations();
+      
+      console.log('Powens connection - Platform:', platformInfo);
+
       // Create Powens connect session
       const response = await fetch('/api/powens/connect', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'User-Agent': navigator.userAgent, // Help Powens optimize for device
         },
+        body: JSON.stringify({
+          platform: platformInfo.platform,
+          isMobile: isPlatformMobile(),
+        }),
       });
 
       if (!response.ok) {
@@ -30,9 +48,29 @@ export function PowensLink({ onSuccess, onError }: PowensLinkProps) {
 
       const data = await response.json();
       
-      // Redirect to Powens connection URL in the same window
-      // This will work even if it's a webview URL
-      window.location.href = data.connect_url;
+      // Use platform-specific webview opening for optimal app-to-app support
+      // This helps enable QR code and desktop login options for compte courant
+      const { openPowensWebview } = await import('../_utils/platform-utils');
+      
+      // Set up popup message listener for callback handling
+      const handleMessage = (event: MessageEvent) => {
+        if (event.origin !== window.location.origin) return;
+        
+        if (event.data?.type === 'POWENS_SUCCESS') {
+          console.log('Powens connection successful:', event.data);
+          toast.success(t('connection.success'));
+          onSuccess?.(event.data);
+          window.removeEventListener('message', handleMessage);
+        } else if (event.data?.type === 'POWENS_ERROR') {
+          console.error('Powens connection error:', event.data);
+          toast.error(t('connection.error', { error: event.data.error }));
+          onError?.(event.data.error);
+          window.removeEventListener('message', handleMessage);
+        }
+      };
+      
+      window.addEventListener('message', handleMessage);
+      openPowensWebview(data.connect_url);
 
     } catch (error) {
       console.error('Error connecting to Powens:', error);

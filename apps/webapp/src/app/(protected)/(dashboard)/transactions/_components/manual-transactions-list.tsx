@@ -62,7 +62,7 @@ export function ManualTransactionsList({
             {transactions.map((transaction: ManualTransaction) => (
               <div
                 key={transaction.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+                className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors w-full overflow-hidden"
               >
                 <div className="flex items-center space-x-4">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -76,8 +76,8 @@ export function ManualTransactionsList({
                       <TrendingDown className="h-4 w-4" />
                     )}
                   </div>
-                  <div className="flex-1">
-                    <div className="font-medium">{transaction.description || t('name')}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium truncate">{transaction.description || t('name')}</div>
                     <div className="text-sm text-muted-foreground flex items-center gap-2">
                       <span>{formatDate(transaction.createdAt)}</span>
                       <span>•</span>

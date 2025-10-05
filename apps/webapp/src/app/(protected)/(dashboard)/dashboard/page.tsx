@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import { Euro } from 'lucide-react';
 import { ProfileCompletionGuard } from '@/components/profile-completion-banner';
 import { QuickMetrics, ProfileOverviewCard, FIProgressBar } from '@/components/financial-profile-widgets';
-import { useTransactions } from './_hooks/use-dashboard';
+import { useTransactions, type Transaction } from './_hooks/use-dashboard';
 
 const LandingPage = () => {
   const [date, setDate] = useState<Date | null>(new Date());
@@ -19,8 +19,10 @@ const LandingPage = () => {
   if (isLoading) return <p>{tTransaction('loadingTransactions')}</p>;
 
   return (
-    <ProfileCompletionGuard bannerVariant="card">
-      <div className="space-y-8">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="p-4">
+        <ProfileCompletionGuard bannerVariant="card">
+          <div className="space-y-8">
         {/* Financial Profile Section */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Your Financial Journey</h2>
@@ -49,7 +51,7 @@ const LandingPage = () => {
           />
         </div>
         <div className="grid gap-2">
-          {transactions?.map(transaction => (
+          {transactions?.map((transaction: Transaction) => (
             <div key={transaction.id} className="flex items-center justify-between p-3 bg-card rounded-lg border">
               <div>
                 <p className="font-medium">
@@ -80,10 +82,11 @@ const LandingPage = () => {
               <p>No transactions found for this date.</p>
             </div>
           )}
-        </div>
-        </div>
+          </div>
+          </div>
+        </ProfileCompletionGuard>
       </div>
-    </ProfileCompletionGuard>
+    </div>
   );
 };
 

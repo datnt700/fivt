@@ -115,7 +115,7 @@ class PowensApiClient {
       console.log('Getting Powens temporary code for webview');
       
       const response = await axios.get(
-        `${POWENS_API_BASE}/auth/token/code`,
+        `${POWENS_API_BASE}/auth/token/code?type=singleAccess`,
         {
           headers: this.getAuthHeaders(accessToken),
         }
@@ -149,9 +149,13 @@ class PowensApiClient {
       }
       const domain = domainMatch[1];
       
-      const connectUrl = `https://webview.powens.com/connect?domain=${domain}&client_id=${process.env.POWENS_CLIENT_ID}&redirect_uri=${encodeURIComponent(callbackUrl)}&code=${temporaryCode}`;
+      // Build webview URL matching the working format from integrate.biapi.pro
+      // This helps enable QR code and desktop login options for compte courant accounts
+      // Use the correct webview endpoint format with connector_capabilities parameter
+      const connectUrl = `https://${domain}.biapi.pro/2.0/auth/webview/connect?redirect_uri=${encodeURIComponent(callbackUrl)}&client_id=${process.env.POWENS_CLIENT_ID}&code=${temporaryCode}&connector_capabilities=bank&connector_ids=8`;
       
       console.log('Powens connect session created successfully');
+      console.log('Connect URL with connector_capabilities=bank:', connectUrl);
       return {
         connect_url: connectUrl,
         id_session: temporaryCode, // Use temporary code as session ID
