@@ -83,6 +83,7 @@ export function CreateTransactionForm({
       shouldDirty: true,
       shouldValidate: true,
     });
+    setIsOpen(false);
   };
 
   const onSubmit = async (values: CreateTransactionFormValues) => {

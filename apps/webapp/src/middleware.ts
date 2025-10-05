@@ -13,6 +13,7 @@ export default function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/dashboard') ||
     request.nextUrl.pathname.startsWith('/transactions') ||
     request.nextUrl.pathname.startsWith('/profile') ||
+    request.nextUrl.pathname.startsWith('/auth') ||
     request.nextUrl.pathname.startsWith('/chatbot') ||
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.startsWith('/_vercel') ||
