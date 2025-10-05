@@ -33,6 +33,7 @@
     "title": "Connectez-vous à votre compte",
     "subtitle": "Entrez votre email ci-dessous pour vous connecter à votre compte",
     "emailLabel": "Email",
+    "nameLabel": "Nom",
     "emailPlaceholder": "nom@exemple.com",
     "signInButton": "Se connecter avec Email",
     "signingIn": "Connexion en cours...",
@@ -220,6 +221,12 @@
       "netWorth": "Valeur Nette",
       "monthlyExpenses": "Dépenses Mensuelles",
       "noDataAvailable": "Aucune donnée disponible"
+    },
+    "userProfile": {
+      "account": "Compte",
+      "underName": "Gérez les paramètres de votre compte",
+      "canChange": "Votre email est principal et ne peut pas être modifié ici.",
+      "description": "Mettez à jour les informations de votre profil public"
     }
   }
 }
