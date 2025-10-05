@@ -26,17 +26,13 @@ describe('/api/chat POST route', () => {
   });
 
   it('should handle valid request with prompt', async () => {
-    // Mock the detectIntent call first (returns "financial")
-    mockChatCompletionsCreate
-      .mockResolvedValueOnce({
-        choices: [{ message: { content: 'financial' } }],
-      })
-      .mockReturnValueOnce({
-        async *[Symbol.asyncIterator]() {
-          yield { choices: [{ delta: { content: 'Mock' } }] };
-          yield { choices: [{ delta: { content: ' response' } }] };
-        },
-      });
+    // Mock only the financial advice response (intent detection uses keyword matching for "financial" keyword)
+    mockChatCompletionsCreate.mockReturnValueOnce({
+      async *[Symbol.asyncIterator]() {
+        yield { choices: [{ delta: { content: 'Mock' } }] };
+        yield { choices: [{ delta: { content: ' response' } }] };
+      },
+    });
 
     // Create mock request with locale
     const mockRequest = {
@@ -49,9 +45,9 @@ describe('/api/chat POST route', () => {
     const response = await POST(mockRequest);
 
     expect(mockRequest.json).toHaveBeenCalled();
-    expect(mockChatCompletionsCreate).toHaveBeenCalledTimes(2); // Once for intent detection, once for response
+    expect(mockChatCompletionsCreate).toHaveBeenCalledTimes(1); // Only once for the financial advice response
     
-    // Check the second call (the actual financial advice call)
+    // Check the call (the actual financial advice call)
     expect(mockChatCompletionsCreate).toHaveBeenCalledWith(
       expect.objectContaining({
         model: 'gpt-5-nano',
@@ -87,12 +83,12 @@ describe('/api/chat POST route', () => {
   });
 
   it('should handle OpenAI API errors', async () => {
-    // Mock the detectIntent call to fail
+    // Mock the financial advice call to fail (using a non-financial keyword to ensure only one call)
     mockChatCompletionsCreate.mockRejectedValue(new Error('OpenAI API Error'));
 
     const mockRequest = {
       json: vi.fn().mockResolvedValue({
-        prompt: 'Test prompt',
+        prompt: 'investment advice help',
         locale: 'en',
       }),
     } as unknown as NextRequest;

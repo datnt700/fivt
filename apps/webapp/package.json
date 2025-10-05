@@ -12,6 +12,8 @@
     "test": "vitest run --passWithNoTests",
     "test:unit": "vitest run --passWithNoTests",
     "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "test:coverage:ui": "vitest --coverage --ui",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "clean": "rimraf .next .turbo",
@@ -79,12 +81,13 @@
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
     "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.34.0",
     "jsdom": "^25.0.1",
     "prisma": "^6.16.1",
     "rimraf": "^6.0.1",
     "typescript": "5.9.2",
-    "vitest": "^2.1.5",
+    "vitest": "^3.2.4",
     "ws": "^8.18.0"
   }
 }

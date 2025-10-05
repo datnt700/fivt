@@ -10,11 +10,16 @@
     "filter:web": "turbo run dev --filter=web",
     "test": "turbo run test",
     "test:unit": "turbo run test:unit",
+    "test:coverage": "turbo run test:coverage",
     "test:e2e": "turbo run test:e2e",
     "test:watch": "turbo run test:watch",
     "clean": "turbo run clean",
     "clean:all": "rimraf node_modules apps/*/node_modules packages/*/node_modules && rimraf **/.turbo",
-    "prepare": "husky"
+    "prepare": "husky",
+    "create:microapp": "node scripts/create-microapp.js",
+    "generate:microapp": "turbo run build --filter=microapp && echo 'Microapp generated successfully'",
+    "dev:microapp": "turbo run dev --filter=microapp",
+    "build:microapp": "turbo run build --filter=microapp"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
@@ -24,7 +29,8 @@
     "turbo": "^2.5.6",
     "typescript": "5.9.2",
     "concurrently": "^9.1.0",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+    "cross-env": "^7.0.3"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
