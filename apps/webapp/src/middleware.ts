@@ -13,6 +13,7 @@ export default function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/dashboard') ||
     request.nextUrl.pathname.startsWith('/transactions') ||
     request.nextUrl.pathname.startsWith('/profile') ||
+    request.nextUrl.pathname.startsWith('/auth') ||
     request.nextUrl.pathname.startsWith('/chatbot') ||
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.startsWith('/_vercel') ||
@@ -28,6 +29,7 @@ export default function middleware(request: NextRequest) {
 export const config = {
   // Match all routes except API, protected routes, and static files
   matcher: [
-    '/((?!api|banking|dashboard|transactions|chatbot|_next|_vercel|.*\\..*).*)',
+    // exclude auth so /auth/login is matched directly
+    '/((?!api|banking|dashboard|transactions|chatbot|auth|_next|_vercel|.*\\..*).*)',
   ],
 };
