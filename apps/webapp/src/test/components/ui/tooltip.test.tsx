@@ -46,7 +46,7 @@ vi.mock('@/lib/utils', () => ({
 
 describe('TooltipProvider', () => {
   it('renders with default props', () => {
-    render(<TooltipProvider />);
+    render(<TooltipProvider><div>test</div></TooltipProvider>);
     
     const provider = screen.getByTestId('tooltip-provider');
     expect(provider).toBeInTheDocument();
@@ -55,7 +55,7 @@ describe('TooltipProvider', () => {
   });
 
   it('renders with custom delayDuration', () => {
-    render(<TooltipProvider delayDuration={500} />);
+    render(<TooltipProvider delayDuration={500}><div>test</div></TooltipProvider>);
     
     const provider = screen.getByTestId('tooltip-provider');
     expect(provider).toHaveAttribute('data-delay-duration', '500');
@@ -72,7 +72,7 @@ describe('TooltipProvider', () => {
   });
 
   it('passes through additional props', () => {
-    render(<TooltipProvider data-testid="custom-provider" />);
+    render(<TooltipProvider data-testid="custom-provider"><div>test</div></TooltipProvider>);
     
     const provider = screen.getByTestId('custom-provider');
     expect(provider).toBeInTheDocument();

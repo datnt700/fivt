@@ -188,14 +188,14 @@ describe('useTabs', () => {
     );
 
     // Initial state
-    expect(result.current.selectedTab.id).toBe('tab1');
+    expect(result.current.selectedTab?.id).toBe('tab1');
 
     // First update
     act(() => {
       result.current.tabProps.setSelectedTab([1, 1]);
     });
 
-    expect(result.current.selectedTab.id).toBe('tab2');
+    expect(result.current.selectedTab?.id).toBe('tab2');
     expect(result.current.tabProps.selectedTabIndex).toBe(1);
     expect(result.current.contentProps.direction).toBe(1);
 
@@ -204,7 +204,7 @@ describe('useTabs', () => {
       result.current.tabProps.setSelectedTab([2, 1]);
     });
 
-    expect(result.current.selectedTab.id).toBe('tab3');
+    expect(result.current.selectedTab?.id).toBe('tab3');
     expect(result.current.tabProps.selectedTabIndex).toBe(2);
     expect(result.current.contentProps.direction).toBe(1);
 
@@ -213,7 +213,7 @@ describe('useTabs', () => {
       result.current.tabProps.setSelectedTab([0, -1]);
     });
 
-    expect(result.current.selectedTab.id).toBe('tab1');
+    expect(result.current.selectedTab?.id).toBe('tab1');
     expect(result.current.tabProps.selectedTabIndex).toBe(0);
     expect(result.current.contentProps.direction).toBe(-1);
   });
@@ -245,7 +245,7 @@ describe('useTabs', () => {
     );
 
     expect(result.current.selectedTab).toBe(complexTabs[1]);
-    expect(result.current.selectedTab.children).toBe(complexTabs[1].children);
+    expect(result.current.selectedTab?.children).toBe(complexTabs[1]?.children);
   });
 
   it('should return consistent object references for stable props', () => {

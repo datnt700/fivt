@@ -3,7 +3,11 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 // Mock next-themes
 vi.mock('next-themes', () => ({
-  useTheme: vi.fn(() => ({ theme: 'light' })),
+  useTheme: vi.fn(() => ({ 
+    theme: 'light', 
+    themes: ['light', 'dark'], 
+    setTheme: vi.fn() 
+  })),
 }));
 
 // Mock sonner
@@ -20,11 +24,11 @@ vi.mock('sonner', () => ({
 }));
 
 import { Toaster } from '@/components/ui/sonner';
-import { useTheme } from 'next-themes';
 import { Toaster as SonnerToaster } from 'sonner';
+import { useTheme } from 'next-themes';
 
-const mockUseTheme = vi.mocked(useTheme);
 const mockSonnerToaster = vi.mocked(SonnerToaster);
+const mockUseTheme = vi.mocked(useTheme);
 
 describe('Toaster', () => {
   beforeEach(() => {
@@ -37,13 +41,13 @@ describe('Toaster', () => {
         data-theme={theme}
         className={className}
         style={style}
-        {...props}
+        {...(props as React.HTMLAttributes<HTMLDivElement>)}
       />
     ));
   });
 
   it('renders with default theme from useTheme', () => {
-    mockUseTheme.mockReturnValue({ theme: 'light' });
+    mockUseTheme.mockReturnValue({ theme: 'light', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     
@@ -54,7 +58,7 @@ describe('Toaster', () => {
   });
 
   it('renders with dark theme', () => {
-    mockUseTheme.mockReturnValue({ theme: 'dark' });
+    mockUseTheme.mockReturnValue({ theme: 'dark', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     
@@ -63,7 +67,7 @@ describe('Toaster', () => {
   });
 
   it('renders with system theme', () => {
-    mockUseTheme.mockReturnValue({ theme: 'system' });
+    mockUseTheme.mockReturnValue({ theme: 'system', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     
@@ -72,7 +76,7 @@ describe('Toaster', () => {
   });
 
   it('uses system theme as default when theme is undefined', () => {
-    mockUseTheme.mockReturnValue({ theme: undefined });
+    mockUseTheme.mockReturnValue({ theme: undefined, themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     
@@ -81,7 +85,7 @@ describe('Toaster', () => {
   });
 
   it('applies correct CSS custom properties', () => {
-    mockUseTheme.mockReturnValue({ theme: 'light' });
+    mockUseTheme.mockReturnValue({ theme: 'light', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     
@@ -94,7 +98,7 @@ describe('Toaster', () => {
   });
 
   it('passes through additional props', () => {
-    mockUseTheme.mockReturnValue({ theme: 'light' });
+    mockUseTheme.mockReturnValue({ theme: 'light', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster position="top-center" />);
     
@@ -103,7 +107,7 @@ describe('Toaster', () => {
   });
 
   it('calls useTheme hook', () => {
-    mockUseTheme.mockReturnValue({ theme: 'light' });
+    mockUseTheme.mockReturnValue({ theme: 'light', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     
@@ -111,7 +115,7 @@ describe('Toaster', () => {
   });
 
   it('renders with correct CSS classes and style', () => {
-    mockUseTheme.mockReturnValue({ theme: 'dark' });
+    mockUseTheme.mockReturnValue({ theme: 'dark', themes: ['light', 'dark'], setTheme: vi.fn() });
     
     render(<Toaster />);
     

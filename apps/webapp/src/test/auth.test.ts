@@ -18,6 +18,7 @@ const mockAuthInstance = {
 const mockNextAuth = vi.fn(() => mockAuthInstance);
 
 // Store callback references for testing
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let _capturedConfig: any = null;
 
 vi.mock('next-auth', () => ({
@@ -83,6 +84,7 @@ describe('Auth Configuration', () => {
     };
 
     // Capture configuration when NextAuth is called
+    // @ts-expect-error - Mock implementation for testing purposes
     mockNextAuth.mockImplementation((config) => {
       _capturedConfig = config;
       return mockAuthInstance;
@@ -127,6 +129,7 @@ describe('Auth Configuration', () => {
     });
 
     it('should enable debug mode in development', async () => {
+      // @ts-expect-error - Temporarily override NODE_ENV for testing
       process.env.NODE_ENV = 'development';
       vi.resetModules();
       

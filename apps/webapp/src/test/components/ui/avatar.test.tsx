@@ -15,6 +15,7 @@ vi.mock('@radix-ui/react-avatar', () => ({
     </div>
   )),
   Image: vi.fn(({ className, 'data-slot': dataSlot, ...props }) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img 
       className={className} 
       data-slot={dataSlot} 

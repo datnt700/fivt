@@ -293,7 +293,7 @@ describe('DropdownMenuRadioGroup', () => {
 
 describe('DropdownMenuRadioItem', () => {
   it('renders with default props', () => {
-    render(<DropdownMenuRadioItem>Radio item</DropdownMenuRadioItem>);
+    render(<DropdownMenuRadioItem value="radio-item">Radio item</DropdownMenuRadioItem>);
     
     const item = screen.getByTestId('dropdown-menu-radio-item');
     expect(item).toBeInTheDocument();
@@ -302,13 +302,13 @@ describe('DropdownMenuRadioItem', () => {
   });
 
   it('renders with CircleIcon', () => {
-    render(<DropdownMenuRadioItem>Radio item</DropdownMenuRadioItem>);
+    render(<DropdownMenuRadioItem value="radio-item">Radio item</DropdownMenuRadioItem>);
     
     expect(screen.getByTestId('circle-icon')).toBeInTheDocument();
   });
 
   it('renders with custom className', () => {
-    render(<DropdownMenuRadioItem className="custom-radio">Radio item</DropdownMenuRadioItem>);
+    render(<DropdownMenuRadioItem value="radio-item" className="custom-radio">Radio item</DropdownMenuRadioItem>);
     
     const item = screen.getByTestId('dropdown-menu-radio-item');
     expect(item.className).toContain('custom-radio');
@@ -463,7 +463,7 @@ describe('DropdownMenu Integration', () => {
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem checked>Checkbox</DropdownMenuCheckboxItem>
           <DropdownMenuRadioGroup>
-            <DropdownMenuRadioItem>Radio 1</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="radio-1">Radio 1</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

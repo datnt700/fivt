@@ -42,9 +42,9 @@ vi.mock('@/app/(protected)/(dashboard)/transactions/_validations/transaction-sch
 // Mock react-hook-form
 vi.mock('react-hook-form', () => ({
   useForm: vi.fn(() => ({
-    register: vi.fn((name) => {
+    register: vi.fn((name: string) => {
       // Return props that would set default values
-      const defaultValues: Record<string, any> = {
+      const defaultValues: Record<string, { value: string | number }> = {
         date: { value: new Date().toISOString().slice(0, 10) },
         amount: { value: 0 },
         type: { value: 'INCOME' },
@@ -53,37 +53,37 @@ vi.mock('react-hook-form', () => ({
       };
       return defaultValues[name] || {};
     }),
-    handleSubmit: vi.fn((fn) => fn),
+    handleSubmit: vi.fn((fn: () => void) => fn),
     control: {},
     reset: vi.fn(),
     formState: { errors: {}, isSubmitting: false },
   })),
-  Controller: ({ render }: { render: Function }) => render({ field: { value: '', onChange: vi.fn() } }),
+  Controller: ({ render }: { render: (props: { field: { value: string; onChange: () => void } }) => React.ReactElement }) => render({ field: { value: '', onChange: vi.fn() } }),
 }));
 
 // Mock UI components
 vi.mock('@/components/ui/select', () => ({
-  Select: ({ children }: any) => <div data-testid="select">{children}</div>,
-  SelectContent: ({ children }: any) => <div>{children}</div>,
-  SelectItem: ({ children, value }: any) => <div data-value={value}>{children}</div>,
-  SelectTrigger: ({ children }: any) => <div>{children}</div>,
-  SelectValue: ({ placeholder }: any) => <div>{placeholder}</div>,
+  Select: ({ children }: { children: React.ReactNode }) => <div data-testid="select">{children}</div>,
+  SelectContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  SelectItem: ({ children, value }: { children: React.ReactNode; value: string }) => <div data-value={value}>{children}</div>,
+  SelectTrigger: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  SelectValue: ({ placeholder }: { placeholder?: string }) => <div>{placeholder}</div>,
 }));
 
 vi.mock('@/components/ui/label', () => ({
-  Label: ({ children }: any) => <label>{children}</label>,
+  Label: ({ children }: { children: React.ReactNode }) => <label>{children}</label>,
 }));
 
 vi.mock('@/components/ui/input', () => ({
-  Input: (props: any) => <input {...props} />,
+  Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
 }));
 
 vi.mock('@/components/ui/textarea', () => ({
-  Textarea: (props: any) => <textarea {...props} />,
+  Textarea: (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => <textarea {...props} />,
 }));
 
 vi.mock('@/components/ui/button', () => ({
-  Button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  Button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { children: React.ReactNode }) => <button {...props}>{children}</button>,
 }));
 
 import { useCategories, useCreateCategory } from '@/app/(protected)/(dashboard)/transactions/_hooks/use-categories';
@@ -107,19 +107,19 @@ describe('CreateTransactionForm', () => {
       isLoading: false,
       error: null,
       isError: false,
-    } as any);
+    } as ReturnType<typeof mockUseCategories>);
 
     mockUseCreateCategory.mockReturnValue({
       mutateAsync: vi.fn(),
       isPending: false,
-    } as any);
+    } as unknown as ReturnType<typeof mockUseCreateCategory>);
 
     mockUseCreateTransaction.mockReturnValue({
       mutateAsync: vi.fn(),
       isPending: false,
       isError: false,
       error: null,
-    } as any);
+    } as unknown as ReturnType<typeof mockUseCreateTransaction>);
   });
 
   it('should render all form fields', () => {
@@ -141,7 +141,9 @@ describe('CreateTransactionForm', () => {
   it('should render date input with proper type', () => {
     render(<CreateTransactionForm />);
     
-    const dateInput = screen.getByDisplayValue('2025-10-05');
+    // Get today's date in YYYY-MM-DD format (same as form default)
+    const today = new Date().toISOString().slice(0, 10);
+    const dateInput = screen.getByDisplayValue(today);
     expect(dateInput).toHaveAttribute('type', 'date');
     expect(dateInput).toHaveAttribute('id', 'date');
   });
@@ -185,7 +187,7 @@ describe('CreateTransactionForm', () => {
       isLoading: true,
       error: null,
       isError: false,
-    } as any);
+    } as unknown as ReturnType<typeof mockUseCategories>);
 
     render(<CreateTransactionForm />);
     
