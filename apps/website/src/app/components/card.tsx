@@ -18,8 +18,8 @@ export const Card = ({
   return (
     <div
       className={cn(
-        `bg-white shadow-[0px 4px 24.9px rgba(0, 109, 189, 0.1)] rounded-2xl border-gray-500`,
-        wrapperClassName
+        'rounded-lg shadow-lg p-3 border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700',
+        className
       )}
       {...other}
     >

@@ -1,34 +1,16 @@
 'use client';
 
 import herobanner from '@/app/_assets/images/herobanner.jpg';
-import example from '@/app/_assets/images/example.jpg';
-import superman from '@/app/_assets/images/superman.jpg';
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Carousel from './components/carousel';
 import { KeyRound } from 'lucide-react';
 import { Card } from './components/card';
+import { Introduction } from './components/Introduction';
 import Footer from './[locale]/_components/Footer';
-import { Header } from './[locale]/_components/Header';
+import { Header } from './components/header';
 
 export default function Home() {
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
-
-  const carouselData = useRef([
-    {
-      title: 'item 1',
-      image: herobanner,
-    },
-    {
-      title: 'item 2',
-      image: example,
-    },
-    {
-      title: 'item 3',
-      image: superman,
-    },
-  ]);
-
   const cardItem = [
     { title: '100% Secured data', icon: <KeyRound /> },
     { title: 'Fast sync', icon: <KeyRound /> },
@@ -85,29 +67,16 @@ export default function Home() {
   ];
 
   return (
-    <>
-      <div className="font-[Poppins] bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee] min-h-screen px-5 md:px-30 lg:px-40 xl:px-50 2xl:px-60 ">
-        <Header />
-        <section className="w-full h-[400px] md:h-[600px] lg:h-[700px] mt-5 rounded-lg overflow-hidden relative">
-          <Carousel
-            activeItemIndex={activeItemIndex}
-            setActiveItemIndex={setActiveItemIndex}
-            carouselData={carouselData.current}
-            autoplay
-            intervalMs={5000}
-            pauseOnHover
-          />
-        </section>
-        <section className="grid gap-4 grid-cols-2 md:grid-cols-4 mt-5">
-          {cardItem.map((item, i) => (
-            <Card key={i} title={item.title} icon={item.icon} />
-          ))}
-        </section>
+    <div className="">
+      <Header />
+      <div className="font-[Poppins] min-h-screen px-5 md:px-10 lg:px-30 xl:px-40 2xl:px-50 ">
+        <Introduction />
+
         <section className="mt-5 flex flex-col gap-5">
           {benefitItem.map((item, i) => {
             const even = i % 2 === 0;
             return (
-              <div key={item.title} className="grid lg:grid-cols-2 gap-5">
+              <div key={i} className="grid lg:grid-cols-2 gap-5">
                 <div
                   className={even ? 'order-2 lg:order-1' : 'order-2 lg:order-2'}
                 >
@@ -157,6 +126,6 @@ export default function Home() {
         </section>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
