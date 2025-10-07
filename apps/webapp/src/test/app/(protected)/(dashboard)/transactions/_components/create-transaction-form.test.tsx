@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CreateTransactionForm } from '@/app/(protected)/(dashboard)/transactions/_components/create-transaction-form';
 
 // Mock next-intl
@@ -21,6 +22,7 @@ vi.mock('next-intl', () => ({
     };
     return translations[key] || key;
   }),
+  useLocale: vi.fn(() => 'en'),
 }));
 
 // Mock hooks
@@ -93,6 +95,30 @@ const mockUseCategories = vi.mocked(useCategories);
 const mockUseCreateCategory = vi.mocked(useCreateCategory);
 const mockUseCreateTransaction = vi.mocked(useCreateTransaction);
 
+// Test wrapper with QueryClient
+const TestWrapper = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  });
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
+  );
+};
+
+const renderWithProviders = (ui: React.ReactElement) => {
+  return render(ui, { wrapper: TestWrapper });
+};
+
 describe('CreateTransactionForm', () => {
   const mockCategories = [
     { id: '1', name: 'Food' },
@@ -123,7 +149,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should render all form fields', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     expect(screen.getByText('Date')).toBeInTheDocument();
     expect(screen.getByText('Amount')).toBeInTheDocument();
@@ -133,13 +159,13 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should render submit button', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     expect(screen.getByRole('button', { name: 'Add Transaction' })).toBeInTheDocument();
   });
 
   it('should render date input with proper type', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     // Get today's date in YYYY-MM-DD format (same as form default)
     const today = new Date().toISOString().slice(0, 10);
@@ -149,7 +175,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should render amount input with proper attributes', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     const amountInput = screen.getByDisplayValue('0');
     expect(amountInput).toHaveAttribute('type', 'number');
@@ -158,7 +184,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should render type select with income and expense options', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     expect(screen.getByText('Select type')).toBeInTheDocument();
     expect(screen.getByText('Income')).toBeInTheDocument();
@@ -166,7 +192,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should render category select with available categories', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     expect(screen.getByText('Select category')).toBeInTheDocument();
     expect(screen.getByText('Food')).toBeInTheDocument();
@@ -175,7 +201,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should render description textarea', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     const textarea = screen.getByRole('textbox');
     expect(textarea.tagName.toLowerCase()).toBe('textarea');
@@ -189,13 +215,13 @@ describe('CreateTransactionForm', () => {
       isError: false,
     } as unknown as ReturnType<typeof mockUseCategories>);
 
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     expect(screen.getByText('No categories available')).toBeInTheDocument();
   });
 
   it('should render form with proper structure', () => {
-    const { container } = render(<CreateTransactionForm />);
+    const { container } = renderWithProviders(<CreateTransactionForm />);
     
     const form = container.querySelector('form');
     expect(form).toBeInTheDocument();
@@ -203,7 +229,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should have proper field labels', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     expect(screen.getByText('Date')).toBeInTheDocument();
     expect(screen.getByText('Amount')).toBeInTheDocument();
@@ -213,7 +239,7 @@ describe('CreateTransactionForm', () => {
   });
 
   it('should use translation keys for all text content', () => {
-    render(<CreateTransactionForm />);
+    renderWithProviders(<CreateTransactionForm />);
     
     // Verify translated content is displayed
     expect(screen.getByText('Add Transaction')).toBeInTheDocument();
@@ -225,7 +251,7 @@ describe('CreateTransactionForm', () => {
 
   it('should call onSuccess callback prop when provided', () => {
     const onSuccess = vi.fn();
-    render(<CreateTransactionForm onSuccess={onSuccess} />);
+    renderWithProviders(<CreateTransactionForm onSuccess={onSuccess} />);
     
     // Component should render without errors when onSuccess is provided
     expect(screen.getByRole('button', { name: 'Add Transaction' })).toBeInTheDocument();

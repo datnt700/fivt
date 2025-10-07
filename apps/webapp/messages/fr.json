@@ -27,7 +27,8 @@
     "settings": "Paramètres",
     "banking": "Services Bancaires",
     "chatbot": "Assistant IA",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "dashboard": "Tableau de bord"
   },
   "auth": {
     "title": "Connectez-vous à votre compte",

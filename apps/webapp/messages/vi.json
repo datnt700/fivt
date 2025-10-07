@@ -27,7 +27,8 @@
     "settings": "Cài đặt",
     "banking": "Ngân hàng",
     "chatbot": "Trợ lý AI",
-    "transactions": "Giao dịch"
+    "transactions": "Giao dịch",
+    "dashboard": "Bảng điều khiển"
   },
   "auth": {
     "title": "Đăng nhập vào tài khoản của bạn",

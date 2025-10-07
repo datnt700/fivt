@@ -5,11 +5,12 @@ import { AdminSidebar } from '@/components/navigation/app-sidebar';
 // Mock next-intl
 const mockTranslations = {
   'transactions.title': 'Transactions',
+  'navigation.dashboard': 'Dashboard',
 };
 
 vi.mock('next-intl', () => ({
-  useTranslations: vi.fn(() => (key: string) => {
-    const fullKey = `transactions.${key}`;
+  useTranslations: vi.fn((namespace: string) => (key: string) => {
+    const fullKey = `${namespace}.${key}`;
     return mockTranslations[fullKey as keyof typeof mockTranslations] || key;
   }),
 }));
@@ -93,6 +94,10 @@ describe('AdminSidebar', () => {
     
     const navItems = screen.getByTestId('nav-items');
     expect(navItems).toBeInTheDocument();
+    
+    // Check that Dashboard item is rendered
+    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+    expect(screen.getByText('/dashboard')).toBeInTheDocument();
     
     // Check that Transactions item is rendered
     expect(screen.getByText('Transactions')).toBeInTheDocument();
@@ -220,14 +225,18 @@ describe('AdminSidebar', () => {
     render(<AdminSidebar />);
     
     const navItems = screen.getAllByTestId('nav-item');
-    expect(navItems).toHaveLength(2);
+    expect(navItems).toHaveLength(3);
     
-    // First item should be Transactions
-    expect(navItems[0]).toHaveTextContent('Transactions');
-    expect(navItems[0]).toHaveTextContent('/transactions');
+    // First item should be Dashboard
+    expect(navItems[0]).toHaveTextContent('Dashboard');
+    expect(navItems[0]).toHaveTextContent('/dashboard');
     
-    // Second item should be Chatbot
-    expect(navItems[1]).toHaveTextContent('Chatbot');
-    expect(navItems[1]).toHaveTextContent('/chatbot');
+    // Second item should be Transactions
+    expect(navItems[1]).toHaveTextContent('Transactions');
+    expect(navItems[1]).toHaveTextContent('/transactions');
+    
+    // Third item should be Chatbot
+    expect(navItems[2]).toHaveTextContent('Chatbot');
+    expect(navItems[2]).toHaveTextContent('/chatbot');
   });
 });

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Command, ArrowLeftRight, BotMessageSquare } from 'lucide-react';
+import { Command, ArrowLeftRight, BotMessageSquare, LayoutDashboard } from 'lucide-react';
 import { NavItems } from './nav-items';
 import { NavUser } from './nav-user';
 import {
@@ -29,7 +29,13 @@ export function AdminSidebar({
   ...props
 }: AppSidebarProps) {
   const tTransaction = useTranslations('transactions');
+  const tNavigation = useTranslations('navigation');
   const navItems = [
+    {
+      name: tNavigation('dashboard'),
+      url: '/dashboard',
+      icon: LayoutDashboard,
+    },
     {
       name: tTransaction('title'),
       url: '/transactions',
