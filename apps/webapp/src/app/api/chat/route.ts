@@ -1,55 +1,124 @@
-import OpenAI from "openai";
+import OpenAI from 'openai';
 import { NextResponse } from 'next/server';
-const modelNano = "gpt-5-nano";
-const client = new OpenAI();
+
+// Ensure this API route is always dynamic and executed at request time
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+const modelNano = 'gpt-5-nano';
+
+// Lazily create OpenAI client to avoid build-time env checks
+function getOpenAIClient(): OpenAI {
+  // Prefer explicit apiKey to avoid surprises in different runtimes
+  const apiKey =
+    process.env.OPENAI_API_KEY ||
+    (process.env.NODE_ENV === 'test' ? 'test-openai-key' : undefined);
+  if (!apiKey) {
+    // We only throw when a call that needs OpenAI is actually attempted.
+    // This avoids Next.js build from failing on import.
+    throw new Error('OPENAI_API_KEY is not configured');
+  }
+  return new OpenAI({ apiKey });
+}
 
 function getUnsupportedMessage(locale: string) {
   switch (locale) {
-    case "fr":
+    case 'fr':
       return "Désolé, je ne peux répondre qu'aux questions financières.";
-    case "vi":
-      return "Xin lỗi, tôi chỉ hỗ trợ các câu hỏi liên quan đến tài chính.";
+    case 'vi':
+      return 'Xin lỗi, tôi chỉ hỗ trợ các câu hỏi liên quan đến tài chính.';
     default:
-      return "Sorry, I can only answer finance-related questions.";
+      return 'Sorry, I can only answer finance-related questions.';
   }
 }
 
-async function detectIntent(prompt: string): Promise<"casual" | "financial" | "unsupported"> {
+async function detectIntent(
+  prompt: string
+): Promise<'casual' | 'financial' | 'unsupported'> {
   // First, check for common greetings and casual phrases manually for reliability
   const casualKeywords = [
-    'hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening',
-    'bonjour', 'salut', 'bonsoir', 'xin chào', 'chào', 
-    'thanks', 'thank you', 'merci', 'cảm ơn', 'спасибо',
-    'how are you', 'what\'s up', 'sup', 'yo',
-    'bye', 'goodbye', 'see you', 'au revoir', 'tạm biệt'
+    'hi',
+    'hello',
+    'hey',
+    'greetings',
+    'good morning',
+    'good afternoon',
+    'good evening',
+    'bonjour',
+    'salut',
+    'bonsoir',
+    'xin chào',
+    'chào',
+    'thanks',
+    'thank you',
+    'merci',
+    'cảm ơn',
+    'спасибо',
+    'how are you',
+    "what's up",
+    'sup',
+    'yo',
+    'bye',
+    'goodbye',
+    'see you',
+    'au revoir',
+    'tạm biệt',
   ];
-  
+
   const financialKeywords = [
-    'money', 'budget', 'save', 'invest', 'loan', 'debt', 'credit', 'bank', 'account',
-    'salary', 'income', 'expense', 'cost', 'price', 'euro', 'dollar', 'finance', 'financial',
-    'retirement', 'pension', 'insurance', 'mortgage', 'rent', 'tax', 'stocks', 'bonds'
+    'money',
+    'budget',
+    'save',
+    'invest',
+    'loan',
+    'debt',
+    'credit',
+    'bank',
+    'account',
+    'salary',
+    'income',
+    'expense',
+    'cost',
+    'price',
+    'euro',
+    'dollar',
+    'finance',
+    'financial',
+    'retirement',
+    'pension',
+    'insurance',
+    'mortgage',
+    'rent',
+    'tax',
+    'stocks',
+    'bonds',
   ];
-  
+
   const lowerPrompt = prompt.toLowerCase().trim();
-  
+
   // Direct keyword matching for reliability
   if (casualKeywords.some(keyword => lowerPrompt.includes(keyword))) {
-    console.log("Direct classification: casual for prompt:", prompt);
-    return "casual";
+    console.log('Direct classification: casual for prompt:', prompt);
+    return 'casual';
   }
-  
+
   if (financialKeywords.some(keyword => lowerPrompt.includes(keyword))) {
-    console.log("Direct classification: financial for prompt:", prompt);
-    return "financial";
+    console.log('Direct classification: financial for prompt:', prompt);
+    return 'financial';
   }
-  
+
   // Only use AI classification for ambiguous cases
   try {
+    // If OpenAI isn't configured (e.g., in CI build), skip AI classification gracefully
+    if (!process.env.OPENAI_API_KEY) {
+      return 'unsupported';
+    }
+    const client = getOpenAIClient();
     const response = await client.chat.completions.create({
-      model: modelNano, 
+      model: modelNano,
       messages: [
         {
-          role: "system",
+          role: 'system',
           content: `You are an intent classifier for a personal finance chatbot. 
 Classify the user's message into one of these categories:
 
@@ -57,31 +126,34 @@ Classify the user's message into one of these categories:
 - "financial": any message about personal or business finance
 - "unsupported": anything else, outside of finance or casual conversation.
 
-Answer with only one word: "casual", "financial", or "unsupported".`
+Answer with only one word: "casual", "financial", or "unsupported".`,
         },
-        { role: "user", content: prompt }
+        { role: 'user', content: prompt },
       ],
-      max_completion_tokens: 10, 
-      stream: false
+      max_completion_tokens: 10,
+      stream: false,
     });
 
-    const raw = response.choices[0]?.message?.content?.trim().toLowerCase() ?? "";
-    console.log("AI classification for prompt:", prompt, "raw response:", raw);
+    const raw =
+      response.choices[0]?.message?.content?.trim().toLowerCase() ?? '';
+    console.log('AI classification for prompt:', prompt, 'raw response:', raw);
 
-    if (raw.includes("casual")) return "casual";
-    if (raw.includes("financial")) return "financial";
-    if (raw.includes("unsupported")) return "unsupported";
+    if (raw.includes('casual')) return 'casual';
+    if (raw.includes('financial')) return 'financial';
+    if (raw.includes('unsupported')) return 'unsupported';
   } catch (error) {
-    console.error("AI classification failed:", error);
+    console.error('AI classification failed:', error);
   }
 
   // Final fallback
-  return "unsupported"; 
+  return 'unsupported';
 }
 
-
 // Simple in-memory cache for common responses
-const responseCache = new Map<string, { response: string; timestamp: number }>();
+const responseCache = new Map<
+  string,
+  { response: string; timestamp: number }
+>();
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 
 function getCachedResponse(key: string): string | null {
@@ -104,9 +176,9 @@ export async function POST(req: Request) {
     // Check cache for common responses
     const cacheKey = `${prompt.toLowerCase().trim()}-${locale}`;
     const cachedResponse = getCachedResponse(cacheKey);
-    
+
     if (cachedResponse) {
-      console.log("Returning cached response for:", prompt);
+      console.log('Returning cached response for:', prompt);
       const stream = new ReadableStream({
         start(controller) {
           controller.enqueue(new TextEncoder().encode(cachedResponse));
@@ -115,47 +187,51 @@ export async function POST(req: Request) {
       });
       return new NextResponse(stream, {
         headers: {
-          "Content-Type": "text/plain",
-          "Transfer-Encoding": "chunked",
+          'Content-Type': 'text/plain',
+          'Transfer-Encoding': 'chunked',
         },
       });
     }
 
     // Language-specific instructions for GPT
     const languageInstructions = {
-      en: "You are FIVT chatbot, a helpful financial advisor assistant. You are NOT ChatGPT or any other AI assistant - you are specifically FIVT chatbot. Please respond only in English. Provide clear, actionable financial advice with structured strategies and steps.",
-      vi: "Bạn là FIVT chatbot, một trợ lý tư vấn tài chính hữu ích. Bạn KHÔNG phải là ChatGPT hay bất kỳ trợ lý AI nào khác - bạn là FIVT chatbot. Vui lòng chỉ trả lời bằng tiếng Việt. Cung cấp lời khuyên tài chính rõ ràng, có thể thực hiện với các chiến lược và bước thực hiện có cấu trúc.",
-      fr: "Vous êtes FIVT chatbot, un assistant conseiller financier utile. Vous n'êtes PAS ChatGPT ou tout autre assistant IA - vous êtes spécifiquement FIVT chatbot. Veuillez répondre uniquement en français. Fournissez des conseils financiers clairs et exploitables avec des stratégies et des étapes structurées."
+      en: 'You are FIVT chatbot, a helpful financial advisor assistant. You are NOT ChatGPT or any other AI assistant - you are specifically FIVT chatbot. Please respond only in English. Provide clear, actionable financial advice with structured strategies and steps.',
+      vi: 'Bạn là FIVT chatbot, một trợ lý tư vấn tài chính hữu ích. Bạn KHÔNG phải là ChatGPT hay bất kỳ trợ lý AI nào khác - bạn là FIVT chatbot. Vui lòng chỉ trả lời bằng tiếng Việt. Cung cấp lời khuyên tài chính rõ ràng, có thể thực hiện với các chiến lược và bước thực hiện có cấu trúc.',
+      fr: "Vous êtes FIVT chatbot, un assistant conseiller financier utile. Vous n'êtes PAS ChatGPT ou tout autre assistant IA - vous êtes spécifiquement FIVT chatbot. Veuillez répondre uniquement en français. Fournissez des conseils financiers clairs et exploitables avec des stratégies et des étapes structurées.",
     };
 
-    const languageInstruction = languageInstructions[locale as keyof typeof languageInstructions] 
-      || languageInstructions.en;
+    const languageInstruction =
+      languageInstructions[locale as keyof typeof languageInstructions] ||
+      languageInstructions.en;
 
     const intent = await detectIntent(prompt);
-    
+
     // For casual and unsupported, return simple text responses
-    if (intent === "casual") {
+    if (intent === 'casual') {
+      const client = getOpenAIClient();
       const casualRes = await client.chat.completions.create({
         model: modelNano,
         messages: [
           {
-            role: "system",
+            role: 'system',
             content: `You are FIVT chatbot, a friendly financial assistant. You are NOT ChatGPT or any other AI assistant - you are specifically FIVT chatbot created to help with financial matters.
             Respond casually with a short and kind greeting. If asked about your identity, clearly state that you are FIVT chatbot.
-            Always answer in ${locale === "vi" ? "Vietnamese" : locale === "fr" ? "French" : "English"}. 
-            Keep it under 1-2 sentences.`
+            Always answer in ${locale === 'vi' ? 'Vietnamese' : locale === 'fr' ? 'French' : 'English'}. 
+            Keep it under 1-2 sentences.`,
           },
-          { role: "user", content: prompt }
+          { role: 'user', content: prompt },
         ],
         max_completion_tokens: 400,
         stream: false,
       });
-      
-      const reply = casualRes.choices[0]?.message?.content?.trim() || getUnsupportedMessage(locale);
-      
+
+      const reply =
+        casualRes.choices[0]?.message?.content?.trim() ||
+        getUnsupportedMessage(locale);
+
       // Cache the response
       setCachedResponse(cacheKey, reply);
-      
+
       // Return simple streaming text response for consistency
       const stream = new ReadableStream({
         start(controller) {
@@ -166,18 +242,18 @@ export async function POST(req: Request) {
 
       return new NextResponse(stream, {
         headers: {
-          "Content-Type": "text/plain",
-          "Transfer-Encoding": "chunked",
+          'Content-Type': 'text/plain',
+          'Transfer-Encoding': 'chunked',
         },
       });
     }
 
-    if (intent === "unsupported") {
+    if (intent === 'unsupported') {
       const message = getUnsupportedMessage(locale);
-      
+
       // Cache the response
       setCachedResponse(cacheKey, message);
-      
+
       // Return simple streaming text response for consistency
       const stream = new ReadableStream({
         start(controller) {
@@ -188,8 +264,8 @@ export async function POST(req: Request) {
 
       return new NextResponse(stream, {
         headers: {
-          "Content-Type": "text/plain",
-          "Transfer-Encoding": "chunked",
+          'Content-Type': 'text/plain',
+          'Transfer-Encoding': 'chunked',
         },
       });
     }
@@ -210,15 +286,16 @@ Guidelines for your response:
 
 Be encouraging and supportive while maintaining professional financial advice standards.`;
 
+    const client = getOpenAIClient();
     const response = await client.chat.completions.create({
       model: modelNano,
       messages: [
         {
-          role: "system",
+          role: 'system',
           content: systemMessage,
         },
         {
-          role: "user",
+          role: 'user',
           content: prompt,
         },
       ],
@@ -229,9 +306,9 @@ Be encouraging and supportive while maintaining professional financial advice st
 
     const stream = new ReadableStream({
       async start(controller) {
-        let fullResponse = "";
+        let fullResponse = '';
         for await (const chunk of response) {
-          const content = chunk.choices[0]?.delta?.content || "";
+          const content = chunk.choices[0]?.delta?.content || '';
           fullResponse += content;
           controller.enqueue(new TextEncoder().encode(content));
         }
@@ -245,12 +322,12 @@ Be encouraging and supportive while maintaining professional financial advice st
 
     return new NextResponse(stream, {
       headers: {
-        "Content-Type": "text/plain",
-        "Transfer-Encoding": "chunked",
+        'Content-Type': 'text/plain',
+        'Transfer-Encoding': 'chunked',
       },
     });
   } catch (err) {
-    console.error("Erreur API:", err);
+    console.error('Erreur API:', err);
     return NextResponse.json({ error: err }, { status: 500 });
   }
 }
