@@ -283,6 +283,7 @@
     "manual": "Thủ công"
   },
   "category": {
+    "noCategories": "Không có danh mục nào.",
     "selected": "Chọn hoặc tạo danh mục",
     "noCategory": "Không có danh mục",
     "loadingCategories": "Đang tải danh mục...",

@@ -5,23 +5,22 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 ### 1. Repository & Architecture Overview
 
 - Monorepo managed by Turborepo (`turbo.json`). Apps: `apps/webapp` (primary product), `apps/docs` (docs site). Shared packages: `packages/ui` (React components), `packages/eslint-config`, `packages/typescript-config`.
-- Tech Stack: Next.js 15 (App Router, React 19), TypeScript, Prisma (PostgreSQL), NextAuth v5 beta (magic link + Google), next-intl for i18n, Vitest (unit), Playwright (e2e), Tailwind CSS v4, Radix UI primitives, React Query for data fetching / caching, OpenAI integration for AI features.
+- Tech Stack: Next.js 15 (App Router, React 19), TypeScript, Prisma (PostgreSQL), NextAuth v5 beta (magic link + Google), next-intl for i18n, Vitest (unit), Playwright (e2e), Tailwind CSS v4, Radix UI primitives + shadcn/ui components, React Query for data fetching / caching, OpenAI integration for financial chatbot.
 - Domain Models (Prisma): Users, Accounts (OAuth), Sessions, Categories, Transactions, Bridge*/Powens* financial aggregation entities (external banking providers). See `apps/webapp/prisma/schema.prisma` for authoritative schema.
 
 ### 2. Execution & Core Workflows
 
 - Install (root): `pnpm install` (Node >=18, pnpm@9). Postinstall in webapp runs `prisma generate`.
-- Dev (root aggregate): `pnpm dev` → `turbo run dev` (not cached). Typically focus on webapp: run from `apps/webapp`: `pnpm dev` (Turbopack, port 3000) or use PowerShell helper: `./scripts/dev.ps1 dev`.
-- Full local CI-style check (webapp): `./scripts/dev.ps1 all` (install → typecheck → lint → test → build). Prefer this before committing.
+- Dev (root aggregate): `pnpm dev` → `turbo run dev` (not cached). Typically focus on webapp: run from `apps/webapp`: `pnpm dev` (Turbopack, port 3000).
 - Build all: `pnpm build` (turbo). Each task inherits env constraints defined in `turbo.json`.
 - Unit tests: `pnpm test:unit` (Vitest) inside `apps/webapp` or `pnpm test:unit` at root (turbo pipeline). E2E: `pnpm test:e2e` (requires built app & Playwright browsers).
 - Type checking: `pnpm check-types` (tsc --noEmit) or integrated in scripts.
 
 ### 3. Environment & Configuration
 
-- Critical env vars surfaced in `turbo.json` task `env`/`globalEnv`: Auth (`AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, magic link RESEND*), Database (`DATABASE_URL`), External Banking (`BRIDGE_*`, `POWENS_*` + `POWENS_API_BASE`), Deployment (`VERCEL_PROJECT_PRODUCTION_URL`, `NEXTAUTH_URL`). Do NOT hardcode; reference via `process.env.*`.
+- Critical env vars surfaced in `turbo.json` task `env`/`globalEnv`: Auth (`AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, magic link RESEND*), Database (`DATABASE_URL`), External Banking (`BRIDGE\_*`, `POWENS\__`+`POWENS_API_BASE`), Deployment (`VERCEL_PROJECT_PRODUCTION_URL`, `NEXTAUTH_URL`). Do NOT hardcode; reference via `process.env._`.
 - Host/port logic: `apps/webapp/src/config.ts` picks production host via `VERCEL_PROJECT_PRODUCTION_URL`, fallback `http://localhost:3000`.
-- **MANDATORY i18n**: next-intl middleware (`src/middleware.ts`) auto localizes all non-excluded routes. ALWAYS use `useTranslations()` hook for all user-facing text in components and pages. Message keys should be added to `messages/en.json`, `messages/fr.json`, `messages/vi.json`. Avoid manual locale prefixes in redirects; use relative paths so middleware re-writes. Exclusions: API routes, protected dashboard/banking routes, static assets.
+- **MANDATORY i18n**: next-intl with routing config (`src/i18n/routing.ts`) using `localePrefix: 'never'` strategy (no URL prefixes). ALWAYS use `useTranslations()` hook for all user-facing text in components and pages. Message keys should be added to `messages/en.json`, `messages/fr.json`, `messages/vi.json`. Locale detection handled automatically via `src/i18n/request.ts`.
 
 ### 4. Authentication Pattern
 
@@ -43,9 +42,17 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 - Financial integrations (Bridge*, Powens* entities) are mapped in Prisma with snake-case DB table mapping via `@@map`. If adding migrations for new external provider models, mirror naming (e.g., `<provider>_users`, `<provider>_accounts`). Maintain referential integrity to `User` with `onDelete: Cascade`.
 - Amount precision: `Decimal(10,2)` for `Transaction.amount` — enforce two decimal places in any new validation utilities.
 
+### 6a. AI/Chatbot Feature
+
+- Financial chatbot at `/chatbot` using OpenAI API (`src/app/api/chat/route.ts`) with intent detection and response caching.
+- Chat routes defined in `src/config/routes/chat.ts` with utility functions (`isChatRoute`, `isChatApiRoute`, `getChatSessionRoute`).
+- Streaming chat responses via service layer (`_services/chat-service.ts`) with React Query mutations in `_hooks/use-chat.ts`.
+- Multi-language support: responses adapt to user locale (en/fr/vi) with appropriate messaging for unsupported intents.
+
 ### 7. UI / Shared Packages
 
 - Shared UI components under `packages/ui/src/*` can be imported via `@repo/ui`. Keep components framework-agnostic (no direct app router dependencies) & typed.
+- shadcn/ui components in `apps/webapp/src/components/ui/` for app-specific UI primitives (Button, Card, Dialog, etc.). Follow existing component patterns and Tailwind styling.
 - ESLint + TypeScript configs centralized (`packages/eslint-config`, `packages/typescript-config`). Extend rather than duplicating per package.
 
 ### 7a. Route-Scoped Modular Structure (Underscore Folders)
@@ -64,14 +71,14 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 
 ### 8. Testing Conventions
 
-- **MANDATORY**: Always generate unit tests when creating new components or pages. Unit test files may live under `src/**` with `.test.` or `.spec.` suffix or in `tests/` (see `turbo.json` inputs). When adding new tests, follow those globs to ensure cache invalidation.
-- Test structure: Use Vitest + React Testing Library for components. Test props, user interactions, and i18n message rendering. Mock server actions and external services.
-- Playwright E2E config: `apps/webapp/playwright.config.ts` (not inspected here; assume standard). Requires build; `test:e2e` depends on `^build` via turbo.
+- **MANDATORY**: Always use TDD/BDD approach - write tests FIRST in the `src/test/` folder, then implement features. Test files should mirror the `src/` structure but live in `src/test/` directory (e.g., `src/test/components/navigation/app-sidebar.test.tsx` for `src/components/navigation/app-sidebar.tsx`).
+- Test structure: Use Vitest + React Testing Library for components. Follow BDD patterns with `describe()` for feature behaviors and `it()` for specific scenarios. Test props, user interactions, and i18n message rendering. Mock server actions and external services.
+- Playwright E2E config: `apps/webapp/playwright.config.ts` for integration tests. Requires build; `test:e2e` depends on `^build` via turbo.
 - Prefer Vitest for React component / server action logic; mock Prisma cautiously (or use a test db URL). Avoid global new PrismaClient instances.
 
 ### 8a. Forms, Validation & Data Fetching Patterns
 
-- React Query setup: Query client provider (see likely `client-provider.tsx`) wraps protected areas. Query keys include locale: e.g. `['categories', locale]`, `['transactions', locale]` enabling locale-scoped caches.
+- React Query setup: Query client provider (`client-provider.tsx`) wraps protected areas. Query keys include locale: e.g. `['categories', locale]`, `['transactions', locale]` enabling locale-scoped caches.
 - Mutations (`useCreateCategory`, `useCreateTransaction`) always `invalidateQueries` with matching locale key to refresh lists after create.
 - Keep `staleTime` (currently 5 min) consistent when introducing new list queries; reuse existing pattern for cache timing.
 - react-hook-form + zod: Forms (e.g., `create-transaction-form.tsx`) use `useForm` with `zodResolver(createTransactionSchema)`; schemas live under `_validations/*-schema.ts`. Coerce numeric input via `z.coerce.number()` and enforce business rules (positive amounts, max description length). Follow this folder co-location pattern when adding new forms.
@@ -90,8 +97,7 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 2. Export server action in `src/actions/<feature>.ts` following auth + validation + return pattern.
 3. Create UI component(s) in `apps/webapp/src/components/...` or shared `packages/ui` if generic.
 4. **MANDATORY**: Add i18n message keys to all three locale files (`messages/en.json`, `messages/fr.json`, `messages/vi.json`) and use `useTranslations()` in components.
-5. **MANDATORY**: Write unit test in same folder (`*.test.ts(x)`) or under `tests/` covering component props, user interactions, and i18n message rendering.
-6. Run `./scripts/dev.ps1 all` before commit.
+5. **MANDATORY**: Write tests FIRST using TDD/BDD approach in `src/test/` folder (mirroring `src/` structure) covering component props, user interactions, and i18n message rendering.
 
 ### 11. Safe Change Guidelines (Project-Specific)
 
@@ -106,19 +112,19 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 - Do not hardcode provider secrets or magic link email HTML inline; keep using templated render path.
 - Do not add global polyfills or experimental flags without updating this file & root README if they affect build tasks.
 - **NEVER create components or pages without i18n** - all user-facing text must use `useTranslations()` hook.
-- **NEVER create components or pages without unit tests** - every new component/page requires corresponding test file.
+- **NEVER create components or pages without tests** - always write tests FIRST using TDD/BDD in `src/test/` folder, then implement.
 
 ### 13. Quick Reference
 
 - Auth file: `apps/webapp/src/auth.ts`
-- Middleware (i18n): `apps/webapp/src/middleware.ts`
+- I18n config: `apps/webapp/src/i18n/routing.ts` + `request.ts`
 - Server actions: `apps/webapp/src/actions/*`
 - Prisma schema: `apps/webapp/prisma/schema.prisma`
-- Dev scripts: `apps/webapp/scripts/dev.ps1` / `dev.sh`
 - Turbo tasks: `turbo.json`
 - Module pattern: `(route)/_components|_hooks|_services|_validations|_types|_utils`
 - Query client setup: `apps/webapp/src/app/(protected)/client-provider.tsx`
 - Config: `apps/webapp/src/config.ts` (hosts, routes)
+- Chat routes: `apps/webapp/src/config/routes/chat.ts`
 
 ---
 

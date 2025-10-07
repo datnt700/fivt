@@ -105,6 +105,16 @@
     },
     "manual": "Manuel"
   },
+  "category": {
+    "noCategories": "Aucune catégorie disponible.",
+    "selected": "Sélectionner ou créer une catégorie",
+    "noCategory": "Aucune catégorie",
+    "loadingCategories": "Chargement des catégories...",
+    "errorLoadingCategories": "Erreur lors du chargement des catégories. Veuillez réessayer.",
+    "addCategory": "Ajouter une catégorie",
+    "editCategory": "Modifier la catégorie",
+    "deleteCategory": "Supprimer la catégorie"
+  },
   "financialProfile": {
     "setup": {
       "title": "Configuration du Profil Financier",

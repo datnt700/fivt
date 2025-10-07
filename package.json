@@ -7,7 +7,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "filter:web": "turbo run dev --filter=web",
+    "dev:webapp": "turbo run dev --filter=@fivt/webapp",
     "test": "turbo run test",
     "test:unit": "turbo run test:unit",
     "test:coverage": "turbo run test:coverage",

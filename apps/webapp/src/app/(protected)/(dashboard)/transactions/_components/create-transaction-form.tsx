@@ -97,7 +97,7 @@ export function CreateTransactionForm({
     }
   };
 
-  if (isLoading) return <p>{tCategory('noCategories')}</p>;
+  if (isLoading) return <p>{tCategory('loadingCategories')}</p>;
 
   return (
     <form
