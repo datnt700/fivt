@@ -23,13 +23,32 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      thresholds: {
+        global: {
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          statements: 80,
+        },
+      },
+      all: true,
+      include: ['src/**/*.{ts,tsx}'],
       exclude: [
         'node_modules/',
-        'src/test/',
+        'src/test/**',
         '**/*.d.ts',
         '**/*.config.*',
         'build/',
         '.next/',
+        '**/*.stories.*',
+        '**/prisma.ts',
+        '**/middleware.ts',
+        'src/app/**/layout.tsx', // Layout files are harder to test meaningfully
+        'src/app/**/loading.tsx', // Loading components are simple
+        'src/app/**/not-found.tsx', // Error pages
+        'src/app/**/error.tsx', // Error pages
+        'src/fonts/**',
+        'src/types/**', // Type definitions
       ],
     },
   },
