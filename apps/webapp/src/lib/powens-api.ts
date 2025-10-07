@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Powens API configuration - Based on https://docs.powens.com/documentation/
-const POWENS_API_BASE = process.env.POWENS_API_BASE || 'https://your-domain-sandbox.biapi.pro/2.0';
+const POWENS_API_BASE =
+  process.env.POWENS_API_BASE || 'https://your-domain-sandbox.biapi.pro/2.0';
 
 // Powens API interfaces based on their documentation
 export interface PowensUser {
@@ -58,10 +59,14 @@ export interface PowensAuthResponse {
 
 class PowensApiClient {
   private getHeaders() {
+    const clientId = process.env.POWENS_CLIENT_ID || 'dummy-client-id';
+    const clientSecret =
+      process.env.POWENS_CLIENT_SECRET || 'dummy-client-secret';
+
     return {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Basic ${Buffer.from(`${process.env.POWENS_CLIENT_ID}:${process.env.POWENS_CLIENT_SECRET}`).toString('base64')}`,
+      Accept: 'application/json',
+      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
       'User-Agent': 'FivtApp/1.0',
     };
   }
@@ -69,8 +74,8 @@ class PowensApiClient {
   private getAuthHeaders(accessToken: string) {
     return {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${accessToken}`,
+      Accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
       'User-Agent': 'FivtApp/1.0',
     };
   }
@@ -78,7 +83,7 @@ class PowensApiClient {
   async createUser(): Promise<PowensAuthResponse> {
     try {
       console.log('Creating Powens user and getting access token');
-      
+
       const response = await axios.post(
         `${POWENS_API_BASE}/auth/init`,
         {
@@ -88,11 +93,11 @@ class PowensApiClient {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            Accept: 'application/json',
           },
         }
       );
-      
+
       console.log('Powens user created successfully with access token');
       return {
         access_token: response.data.auth_token,
@@ -106,21 +111,23 @@ class PowensApiClient {
         console.error('Response data:', error.response?.data);
         console.error('Request headers:', error.config?.headers);
       }
-      throw new Error(`Failed to create Powens user: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create Powens user: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   async getTemporaryCode(accessToken: string): Promise<string> {
     try {
       console.log('Getting Powens temporary code for webview');
-      
+
       const response = await axios.get(
         `${POWENS_API_BASE}/auth/token/code?type=singleAccess`,
         {
           headers: this.getAuthHeaders(accessToken),
         }
       );
-      
+
       console.log('Powens temporary code obtained successfully');
       return response.data.code;
     } catch (error) {
@@ -130,7 +137,9 @@ class PowensApiClient {
         console.error('Response data:', error.response?.data);
         console.error('Request headers:', error.config?.headers);
       }
-      throw new Error(`Failed to get Powens temporary code: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to get Powens temporary code: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -141,19 +150,23 @@ class PowensApiClient {
     try {
       console.log('Creating Powens webview connect URL');
       console.log('Using callback URL:', callbackUrl);
-      
+
       // Extract domain from API base URL with validation
-      const domainMatch = POWENS_API_BASE.match(/^https:\/\/([^.]+)\.biapi\.pro/);
+      const domainMatch = POWENS_API_BASE.match(
+        /^https:\/\/([^.]+)\.biapi\.pro/
+      );
       if (!domainMatch || !domainMatch[1]) {
-        throw new Error(`Failed to extract domain from POWENS_API_BASE: "${POWENS_API_BASE}". Please check your configuration.`);
+        throw new Error(
+          `Failed to extract domain from POWENS_API_BASE: "${POWENS_API_BASE}". Please check your configuration.`
+        );
       }
       const domain = domainMatch[1];
-      
+
       // Build webview URL matching the working format from integrate.biapi.pro
       // This helps enable QR code and desktop login options for compte courant accounts
       // Use the correct webview endpoint format with connector_capabilities parameter
       const connectUrl = `https://${domain}.biapi.pro/2.0/auth/webview/connect?redirect_uri=${encodeURIComponent(callbackUrl)}&client_id=${process.env.POWENS_CLIENT_ID}&code=${temporaryCode}&connector_capabilities=bank&connector_ids=8`;
-      
+
       console.log('Powens connect session created successfully');
       console.log('Connect URL with connector_capabilities=bank:', connectUrl);
       return {
@@ -162,22 +175,31 @@ class PowensApiClient {
       };
     } catch (error) {
       console.error('Error creating Powens connect session:', error);
-      throw new Error(`Failed to create Powens connect session: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create Powens connect session: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
-  async getAccounts(accessToken: string, userId: number): Promise<PowensAccount[]> {
+  async getAccounts(
+    accessToken: string,
+    userId: number
+  ): Promise<PowensAccount[]> {
     try {
       console.log('Fetching Powens accounts for user:', userId);
-      
+
       const response = await axios.get(
         `${POWENS_API_BASE}/users/${userId}/accounts`,
         {
           headers: this.getAuthHeaders(accessToken),
         }
       );
-      
-      console.log('Powens accounts fetched successfully:', response.data.length, 'accounts');
+
+      console.log(
+        'Powens accounts fetched successfully:',
+        response.data.length,
+        'accounts'
+      );
       return response.data;
     } catch (error) {
       console.error('Error fetching Powens accounts:', error);
@@ -185,14 +207,19 @@ class PowensApiClient {
         console.error('Response status:', error.response?.status);
         console.error('Response data:', error.response?.data);
       }
-      throw new Error(`Failed to fetch Powens accounts: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch Powens accounts: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
-  async getTransactions(accessToken: string, accountId: number): Promise<PowensTransaction[]> {
+  async getTransactions(
+    accessToken: string,
+    accountId: number
+  ): Promise<PowensTransaction[]> {
     try {
       console.log('Fetching Powens transactions for account:', accountId);
-      
+
       const response = await axios.get(
         `${POWENS_API_BASE}/accounts/${accountId}/transactions`,
         {
@@ -202,8 +229,12 @@ class PowensApiClient {
           },
         }
       );
-      
-      console.log('Powens transactions fetched successfully:', response.data.length, 'transactions');
+
+      console.log(
+        'Powens transactions fetched successfully:',
+        response.data.length,
+        'transactions'
+      );
       return response.data;
     } catch (error) {
       console.error('Error fetching Powens transactions:', error);
@@ -211,7 +242,9 @@ class PowensApiClient {
         console.error('Response status:', error.response?.status);
         console.error('Response data:', error.response?.data);
       }
-      throw new Error(`Failed to fetch Powens transactions: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch Powens transactions: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -219,7 +252,7 @@ class PowensApiClient {
     try {
       const response = await axios.get(`${POWENS_API_BASE}/connectors`, {
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
         timeout: 5000,
       });
