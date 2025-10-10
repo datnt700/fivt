@@ -73,6 +73,7 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 
 - **MANDATORY**: Always use TDD/BDD approach - write tests FIRST in the `src/test/` folder, then implement features. Test files should mirror the `src/` structure but live in `src/test/` directory (e.g., `src/test/components/navigation/app-sidebar.test.tsx` for `src/components/navigation/app-sidebar.tsx`).
 - Test structure: Use Vitest + React Testing Library for components. Follow BDD patterns with `describe()` for feature behaviors and `it()` for specific scenarios. Test props, user interactions, and i18n message rendering. Mock server actions and external services.
+- **Type Safety in Tests**: Use `ReturnType<typeof hookName>` for typing hook mocks. Avoid `as any` - use `as unknown as ValidType` when testing invalid inputs. Import types from actual implementation files, not duplicated test types.
 - Playwright E2E config: `apps/webapp/playwright.config.ts` for integration tests. Requires build; `test:e2e` depends on `^build` via turbo.
 - Prefer Vitest for React component / server action logic; mock Prisma cautiously (or use a test db URL). Avoid global new PrismaClient instances.
 
@@ -113,6 +114,8 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 - Do not add global polyfills or experimental flags without updating this file & root README if they affect build tasks.
 - **NEVER create components or pages without i18n** - all user-facing text must use `useTranslations()` hook.
 - **NEVER create components or pages without tests** - always write tests FIRST using TDD/BDD in `src/test/` folder, then implement.
+- **NEVER use `as any` type assertions** - always use proper TypeScript types or `as unknown as ValidType` for intentional type bypassing in tests.
+- **NEVER skip TypeScript compilation** - all code must pass `tsc --noEmit` and ESLint without warnings before committing.
 
 ### 13. Quick Reference
 

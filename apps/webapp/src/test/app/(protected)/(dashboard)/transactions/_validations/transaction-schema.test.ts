@@ -1,12 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { createTransactionSchema, type CreateTransactionFormValues } from '@/app/(protected)/(dashboard)/transactions/_validations/transaction-schema';
+import {
+  createTransactionSchema,
+  type CreateTransactionFormValues,
+} from '@/app/(protected)/(dashboard)/budget/_validations/transaction-schema';
 import { ZodError } from 'zod';
 
 describe('Transaction Schema Validation', () => {
   describe('createTransactionSchema', () => {
     const validTransactionData: CreateTransactionFormValues = {
       date: '2024-01-15',
-      amount: 150.50,
+      amount: 150.5,
       type: 'EXPENSE',
       categoryId: 'cat-123',
       description: 'Valid transaction description',
@@ -15,10 +18,10 @@ describe('Transaction Schema Validation', () => {
     describe('Valid Data', () => {
       it('should validate correct transaction data', () => {
         const result = createTransactionSchema.parse(validTransactionData);
-        
+
         expect(result).toEqual(validTransactionData);
         expect(result.date).toBe('2024-01-15');
-        expect(result.amount).toBe(150.50);
+        expect(result.amount).toBe(150.5);
         expect(result.type).toBe('EXPENSE');
         expect(result.categoryId).toBe('cat-123');
         expect(result.description).toBe('Valid transaction description');
@@ -32,7 +35,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(incomeData);
-        
+
         expect(result.type).toBe('INCOME');
         expect(result.description).toBe('Salary payment');
       });
@@ -45,7 +48,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(expenseData);
-        
+
         expect(result.type).toBe('EXPENSE');
         expect(result.description).toBe('Grocery shopping');
       });
@@ -59,7 +62,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(dataWithoutDescription);
-        
+
         expect(result.description).toBeUndefined();
       });
 
@@ -70,7 +73,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(dataWithEmptyDescription);
-        
+
         expect(result.description).toBe('');
       });
 
@@ -90,7 +93,7 @@ describe('Transaction Schema Validation', () => {
 
       it('should handle string amounts that can be coerced to numbers', () => {
         const testCases = [
-          { input: '150.50', expected: 150.50 },
+          { input: '150.50', expected: 150.5 },
           { input: '100', expected: 100 },
           { input: '0.01', expected: 0.01 },
           { input: '999999.99', expected: 999999.99 },
@@ -159,8 +162,9 @@ describe('Transaction Schema Validation', () => {
           date: '',
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should reject undefined date', () => {
@@ -169,8 +173,9 @@ describe('Transaction Schema Validation', () => {
           date: undefined as unknown,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should accept valid date formats', () => {
@@ -194,11 +199,7 @@ describe('Transaction Schema Validation', () => {
 
       it('should handle date edge cases', () => {
         // Note: The schema validates string format, not actual date validity
-        const dateStrings = [
-          '2024-01-01',
-          '2024-12-31',
-          '2000-01-01',
-        ];
+        const dateStrings = ['2024-01-01', '2024-12-31', '2000-01-01'];
 
         dateStrings.forEach(date => {
           const testData = {
@@ -218,8 +219,9 @@ describe('Transaction Schema Validation', () => {
           amount: 0,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should reject negative amounts', () => {
@@ -231,8 +233,9 @@ describe('Transaction Schema Validation', () => {
             amount,
           };
 
-          expect(() => createTransactionSchema.parse(invalidData))
-            .toThrow(ZodError);
+          expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+            ZodError
+          );
         });
       });
 
@@ -245,8 +248,9 @@ describe('Transaction Schema Validation', () => {
             amount: amount as unknown,
           };
 
-          expect(() => createTransactionSchema.parse(invalidData))
-            .toThrow(ZodError);
+          expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+            ZodError
+          );
         });
       });
 
@@ -256,8 +260,9 @@ describe('Transaction Schema Validation', () => {
           amount: undefined as unknown,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should reject null amount', () => {
@@ -266,14 +271,22 @@ describe('Transaction Schema Validation', () => {
           amount: null as unknown,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
     });
 
     describe('Type Validation Errors', () => {
       it('should reject invalid transaction types', () => {
-        const invalidTypes = ['TRANSFER', 'DEPOSIT', 'WITHDRAWAL', '', null, undefined];
+        const invalidTypes = [
+          'TRANSFER',
+          'DEPOSIT',
+          'WITHDRAWAL',
+          '',
+          null,
+          undefined,
+        ];
 
         invalidTypes.forEach(type => {
           const invalidData = {
@@ -281,13 +294,20 @@ describe('Transaction Schema Validation', () => {
             type: type as unknown,
           };
 
-          expect(() => createTransactionSchema.parse(invalidData))
-            .toThrow(ZodError);
+          expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+            ZodError
+          );
         });
       });
 
       it('should reject case-sensitive incorrect types', () => {
-        const invalidTypes = ['income', 'expense', 'Income', 'Expense', 'INCOME_TYPE'];
+        const invalidTypes = [
+          'income',
+          'expense',
+          'Income',
+          'Expense',
+          'INCOME_TYPE',
+        ];
 
         invalidTypes.forEach(type => {
           const invalidData = {
@@ -295,8 +315,9 @@ describe('Transaction Schema Validation', () => {
             type: type as unknown,
           };
 
-          expect(() => createTransactionSchema.parse(invalidData))
-            .toThrow(ZodError);
+          expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+            ZodError
+          );
         });
       });
     });
@@ -308,8 +329,9 @@ describe('Transaction Schema Validation', () => {
           categoryId: '',
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should reject undefined category ID', () => {
@@ -318,8 +340,9 @@ describe('Transaction Schema Validation', () => {
           categoryId: undefined as unknown,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should reject null category ID', () => {
@@ -328,8 +351,9 @@ describe('Transaction Schema Validation', () => {
           categoryId: null as unknown,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should accept whitespace-only category ID (schema allows it)', () => {
@@ -352,8 +376,9 @@ describe('Transaction Schema Validation', () => {
           description: tooLongDescription,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should reject description much longer than limit', () => {
@@ -363,8 +388,9 @@ describe('Transaction Schema Validation', () => {
           description: tooLongDescription,
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
     });
 
@@ -379,8 +405,9 @@ describe('Transaction Schema Validation', () => {
           description: 'A'.repeat(250),
         };
 
-        expect(() => createTransactionSchema.parse(invalidData))
-          .toThrow(ZodError);
+        expect(() => createTransactionSchema.parse(invalidData)).toThrow(
+          ZodError
+        );
       });
 
       it('should validate with minimal required fields', () => {
@@ -392,7 +419,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(minimalData);
-        
+
         expect(result.date).toBe('2024-01-15');
         expect(result.amount).toBe(50);
         expect(result.type).toBe('EXPENSE');
@@ -410,7 +437,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(completeData);
-        
+
         expect(result).toEqual(completeData);
       });
     });
@@ -426,7 +453,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(testData);
-        
+
         // TypeScript should infer the correct types
         expect(typeof result.date).toBe('string');
         expect(typeof result.amount).toBe('number');
@@ -446,8 +473,12 @@ describe('Transaction Schema Validation', () => {
           type: 'EXPENSE' as const,
         };
 
-        expect(() => createTransactionSchema.parse(incomeTransaction)).not.toThrow();
-        expect(() => createTransactionSchema.parse(expenseTransaction)).not.toThrow();
+        expect(() =>
+          createTransactionSchema.parse(incomeTransaction)
+        ).not.toThrow();
+        expect(() =>
+          createTransactionSchema.parse(expenseTransaction)
+        ).not.toThrow();
       });
     });
 
@@ -463,7 +494,9 @@ describe('Transaction Schema Validation', () => {
         } catch (error) {
           expect(error).toBeInstanceOf(ZodError);
           const zodError = error as ZodError;
-          expect(zodError.errors.some(err => err.message.includes('Select date'))).toBe(true);
+          expect(
+            zodError.errors.some(err => err.message.includes('Select date'))
+          ).toBe(true);
         }
       });
 
@@ -478,7 +511,11 @@ describe('Transaction Schema Validation', () => {
         } catch (error) {
           expect(error).toBeInstanceOf(ZodError);
           const zodError = error as ZodError;
-          expect(zodError.errors.some(err => err.message.includes('Amount must be > 0'))).toBe(true);
+          expect(
+            zodError.errors.some(err =>
+              err.message.includes('Amount must be > 0')
+            )
+          ).toBe(true);
         }
       });
 
@@ -493,7 +530,11 @@ describe('Transaction Schema Validation', () => {
         } catch (error) {
           expect(error).toBeInstanceOf(ZodError);
           const zodError = error as ZodError;
-          expect(zodError.errors.some(err => err.message.includes('Choose a category'))).toBe(true);
+          expect(
+            zodError.errors.some(err =>
+              err.message.includes('Choose a category')
+            )
+          ).toBe(true);
         }
       });
     });
@@ -507,7 +548,7 @@ describe('Transaction Schema Validation', () => {
         };
 
         const result = createTransactionSchema.parse(testData);
-        expect(result.amount).toBe(125.50);
+        expect(result.amount).toBe(125.5);
         expect(typeof result.amount).toBe('number');
       });
 

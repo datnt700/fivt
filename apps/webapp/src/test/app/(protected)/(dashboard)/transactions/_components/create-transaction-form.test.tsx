@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CreateTransactionForm } from '@/app/(protected)/(dashboard)/transactions/_components/create-transaction-form';
+import { CreateTransactionForm } from '@/app/(protected)/(dashboard)/budget/_components/create-transaction-form';
 
 // Mock next-intl
 vi.mock('next-intl', () => ({
@@ -27,24 +27,18 @@ vi.mock('next-intl', () => ({
 }));
 
 // Mock hooks
-vi.mock(
-  '@/app/(protected)/(dashboard)/transactions/_hooks/use-categories',
-  () => ({
-    useCategories: vi.fn(),
-    useCreateCategory: vi.fn(),
-  })
-);
+vi.mock('@/app/(protected)/(dashboard)/budget/_hooks/use-categories', () => ({
+  useCategories: vi.fn(),
+  useCreateCategory: vi.fn(),
+}));
 
-vi.mock(
-  '@/app/(protected)/(dashboard)/transactions/_hooks/use-transaction',
-  () => ({
-    useCreateTransaction: vi.fn(),
-  })
-);
+vi.mock('@/app/(protected)/(dashboard)/budget/_hooks/use-transaction', () => ({
+  useCreateTransaction: vi.fn(),
+}));
 
 // Mock form validation schema
 vi.mock(
-  '@/app/(protected)/(dashboard)/transactions/_validations/transaction-schema',
+  '@/app/(protected)/(dashboard)/budget/_validations/transaction-schema',
   () => ({
     createTransactionSchema: {},
     type: 'CreateTransactionFormValues',
@@ -132,8 +126,8 @@ vi.mock('@/components/ui/button', () => ({
 import {
   useCategories,
   useCreateCategory,
-} from '@/app/(protected)/(dashboard)/transactions/_hooks/use-categories';
-import { useCreateTransaction } from '@/app/(protected)/(dashboard)/transactions/_hooks/use-transaction';
+} from '@/app/(protected)/(dashboard)/budget/_hooks/use-categories';
+import { useCreateTransaction } from '@/app/(protected)/(dashboard)/budget/_hooks/use-transaction';
 
 const mockUseCategories = vi.mocked(useCategories);
 const mockUseCreateCategory = vi.mocked(useCreateCategory);

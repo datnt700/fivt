@@ -4,21 +4,18 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import { 
-  CreateTransactionFormCard, 
-  TransactionsSummary, 
-  BankTransactionsList, 
-  ManualTransactionsList,
-  MonthSelector 
+import {
+  TransactionsSummary,
+  BankTransactionsList,
+  MonthSelector,
 } from './_components';
-import { useTransactions } from './_hooks/use-transaction';
 import type { Transaction } from './_types';
 import { getMonthOptions } from './_utils';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TransactionsPage() {
   const t = useTranslations('transactions');
-  
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,21 +26,18 @@ export default function TransactionsPage() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [transactionCount, setTransactionCount] = useState(0);
 
-  // Fetch manual transactions
-  const { data: manualTransactions, isLoading: manualLoading, error: manualError } = useTransactions();
-
   const fetchTransactions = async (month: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await fetch(`/api/powens/transactions?month=${month}`);
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || 'Failed to fetch transactions');
       }
-      
+
       setTransactions(data.transactions);
       setTotalAmount(data.total);
       setTransactionCount(data.count);
@@ -65,51 +59,42 @@ export default function TransactionsPage() {
     <div className="w-full h-full overflow-y-auto">
       <div className="space-y-6 p-4">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t('bankTransactions')}</h1>
-          <p className="text-muted-foreground">
-            {t('subtitle')}
-          </p>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              {t('bankTransactions')}
+            </h1>
+            <p className="text-muted-foreground">{t('subtitle')}</p>
+          </div>
+
+          <MonthSelector
+            selectedMonth={selectedMonth}
+            onMonthChange={setSelectedMonth}
+            onRefresh={() => fetchTransactions(selectedMonth)}
+            loading={loading}
+          />
         </div>
-        
-        <MonthSelector
-          selectedMonth={selectedMonth}
-          onMonthChange={setSelectedMonth}
-          onRefresh={() => fetchTransactions(selectedMonth)}
-          loading={loading}
+
+        <TransactionsSummary
+          transactions={transactions}
+          totalAmount={totalAmount}
+          transactionCount={transactionCount}
         />
-      </div>
 
-      <TransactionsSummary
-        transactions={transactions}
-        totalAmount={totalAmount}
-        transactionCount={transactionCount}
-      />
+        {/* Error State */}
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-      {/* Error State */}
-      {error && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
-
-      <BankTransactionsList
-        transactions={transactions}
-        loading={loading}
-        error={error}
-        selectedMonth={selectedMonth}
-        monthOptions={getMonthOptions()}
-      />
-
-      <ManualTransactionsList
-        transactions={manualTransactions}
-        loading={manualLoading}
-        error={manualError}
-      />
-
-        {/* Manual Transaction Creation */}
-        <CreateTransactionFormCard />
+        <BankTransactionsList
+          transactions={transactions}
+          loading={loading}
+          error={error}
+          selectedMonth={selectedMonth}
+          monthOptions={getMonthOptions()}
+        />
       </div>
     </div>
   );

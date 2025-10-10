@@ -74,12 +74,12 @@ export function CreateTransactionForm({
       ['categories', locale],
       old => {
         const prev = old ?? [];
-        const id = String(created.id);
-        if (prev.some(x => String(x.id) === id)) return prev;
+        const id = created.id;
+        if (prev.some(x => x.id === id)) return prev;
         return [...prev, { id, name: created.name }];
       }
     );
-    setValue('categoryId', String(created.id), {
+    setValue('categoryId', created.id, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -249,7 +249,7 @@ export function CreateTransactionForm({
 
       {createTransaction.isError && (
         <p className="text-red-500 text-sm">
-          ⚠️ {(createTransaction.error as Error).message}
+          ⚠️ {createTransaction.error?.message || 'An error occurred'}
         </p>
       )}
     </form>
