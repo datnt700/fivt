@@ -1,0 +1,63 @@
+@use '@/app/components/ui/common/styles/breakpoints' as bp;
+
+.itemDetail {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  max-width: 100%;
+  gap: 0.5rem;
+  align-items: center;
+  transition: transform ease-out 0.3s;
+
+  &:hover {
+    //transform: scale(1.1);
+  }
+
+  .container {
+    text-align: center;
+    @media screen and (min-width: bp.$bp-md) {
+      text-align: left;
+    }
+  }
+
+  .featuresDescription {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    @media screen and (min-width: bp.$bp-md) {
+      text-align: left;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .descriptionTitle {
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 2.5rem;
+
+      @media screen and (min-width: bp.$bp-md) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .descriptionDetail {
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      color: var(--dark-5);
+    }
+  }
+}
+
+.icon {
+  justify-content: flex-start;
+  color: var(--main-color);
+
+  .light {
+    color: var(--light);
+  }
+}

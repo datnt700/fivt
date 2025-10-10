@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const bgMap = {
   light: 'bg-white',
-  gradient: 'bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee]',
+  gradient: 'bg-gradient-to-t from-[#F2F7FF] to-[#FFFFFF]',
 } as const;
 
 export const Layout = ({

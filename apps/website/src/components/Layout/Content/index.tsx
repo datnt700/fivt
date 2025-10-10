@@ -8,7 +8,7 @@ interface ContentProps {
 
 export const Content = ({ children }: ContentProps) => {
   return (
-    <div className="w-full h-full m-auto px-0 py-1 md:max-w-[1700px]">
+    <div className="w-full h-full m-auto px-5 py-2 md:max-w-[1700px]">
       {children}
     </div>
   );

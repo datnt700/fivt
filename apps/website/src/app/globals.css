@@ -2,21 +2,26 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-site-title: "EB Garamond", serif;
+  --color-title: #333333;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-primary: #f97316;
+  --color-title: #333333;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-title: #e5e7eb;
   }
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -31,4 +36,9 @@ body {
     Arial,
     Helvetica,
     sans-serif;
+  
+}
+
+h1 {
+  font-weight: 700;
 }

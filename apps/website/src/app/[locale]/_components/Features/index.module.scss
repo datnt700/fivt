@@ -1,0 +1,37 @@
+@use '@/app/components/ui/common/styles/breakpoints' as bp;
+
+.wrapper {
+  padding: 4rem 0 8rem;
+}
+
+.introductionFeature {
+  text-align: justify;
+  margin-bottom: 2rem;
+
+  @media screen and (min-width: bp.$bp-md) {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .text {
+    font-weight: 700;
+    // font-size: 2.5rem;
+  }
+}
+
+.features {
+  max-width: 100%;
+  margin-bottom: 3rem;
+  .featuresItem {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    gap: 2rem;
+
+    @media screen and (min-width: bp.$bp-md) {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
