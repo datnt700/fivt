@@ -28,7 +28,10 @@ vi.mock('next-intl', () => ({
 // Mock utility functions
 vi.mock('@/app/(protected)/(dashboard)/transactions/_utils', () => ({
   formatCurrency: vi.fn((amount: number) => `$${amount.toFixed(2)}`),
-  formatDate: vi.fn((date: string) => new Date(date).toLocaleDateString()),
+  formatDate: vi.fn((date: string) => {
+    const d = new Date(date);
+    return `${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}/${d.getFullYear()}`;
+  }),
 }));
 
 // Mock icons
@@ -251,10 +254,10 @@ describe('ManualTransactionsList', () => {
   it('should render formatted dates', () => {
     renderWithQueryClient(<ManualTransactionsList {...defaultProps} />);
 
-    // Mock formatDate returns toLocaleDateString
+    // Mock formatDate returns consistently formatted dates
     expect(screen.getByText('10/10/2023')).toBeInTheDocument();
-    expect(screen.getByText('09/10/2023')).toBeInTheDocument();
-    expect(screen.getByText('08/10/2023')).toBeInTheDocument();
+    expect(screen.getByText('10/09/2023')).toBeInTheDocument();
+    expect(screen.getByText('10/08/2023')).toBeInTheDocument();
   });
 
   it('should have hover effects on transaction items', () => {
