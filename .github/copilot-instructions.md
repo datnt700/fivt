@@ -68,6 +68,11 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 - When adding a new feature, replicate this structure; only create folders actually needed (avoid empty placeholders).
 - Cross-module sharing: if logic becomes generic (used in >1 feature), promote to `src/lib` (utilities) or `packages/ui` (visual component) instead of reaching across feature boundaries.
 - Keep server actions OUT of `_services` (they live globally in `src/actions`); services call them via fetch or direct import if server-only.
+- **Modular Architecture Example**: The `extensions` module exemplifies this pattern:
+  - `_hooks/use-extensions.ts`: React Query hooks for extension management (`useUserSubscriptions`, `useSubscribeToService`)
+  - `_services/extension-service.ts`: API client functions for extension operations (`extensionService.getUserExtensions()`)
+  - `_components/extensions-manager.tsx`: Main UI component importing from local `../_hooks/use-extensions`
+  - Import pattern: `import { useUserSubscriptions } from '../_hooks/use-extensions'` NOT global hooks
 
 ### 8. Testing Conventions
 
@@ -125,6 +130,7 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 - Prisma schema: `apps/webapp/prisma/schema.prisma`
 - Turbo tasks: `turbo.json`
 - Module pattern: `(route)/_components|_hooks|_services|_validations|_types|_utils`
+- Extensions example: `extensions/_hooks/use-extensions.ts`, `extensions/_services/extension-service.ts`
 - Query client setup: `apps/webapp/src/app/(protected)/client-provider.tsx`
 - Config: `apps/webapp/src/config.ts` (hosts, routes)
 - Chat routes: `apps/webapp/src/config/routes/chat.ts`
