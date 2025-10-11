@@ -26,6 +26,7 @@ model User {
   bridgeAccounts BridgeAccount[]
   powensUser     PowensUser?
   powensAccounts PowensAccount[]
+  subscriptions UserSubscription[]
 }
 
 model Account {
@@ -168,4 +169,65 @@ model PowensAccount {
   updatedAt        DateTime @updatedAt
   
   @@map("powens_accounts")
+}
+
+// Subscription system models
+enum ServiceType {
+  DASHBOARD
+  BUDGET_TRACKING
+  TRANSACTION_MANAGEMENT
+  BANKING_INTEGRATION
+  AI_CHATBOT
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PENDING
+}
+
+model Service {
+  id              String             @id @default(uuid())
+  name            String
+  description     String?
+  type            ServiceType
+  price           Decimal            @db.Decimal(10, 2)
+  isActive        Boolean            @default(true)
+  features        String[]
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  subscriptions   UserSubscription[]
+  planIds         String[]           // Service can be part of multiple plans
+}
+
+model UserSubscription {
+  id        String             @id @default(uuid())
+  userId    String
+  serviceId String
+  status    SubscriptionStatus @default(PENDING)
+  startDate DateTime           @default(now())
+  endDate   DateTime?
+  autoRenew Boolean            @default(true)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, serviceId])
+}
+
+model SubscriptionPlan {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  price           Decimal  @db.Decimal(10, 2)
+  billingInterval String   @default("MONTHLY") // MONTHLY, YEARLY
+  serviceIds      String[] // Array of service IDs included in this plan
+  isActive        Boolean  @default(true)
+  maxUsers        Int?     @default(1)
+  features        String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

@@ -429,5 +429,113 @@
       "canChange": "Email của bạn là email chính và không thể thay đổi tại đây.",
       "description": "Cập nhật thông tin hồ sơ công khai của bạn"
     }
+  },
+  "extensions": {
+    "title": "Tiện ích mở rộng",
+    "subtitle": "Khám phá và quản lý các tiện ích mở rộng dịch vụ tài chính của bạn",
+    "back": "Quay lại Tiện ích mở rộng",
+    "stats": {
+      "installed": "Đã cài đặt",
+      "installedDescription": "Tiện ích đang hoạt động",
+      "available": "Có sẵn",
+      "availableDescription": "Sẵn sàng cài đặt",
+      "monthlySpend": "Chi phí Hàng tháng",
+      "monthlySpendDescription": "Tổng chi phí đăng ký",
+      "activeServices": "Dịch vụ Hoạt động",
+      "activeServicesDescription": "Dịch vụ hiện đang hoạt động"
+    },
+    "tabs": {
+      "installed": "Đã cài đặt",
+      "discover": "Khám phá",
+      "plans": "Gói dịch vụ"
+    },
+    "status": {
+      "active": "Hoạt động",
+      "cancelled": "Đã hủy",
+      "expired": "Đã hết hạn",
+      "pending": "Đang chờ"
+    },
+    "subscription": {
+      "installedOn": "Đã cài đặt",
+      "ago": "trước",
+      "expires": "Hết hạn",
+      "fromNow": "từ bây giờ",
+      "month": "tháng",
+      "per": "mỗi"
+    },
+    "actions": {
+      "configure": "Cấu hình",
+      "uninstall": "Gỡ cài đặt",
+      "install": "Cài đặt",
+      "cancel": "Hủy",
+      "installing": "Đang cài đặt...",
+      "uninstalling": "Đang gỡ cài đặt..."
+    },
+    "features": {
+      "title": "Tính năng",
+      "included": "Tính năng Bao gồm",
+      "andMore": "+{count} tính năng khác"
+    },
+    "empty": {
+      "installed": {
+        "title": "Chưa có Tiện ích nào được Cài đặt",
+        "description": "Cài đặt tiện ích để nâng cao trải nghiệm quản lý tài chính của bạn",
+        "action": "Duyệt Tiện ích"
+      },
+      "discover": {
+        "title": "Đã Cài đặt Tất cả Tiện ích",
+        "description": "Bạn đã cài đặt tất cả các tiện ích có sẵn. Tuyệt vời!"
+      }
+    },
+    "plans": {
+      "info": "Gộp nhiều tiện ích lại với nhau và tiết kiệm tiền với các gói đăng ký của chúng tôi.",
+      "popular": "Phổ biến Nhất",
+      "subscribed": "Đã Đăng ký",
+      "choose": "Chọn"
+    },
+    "accessDenied": {
+      "title": "Truy cập Bị từ chối",
+      "description": "Bạn cần đăng ký {service} để truy cập tính năng này.",
+      "upgrade": "Nâng cấp Ngay",
+      "backToDashboard": "Quay lại Bảng điều khiển"
+    },
+    "sidebar": {
+      "unlockFeatures": "Mở khóa thêm tính năng",
+      "subscribeToAccess": "Đăng ký để truy cập thêm {count} dịch vụ",
+      "viewPlans": "Xem gói →",
+      "loading": "Đang tải điều hướng..."
+    },
+    "services": {
+      "dashboard": {
+        "name": "Dịch vụ Bảng điều khiển",
+        "description": "Tổng quan tài chính toàn diện và phân tích"
+      },
+      "budget": {
+        "name": "Theo dõi Ngân sách",
+        "description": "Quản lý và theo dõi ngân sách nâng cao"
+      },
+      "transactions": {
+        "name": "Quản lý Giao dịch",
+        "description": "Hệ thống quản lý giao dịch thủ công"
+      },
+      "banking": {
+        "name": "Tích hợp Ngân hàng",
+        "description": "Kết nối và đồng bộ với tài khoản ngân hàng của bạn"
+      },
+      "chatbot": {
+        "name": "Trợ lý Tài chính AI",
+        "description": "Tư vấn và hỗ trợ tài chính thông minh"
+      }
+    },
+    "notifications": {
+      "installSuccess": "{name} đã được cài đặt thành công!",
+      "installError": "Không thể cài đặt {name}",
+      "uninstallSuccess": "{name} đã được gỡ cài đặt thành công!",
+      "uninstallError": "Không thể gỡ cài đặt {name}"
+    },
+    "errors": {
+      "notFound": "Không Tìm Thấy Tiện Ích",
+      "notFoundDescription": "Không thể tìm thấy tiện ích được yêu cầu."
+    }
   }
 }

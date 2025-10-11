@@ -24,6 +24,13 @@ vi.mock('@/app/(protected)/(dashboard)/budget/_hooks/use-transaction', () => ({
   useTransactions: vi.fn(),
 }));
 
+// Mock ServiceGuard component
+vi.mock('@/components/subscription/service-guard', () => ({
+  ServiceGuard: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+}));
+
 // Mock components
 vi.mock('@/app/(protected)/(dashboard)/transactions/_components', () => ({
   ManualTransactionsList: vi.fn(

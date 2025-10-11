@@ -427,5 +427,113 @@
     "underName": "Manage your account settings",
     "canChange": "Your email is primary and cannot be changed here.",
     "description": "Update your public profile information"
+  },
+  "extensions": {
+    "title": "Extensions",
+    "subtitle": "Discover and manage your financial service extensions",
+    "back": "Back to Extensions",
+    "stats": {
+      "installed": "Installed",
+      "installedDescription": "Active extensions",
+      "available": "Available",
+      "availableDescription": "Ready to install",
+      "monthlySpend": "Monthly Cost",
+      "monthlySpendDescription": "Total subscription cost",
+      "activeServices": "Active Services",
+      "activeServicesDescription": "Services currently active"
+    },
+    "tabs": {
+      "installed": "Installed",
+      "discover": "Discover",
+      "plans": "Plans"
+    },
+    "status": {
+      "active": "Active",
+      "cancelled": "Cancelled",
+      "expired": "Expired",
+      "pending": "Pending"
+    },
+    "subscription": {
+      "installedOn": "Installed",
+      "ago": "ago",
+      "expires": "Expires",
+      "fromNow": "from now",
+      "month": "month",
+      "per": "per"
+    },
+    "actions": {
+      "configure": "Configure",
+      "uninstall": "Uninstall",
+      "install": "Install",
+      "cancel": "Cancel",
+      "installing": "Installing...",
+      "uninstalling": "Uninstalling..."
+    },
+    "features": {
+      "title": "Features",
+      "included": "Included Features",
+      "andMore": "+{count} more features"
+    },
+    "empty": {
+      "installed": {
+        "title": "No Extensions Installed",
+        "description": "Install extensions to enhance your financial management experience",
+        "action": "Browse Extensions"
+      },
+      "discover": {
+        "title": "All Extensions Installed",
+        "description": "You have installed all available extensions. Great job!"
+      }
+    },
+    "plans": {
+      "info": "Bundle multiple extensions together and save money with our subscription plans.",
+      "popular": "Most Popular",
+      "subscribed": "Subscribed",
+      "choose": "Choose"
+    },
+    "accessDenied": {
+      "title": "Access Denied",
+      "description": "You need to subscribe to {service} to access this feature.",
+      "upgrade": "Upgrade Now",
+      "backToDashboard": "Back to Dashboard"
+    },
+    "sidebar": {
+      "unlockFeatures": "Unlock More Features",
+      "subscribeToAccess": "Subscribe to access {count} more services",
+      "viewPlans": "View Plans →",
+      "loading": "Loading navigation..."
+    },
+    "services": {
+      "dashboard": {
+        "name": "Dashboard Service",
+        "description": "Comprehensive financial overview and analytics"
+      },
+      "budget": {
+        "name": "Budget Tracking",
+        "description": "Advanced budget management and tracking"
+      },
+      "transactions": {
+        "name": "Transaction Management",
+        "description": "Manual transaction management system"
+      },
+      "banking": {
+        "name": "Banking Integration",
+        "description": "Connect and sync with your bank accounts"
+      },
+      "chatbot": {
+        "name": "AI Financial Assistant",
+        "description": "Intelligent financial advice and support"
+      }
+    },
+    "notifications": {
+      "installSuccess": "{name} installed successfully!",
+      "installError": "Failed to install {name}",
+      "uninstallSuccess": "{name} uninstalled successfully!",
+      "uninstallError": "Failed to uninstall {name}"
+    },
+    "errors": {
+      "notFound": "Extension Not Found",
+      "notFoundDescription": "The requested extension could not be found."
+    }
   }
 }

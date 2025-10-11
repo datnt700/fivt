@@ -267,7 +267,7 @@ describe('AdminSidebar', () => {
     render(<AdminSidebar />);
 
     const navItems = screen.getAllByTestId('nav-item');
-    expect(navItems).toHaveLength(4);
+    expect(navItems).toHaveLength(5);
 
     // First item should be Dashboard
     expect(navItems[0]).toHaveTextContent('Dashboard');
@@ -284,5 +284,9 @@ describe('AdminSidebar', () => {
     // Fourth item should be Chatbot
     expect(navItems[3]).toHaveTextContent('Chatbot');
     expect(navItems[3]).toHaveTextContent('/chatbot');
+
+    // Fifth item should be Extensions
+    expect(navItems[4]).toHaveTextContent('title');
+    expect(navItems[4]).toHaveTextContent('/extensions');
   });
 });

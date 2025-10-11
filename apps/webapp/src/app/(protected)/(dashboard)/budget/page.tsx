@@ -6,6 +6,7 @@ import { ManualTransactionsList } from '../transactions/_components';
 import { useTransactions } from './_hooks/use-transaction';
 import 'react-datepicker/dist/react-datepicker.css';
 import { CreateTransactionModal } from './_components/create-transaction-modal';
+import { ServiceGuard } from '@/components/subscription/service-guard';
 
 export default function BudgetPage() {
   const t = useTranslations('budget');
@@ -19,29 +20,33 @@ export default function BudgetPage() {
   } = useTransactions();
 
   return (
-    <div className="w-full h-full overflow-y-auto">
-      <div className="space-y-6 p-4">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
-            <p className="text-muted-foreground">{t('subtitle')}</p>
+    <ServiceGuard serviceType="BUDGET_TRACKING">
+      <div className="w-full h-full overflow-y-auto">
+        <div className="space-y-6 p-4">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">
+                {t('title')}
+              </h1>
+              <p className="text-muted-foreground">{t('subtitle')}</p>
+            </div>
+            {/* Manual Transaction Creation */}
+            {/* <CreateTransactionFormCard /> */}
+            <CreateTransactionModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
           </div>
-          {/* Manual Transaction Creation */}
-          {/* <CreateTransactionFormCard /> */}
-          <CreateTransactionModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+
+          {/* Manual Transactions List */}
+          <ManualTransactionsList
+            transactions={manualTransactions}
+            loading={manualLoading}
+            error={manualError}
+            openCreateTransactionModal={() => setIsModalOpen(true)}
           />
         </div>
-
-        {/* Manual Transactions List */}
-        <ManualTransactionsList
-          transactions={manualTransactions}
-          loading={manualLoading}
-          error={manualError}
-          openCreateTransactionModal={() => setIsModalOpen(true)}
-        />
       </div>
-    </div>
+    </ServiceGuard>
   );
 }

@@ -7,6 +7,7 @@ import {
   BotMessageSquare,
   LayoutDashboard,
   PiggyBank,
+  Puzzle,
 } from 'lucide-react';
 import { NavItems } from './nav-items';
 import { NavUser } from './nav-user';
@@ -37,6 +38,7 @@ export function AdminSidebar({
   const tTransaction = useTranslations('transactions');
   const tNavigation = useTranslations('navigation');
   const tBudget = useTranslations('budget');
+  const tExtensions = useTranslations('extensions');
   const navItems = [
     {
       name: tNavigation('dashboard'),
@@ -57,6 +59,11 @@ export function AdminSidebar({
       name: 'Chatbot',
       url: '/chatbot',
       icon: BotMessageSquare,
+    },
+    {
+      name: tExtensions('title'),
+      url: '/extensions',
+      icon: Puzzle,
     },
   ];
 

@@ -252,5 +252,113 @@
       "canChange": "Votre email est principal et ne peut pas être modifié ici.",
       "description": "Mettez à jour les informations de votre profil public"
     }
+  },
+  "extensions": {
+    "title": "Extensions",
+    "subtitle": "Découvrez et gérez vos extensions de services financiers",
+    "back": "Retour aux Extensions",
+    "stats": {
+      "installed": "Installées",
+      "installedDescription": "Extensions actives",
+      "available": "Disponibles",
+      "availableDescription": "Prêtes à installer",
+      "monthlySpend": "Coût Mensuel",
+      "monthlySpendDescription": "Coût total des abonnements",
+      "activeServices": "Services Actifs",
+      "activeServicesDescription": "Services actuellement actifs"
+    },
+    "tabs": {
+      "installed": "Installées",
+      "discover": "Découvrir",
+      "plans": "Forfaits"
+    },
+    "status": {
+      "active": "Active",
+      "cancelled": "Annulée",
+      "expired": "Expirée",
+      "pending": "En attente"
+    },
+    "subscription": {
+      "installedOn": "Installée",
+      "ago": "il y a",
+      "expires": "Expire",
+      "fromNow": "à partir de maintenant",
+      "month": "mois",
+      "per": "par"
+    },
+    "actions": {
+      "configure": "Configurer",
+      "uninstall": "Désinstaller",
+      "install": "Installer",
+      "cancel": "Annuler",
+      "installing": "Installation...",
+      "uninstalling": "Désinstallation..."
+    },
+    "features": {
+      "title": "Fonctionnalités",
+      "included": "Fonctionnalités Incluses",
+      "andMore": "+{count} autres fonctionnalités"
+    },
+    "empty": {
+      "installed": {
+        "title": "Aucune Extension Installée",
+        "description": "Installez des extensions pour améliorer votre expérience de gestion financière",
+        "action": "Parcourir les Extensions"
+      },
+      "discover": {
+        "title": "Toutes les Extensions Installées",
+        "description": "Vous avez installé toutes les extensions disponibles. Excellent travail !"
+      }
+    },
+    "plans": {
+      "info": "Regroupez plusieurs extensions ensemble et économisez de l'argent avec nos forfaits d'abonnement.",
+      "popular": "Le Plus Populaire",
+      "subscribed": "Abonné",
+      "choose": "Choisir"
+    },
+    "accessDenied": {
+      "title": "Accès refusé",
+      "description": "Vous devez vous abonner à {service} pour accéder à cette fonctionnalité.",
+      "upgrade": "Mettre à niveau maintenant",
+      "backToDashboard": "Retour au tableau de bord"
+    },
+    "sidebar": {
+      "unlockFeatures": "Débloquer plus de fonctionnalités",
+      "subscribeToAccess": "Abonnez-vous pour accéder à {count} services supplémentaires",
+      "viewPlans": "Voir les plans →",
+      "loading": "Chargement de la navigation..."
+    },
+    "services": {
+      "dashboard": {
+        "name": "Service Tableau de Bord",
+        "description": "Aperçu financier complet et analyses"
+      },
+      "budget": {
+        "name": "Suivi de Budget",
+        "description": "Gestion et suivi avancés du budget"
+      },
+      "transactions": {
+        "name": "Gestion des Transactions",
+        "description": "Système de gestion manuelle des transactions"
+      },
+      "banking": {
+        "name": "Intégration Bancaire",
+        "description": "Connectez et synchronisez avec vos comptes bancaires"
+      },
+      "chatbot": {
+        "name": "Assistant Financier IA",
+        "description": "Conseils et support financiers intelligents"
+      }
+    },
+    "notifications": {
+      "installSuccess": "{name} installé avec succès !",
+      "installError": "Échec de l'installation de {name}",
+      "uninstallSuccess": "{name} désinstallé avec succès !",
+      "uninstallError": "Échec de la désinstallation de {name}"
+    },
+    "errors": {
+      "notFound": "Extension Non Trouvée",
+      "notFoundDescription": "L'extension demandée n'a pas pu être trouvée."
+    }
   }
 }
