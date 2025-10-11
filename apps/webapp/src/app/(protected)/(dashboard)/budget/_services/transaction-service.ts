@@ -7,24 +7,24 @@ export const transactionService = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     });
-    
+
     if (!response.ok) {
       throw new Error('Failed to create transaction');
     }
-    
+
     return response.json();
   },
 
   async getTransactions(locale?: string) {
-    const response = await fetch('/api/transactions', { 
+    const response = await fetch('/api/transactions', {
       cache: 'no-store',
-      headers: locale ? { 'Accept-Language': locale } : {}
+      headers: locale ? { 'Accept-Language': locale } : {},
     });
-    
+
     if (!response.ok) {
       throw new Error('Failed to load transactions');
     }
-    
+
     return response.json();
-  }
+  },
 };

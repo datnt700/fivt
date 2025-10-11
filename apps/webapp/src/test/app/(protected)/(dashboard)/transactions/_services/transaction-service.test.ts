@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { transactionService } from '@/app/(protected)/(dashboard)/transactions/_services/transaction-service';
-import type { CreateTransactionFormValues } from '@/app/(protected)/(dashboard)/transactions/_validations/transaction-schema';
+import { transactionService } from '@/app/(protected)/(dashboard)/budget/_services/transaction-service';
+import type { CreateTransactionFormValues } from '@/app/(protected)/(dashboard)/budget/_validations/transaction-schema';
 
 // Mock fetch globally
 const mockFetch = vi.fn();
@@ -38,7 +38,8 @@ describe('Transaction Service', () => {
         json: () => Promise.resolve(mockResponse),
       });
 
-      const result = await transactionService.createTransaction(mockTransactionData);
+      const result =
+        await transactionService.createTransaction(mockTransactionData);
 
       expect(mockFetch).toHaveBeenCalledWith('/api/transactions', {
         method: 'POST',
@@ -91,10 +92,13 @@ describe('Transaction Service', () => {
 
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => Promise.resolve({ id: 'tx-789', ...dataWithoutDescription }),
+        json: () =>
+          Promise.resolve({ id: 'tx-789', ...dataWithoutDescription }),
       });
 
-      const result = await transactionService.createTransaction(dataWithoutDescription);
+      const result = await transactionService.createTransaction(
+        dataWithoutDescription
+      );
 
       expect(mockFetch).toHaveBeenCalledWith('/api/transactions', {
         method: 'POST',
@@ -112,8 +116,9 @@ describe('Transaction Service', () => {
         json: () => Promise.resolve({ error: 'Invalid category ID' }),
       });
 
-      await expect(transactionService.createTransaction(mockTransactionData))
-        .rejects.toThrow('Failed to create transaction');
+      await expect(
+        transactionService.createTransaction(mockTransactionData)
+      ).rejects.toThrow('Failed to create transaction');
     });
 
     it('should handle server errors', async () => {
@@ -122,15 +127,17 @@ describe('Transaction Service', () => {
         status: 500,
       });
 
-      await expect(transactionService.createTransaction(mockTransactionData))
-        .rejects.toThrow('Failed to create transaction');
+      await expect(
+        transactionService.createTransaction(mockTransactionData)
+      ).rejects.toThrow('Failed to create transaction');
     });
 
     it('should handle network errors', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network connection failed'));
 
-      await expect(transactionService.createTransaction(mockTransactionData))
-        .rejects.toThrow('Network connection failed');
+      await expect(
+        transactionService.createTransaction(mockTransactionData)
+      ).rejects.toThrow('Network connection failed');
     });
 
     it('should send correct request format', async () => {
@@ -154,7 +161,7 @@ describe('Transaction Service', () => {
 
       for (const amount of edgeCaseAmounts) {
         const testData = { ...mockTransactionData, amount };
-        
+
         mockFetch.mockResolvedValueOnce({
           ok: true,
           json: () => Promise.resolve({ id: `tx-${amount}`, ...testData }),
@@ -162,7 +169,7 @@ describe('Transaction Service', () => {
 
         const result = await transactionService.createTransaction(testData);
         expect(result.amount).toBe(amount);
-        
+
         mockFetch.mockClear();
       }
     });
@@ -200,7 +207,7 @@ describe('Transaction Service', () => {
 
       expect(mockFetch).toHaveBeenCalledWith('/api/transactions', {
         cache: 'no-store',
-        headers: {}
+        headers: {},
       });
 
       expect(result).toEqual(mockTransactions);
@@ -208,7 +215,7 @@ describe('Transaction Service', () => {
 
     it('should fetch transactions with locale header', async () => {
       const locale = 'fr';
-      
+
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: () => Promise.resolve(mockTransactions),
@@ -218,7 +225,7 @@ describe('Transaction Service', () => {
 
       expect(mockFetch).toHaveBeenCalledWith('/api/transactions', {
         cache: 'no-store',
-        headers: { 'Accept-Language': locale }
+        headers: { 'Accept-Language': locale },
       });
 
       expect(result).toEqual(mockTransactions);
@@ -237,7 +244,7 @@ describe('Transaction Service', () => {
 
         expect(mockFetch).toHaveBeenCalledWith('/api/transactions', {
           cache: 'no-store',
-          headers: { 'Accept-Language': locale }
+          headers: { 'Accept-Language': locale },
         });
 
         mockFetch.mockClear();
@@ -261,8 +268,9 @@ describe('Transaction Service', () => {
         status: 401,
       });
 
-      await expect(transactionService.getTransactions())
-        .rejects.toThrow('Failed to load transactions');
+      await expect(transactionService.getTransactions()).rejects.toThrow(
+        'Failed to load transactions'
+      );
     });
 
     it('should handle server errors', async () => {
@@ -271,15 +279,17 @@ describe('Transaction Service', () => {
         status: 500,
       });
 
-      await expect(transactionService.getTransactions())
-        .rejects.toThrow('Failed to load transactions');
+      await expect(transactionService.getTransactions()).rejects.toThrow(
+        'Failed to load transactions'
+      );
     });
 
     it('should handle network errors', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Connection timeout'));
 
-      await expect(transactionService.getTransactions())
-        .rejects.toThrow('Connection timeout');
+      await expect(transactionService.getTransactions()).rejects.toThrow(
+        'Connection timeout'
+      );
     });
 
     it('should always use no-store cache policy', async () => {
@@ -300,8 +310,9 @@ describe('Transaction Service', () => {
         json: () => Promise.reject(new Error('Invalid JSON')),
       });
 
-      await expect(transactionService.getTransactions())
-        .rejects.toThrow('Invalid JSON');
+      await expect(transactionService.getTransactions()).rejects.toThrow(
+        'Invalid JSON'
+      );
     });
 
     it('should preserve request headers when no locale provided', async () => {
@@ -341,7 +352,8 @@ describe('Transaction Service', () => {
       });
 
       // Create transaction
-      const createResult = await transactionService.createTransaction(createData);
+      const createResult =
+        await transactionService.createTransaction(createData);
       expect(createResult).toEqual(createdTransaction);
 
       // Mock fetch transactions including the new one
@@ -365,7 +377,7 @@ describe('Transaction Service', () => {
       });
       expect(mockFetch).toHaveBeenNthCalledWith(2, '/api/transactions', {
         cache: 'no-store',
-        headers: {}
+        headers: {},
       });
     });
 
@@ -422,18 +434,22 @@ describe('Transaction Service', () => {
     it('should handle fetch throwing non-Error objects', async () => {
       mockFetch.mockRejectedValueOnce('String error');
 
-      await expect(transactionService.getTransactions())
-        .rejects.toBe('String error');
+      await expect(transactionService.getTransactions()).rejects.toBe(
+        'String error'
+      );
     });
 
     it('should handle response.json() throwing error', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: () => { throw new Error('JSON parse error'); },
+        json: () => {
+          throw new Error('JSON parse error');
+        },
       });
 
-      await expect(transactionService.getTransactions())
-        .rejects.toThrow('JSON parse error');
+      await expect(transactionService.getTransactions()).rejects.toThrow(
+        'JSON parse error'
+      );
     });
   });
 });

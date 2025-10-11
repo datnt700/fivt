@@ -282,6 +282,19 @@
     },
     "manual": "Thủ công"
   },
+  "budget": {
+    "title": "Theo Dõi Ngân Sách",
+    "subtitle": "Theo dõi các giao dịch thủ công và quản lý ngân sách của bạn",
+    "addTransaction": "Thêm Giao Dịch",
+    "manualTransactions": "Giao Dịch Thủ Công",
+    "noTransactions": "Không có giao dịch thủ công",
+    "noTransactionsDesc": "Bắt đầu theo dõi bằng cách thêm giao dịch thủ công đầu tiên của bạn.",
+    "createTransaction": "Tạo Giao Dịch",
+    "editTransaction": "Chỉnh Sửa Giao Dịch",
+    "deleteTransaction": "Xóa Giao Dịch",
+    "loadingTransactions": "Đang tải giao dịch...",
+    "errorLoadingTransactions": "Lỗi khi tải giao dịch. Vui lòng thử lại."
+  },
   "category": {
     "noCategories": "Không có danh mục nào.",
     "selected": "Chọn hoặc tạo danh mục",

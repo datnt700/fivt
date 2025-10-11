@@ -105,6 +105,19 @@
     },
     "manual": "Manuel"
   },
+  "budget": {
+    "title": "Suivi du Budget",
+    "subtitle": "Suivez vos transactions manuelles et gérez votre budget",
+    "addTransaction": "Ajouter Transaction",
+    "manualTransactions": "Transactions Manuelles",
+    "noTransactions": "Aucune transaction manuelle",
+    "noTransactionsDesc": "Commencez le suivi en ajoutant votre première transaction manuelle.",
+    "createTransaction": "Créer Transaction",
+    "editTransaction": "Modifier Transaction",
+    "deleteTransaction": "Supprimer Transaction",
+    "loadingTransactions": "Chargement des transactions...",
+    "errorLoadingTransactions": "Erreur lors du chargement des transactions. Veuillez réessayer."
+  },
   "category": {
     "noCategories": "Aucune catégorie disponible.",
     "selected": "Sélectionner ou créer une catégorie",

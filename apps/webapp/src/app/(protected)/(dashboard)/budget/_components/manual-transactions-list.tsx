@@ -1,34 +1,58 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CreditCard, TrendingDown, TrendingUp, AlertCircle } from 'lucide-react';
-import type { ManualTransaction } from '../_types';
-import { formatCurrency, formatDate } from '../_utils';
+import {
+  CreditCard,
+  TrendingDown,
+  TrendingUp,
+  AlertCircle,
+} from 'lucide-react';
+import type { ManualTransaction } from '../../transactions/_types';
+import { formatCurrency, formatDate } from '../../transactions/_utils';
+import { Button } from '@/components/ui/button';
 
 interface ManualTransactionsListProps {
   transactions: ManualTransaction[] | undefined;
   loading: boolean;
   error: Error | null;
+  openCreateTransactionModal: () => void;
 }
 
-export function ManualTransactionsList({ 
-  transactions, 
-  loading, 
-  error 
+export function ManualTransactionsList({
+  transactions,
+  loading,
+  error,
+  openCreateTransactionModal,
 }: ManualTransactionsListProps) {
   const t = useTranslations('transactions');
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('manualTransactions')}</CardTitle>
-        <CardDescription>
-          {t('manualSubtitle')}
-        </CardDescription>
+        <div className="flex items-start justify-between">
+          <div className="space-y-1">
+            <CardTitle>{t('manualTransactions')}</CardTitle>
+            <CardDescription>{t('manualSubtitle')}</CardDescription>
+          </div>
+          <Button
+            type="button"
+            onClick={openCreateTransactionModal}
+            size="sm"
+            className="shrink-0"
+          >
+            {t('addTransaction')}
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -52,7 +76,9 @@ export function ManualTransactionsList({
         ) : !transactions || transactions.length === 0 ? (
           <div className="text-center py-8">
             <CreditCard className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">{t('noManualTransactions')}</h3>
+            <h3 className="text-lg font-medium mb-2">
+              {t('noManualTransactions')}
+            </h3>
             <p className="text-muted-foreground mb-4">
               {t('noManualTransactionsDesc')}
             </p>
@@ -65,11 +91,13 @@ export function ManualTransactionsList({
                 className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors w-full overflow-hidden"
               >
                 <div className="flex items-center space-x-4">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                    transaction.type === 'INCOME' 
-                      ? 'bg-green-100 text-green-600 dark:bg-green-900/20' 
-                      : 'bg-red-100 text-red-600 dark:bg-red-900/20'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      transaction.type === 'INCOME'
+                        ? 'bg-green-100 text-green-600 dark:bg-green-900/20'
+                        : 'bg-red-100 text-red-600 dark:bg-red-900/20'
+                    }`}
+                  >
                     {transaction.type === 'INCOME' ? (
                       <TrendingUp className="h-4 w-4" />
                     ) : (
@@ -77,7 +105,9 @@ export function ManualTransactionsList({
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium truncate">{transaction.description || t('name')}</div>
+                    <div className="font-medium truncate">
+                      {transaction.description || t('name')}
+                    </div>
                     <div className="text-sm text-muted-foreground flex items-center gap-2">
                       <span>{formatDate(transaction.createdAt)}</span>
                       <span>•</span>
@@ -95,10 +125,15 @@ export function ManualTransactionsList({
                     </div>
                   </div>
                 </div>
-                <div className={`text-lg font-semibold ${
-                  transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {transaction.type === 'INCOME' ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount))}
+                <div
+                  className={`text-lg font-semibold ${
+                    transaction.type === 'INCOME'
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  }`}
+                >
+                  {transaction.type === 'INCOME' ? '+' : '-'}
+                  {formatCurrency(Math.abs(transaction.amount))}
                 </div>
               </div>
             ))}

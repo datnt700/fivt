@@ -28,6 +28,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogContent,
+  DialogDescription,
 } from '@/components/ui/dialog';
 
 interface CreateTransactionFormProps {
@@ -74,12 +75,12 @@ export function CreateTransactionForm({
       ['categories', locale],
       old => {
         const prev = old ?? [];
-        const id = String(created.id);
-        if (prev.some(x => String(x.id) === id)) return prev;
+        const id = created.id;
+        if (prev.some(x => x.id === id)) return prev;
         return [...prev, { id, name: created.name }];
       }
     );
-    setValue('categoryId', String(created.id), {
+    setValue('categoryId', created.id, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -204,6 +205,9 @@ export function CreateTransactionForm({
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>{tTransaction('category')}</DialogTitle>
+                <DialogDescription>
+                  Enter the name for your new category
+                </DialogDescription>
               </DialogHeader>
               <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-orange-500 ">
                 <input
@@ -249,7 +253,7 @@ export function CreateTransactionForm({
 
       {createTransaction.isError && (
         <p className="text-red-500 text-sm">
-          ⚠️ {(createTransaction.error as Error).message}
+          ⚠️ {createTransaction.error?.message || 'An error occurred'}
         </p>
       )}
     </form>

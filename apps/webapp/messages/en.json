@@ -281,6 +281,19 @@
     },
     "manual": "Manual"
   },
+  "budget": {
+    "title": "Budget Tracking",
+    "subtitle": "Track your manual transactions and manage your budget",
+    "addTransaction": "Add Transaction",
+    "manualTransactions": "Manual Transactions",
+    "noTransactions": "No manual transactions",
+    "noTransactionsDesc": "Start tracking by adding your first manual transaction.",
+    "createTransaction": "Create Transaction",
+    "editTransaction": "Edit Transaction",
+    "deleteTransaction": "Delete Transaction",
+    "loadingTransactions": "Loading transactions...",
+    "errorLoadingTransactions": "Error loading transactions. Please try again."
+  },
   "category": {
     "noCategories": "No categories available.",
     "loadingCategories": "Loading categories...",

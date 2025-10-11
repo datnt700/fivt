@@ -8,4 +8,6 @@ export const createTransactionSchema = z.object({
   description: z.string().trim().max(200).optional(),
 });
 
-export type CreateTransactionFormValues = z.infer<typeof createTransactionSchema>;
+export type CreateTransactionFormValues = z.infer<
+  typeof createTransactionSchema
+>;
