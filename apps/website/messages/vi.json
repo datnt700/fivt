@@ -1,4 +1,14 @@
 {
+  "Header": {
+    "home": "TRANG CHỦ",
+    "about": "VỀ CHÚNG TÔI",
+    "services": "DỊCH VỤ",
+    "contact": "LIÊN HỆ",
+    "pricing": "BẢNG GIÁ",
+    "blog": "BLOG",
+    "login": "ĐĂNG NHẬP",
+    "signup": "ĐĂNG KÝ"
+  },
   "Features": {
     "features": "CHỨC NĂNG",
     "understandF": "Hiểu rõ cách phân bổ danh mục đầu tư của bạn",

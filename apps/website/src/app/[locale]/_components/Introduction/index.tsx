@@ -18,22 +18,6 @@ const reassurranceItem = [
 ];
 
 export const Introduction = () => {
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
-
-  const carouselData = useRef([
-    {
-      title: 'item 1',
-      image: herobanner,
-    },
-    {
-      title: 'item 2',
-      image: example,
-    },
-    {
-      title: 'item 3',
-      image: superman,
-    },
-  ]);
   return (
     <Layout>
       <Content>

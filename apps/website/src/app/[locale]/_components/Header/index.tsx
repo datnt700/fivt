@@ -9,19 +9,13 @@ import { EnglandFlag } from '@/app/_component/Icons/Flag/england';
 import { VietnamFlag } from '@/app/_component/Icons/Flag/vietnam';
 import { Layout } from '@/components/Layout';
 import { Content } from '@/components/Layout/Content';
+import { useTranslations } from 'next-intl';
 
 interface Language {
   name: string;
   img: React.JSX.Element;
   lang: string;
 }
-const MenuItem = [
-  { name: 'Home', link: '#' },
-  { name: 'About', link: '#' },
-  { name: 'Services', link: '#' },
-  { name: 'Contact', link: '#' },
-  { name: 'Blog', link: '#' },
-];
 
 const LanguageItem = [
   {
@@ -47,6 +41,17 @@ export const Header = () => {
   const [isLightHeader, setLightHeader] = useState(false);
   const [open, setOpen] = useState(false);
   const toggleMenu = () => setOpen(o => !o);
+
+  const t = useTranslations('Header');
+
+  const MenuItem = [
+    { name: t('home'), link: '#' },
+    { name: t('about'), link: '#' },
+    { name: t('services'), link: '#' },
+    { name: t('contact'), link: '#' },
+    { name: t('blog'), link: '#' },
+  ];
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', () =>

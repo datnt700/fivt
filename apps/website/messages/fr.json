@@ -1,4 +1,14 @@
 {
+  "Header": {
+    "home": "HOME",
+    "about": "À PROPOS",
+    "services": "SERVICES",
+    "contact": "CONTACT",
+    "pricing": "TARIFS",
+    "blog": "BLOG",
+    "login": "SE CONNECTER",
+    "signup": "S'INSCRIRE"
+  },
   "Features": {
     "features": "FONCTIONNALITÉ",
     "understandF": "Comprenez la répartition de votre portefeuille",
