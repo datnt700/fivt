@@ -1,4 +1,14 @@
 {
+  "Header": {
+    "home": "HOME",
+    "about": "ABOUT",
+    "services": "SERVICES",
+    "contact": "CONTACT",
+    "pricing": "PRICING",
+    "blog": "BLOG",
+    "login": "LOG IN",
+    "signup": "SIGN UP"
+  },
   "Features": {
     "features": "FEATURES",
     "understandF": "Understand your portfolio allocation",

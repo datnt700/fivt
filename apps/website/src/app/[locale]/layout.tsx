@@ -10,13 +10,11 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Chỉ check locale ở đây (không phải root layout)
   if (!routing.locales.includes(locale as never)) {
     notFound();
   }
 
-  // Lấy messages ổn định theo locale
-  const messages = await getMessages({ locale }); // hoặc getMessages() nếu bạn đã config middleware
+  const messages = await getMessages({ locale });
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

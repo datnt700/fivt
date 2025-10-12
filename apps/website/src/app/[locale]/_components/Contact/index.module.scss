@@ -55,3 +55,9 @@
     margin-top: 0.5rem;
   }
 }
+
+.textArea {
+  min-height: 6rem;
+  resize: vertical;
+  border: 1px solid var(--light-4);
+}
