@@ -6,15 +6,54 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
+      "env": [
+        "NODE_ENV",
+        "RESEND_API_KEY",
+        "AUTH_RESEND_FROM",
+        "BRIDGE_CLIENT_ID",
+        "BRIDGE_CLIENT_SECRET",
+        "BRIDGE_CALLBACK_URL",
+        "POWENS_CLIENT_ID",
+        "POWENS_CLIENT_SECRET",
+        "POWENS_CALLBACK_URL",
+        "POWENS_API_BASE",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "OPENAI_API_KEY"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"],
-      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
+      "env": [
+        "NODE_ENV",
+        "RESEND_API_KEY",
+        "AUTH_RESEND_FROM",
+        "BRIDGE_CLIENT_ID",
+        "BRIDGE_CLIENT_SECRET",
+        "BRIDGE_CALLBACK_URL",
+        "POWENS_CLIENT_ID",
+        "POWENS_CLIENT_SECRET",
+        "POWENS_CALLBACK_URL",
+        "POWENS_API_BASE",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "OPENAI_API_KEY"
+      ]
     },
     "check-types": {
       "dependsOn": ["^check-types"],
-      "env": ["NODE_ENV", "RESEND_API_KEY", "AUTH_RESEND_FROM", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
+      "env": [
+        "NODE_ENV",
+        "RESEND_API_KEY",
+        "AUTH_RESEND_FROM",
+        "BRIDGE_CLIENT_ID",
+        "BRIDGE_CLIENT_SECRET",
+        "BRIDGE_CALLBACK_URL",
+        "POWENS_CLIENT_ID",
+        "POWENS_CLIENT_SECRET",
+        "POWENS_CALLBACK_URL",
+        "POWENS_API_BASE",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "OPENAI_API_KEY"
+      ]
     },
     "test": {
       "dependsOn": ["^test"],
@@ -28,6 +67,11 @@
     "test:unit": {
       "dependsOn": ["^test:unit"],
       "inputs": ["$TURBO_DEFAULT$", "src/**/*.test.*", "src/**/*.spec.*"]
+    },
+    "test:coverage": {
+      "dependsOn": ["^test:coverage"],
+      "inputs": ["$TURBO_DEFAULT$", "src/**/*.test.*", "src/**/*.spec.*"],
+      "outputs": ["coverage/**"]
     },
     "test:e2e": {
       "dependsOn": ["^build"],
@@ -43,7 +87,18 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["PORT", "BRIDGE_CLIENT_ID", "BRIDGE_CLIENT_SECRET", "BRIDGE_CALLBACK_URL", "POWENS_CLIENT_ID", "POWENS_CLIENT_SECRET", "POWENS_CALLBACK_URL", "POWENS_API_BASE", "VERCEL_PROJECT_PRODUCTION_URL"]
+      "env": [
+        "PORT",
+        "BRIDGE_CLIENT_ID",
+        "BRIDGE_CLIENT_SECRET",
+        "BRIDGE_CALLBACK_URL",
+        "POWENS_CLIENT_ID",
+        "POWENS_CLIENT_SECRET",
+        "POWENS_CALLBACK_URL",
+        "POWENS_API_BASE",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+        "OPENAI_API_KEY"
+      ]
     }
   },
   "globalEnv": [
@@ -54,6 +109,7 @@
     "AUTH_RESEND_FROM",
     "AUTH_GOOGLE_ID",
     "AUTH_GOOGLE_SECRET",
-    "DATABASE_URL"
+    "DATABASE_URL",
+    "OPENAI_API_KEY"
   ]
 }

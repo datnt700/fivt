@@ -57,11 +57,17 @@ class BridgeApiClient {
   private clientSecret: string;
 
   constructor() {
-    if (!process.env.BRIDGE_CLIENT_ID || !process.env.BRIDGE_CLIENT_SECRET) {
+    // Only throw error at runtime, not during build
+    if (
+      process.env.NODE_ENV !== 'development' &&
+      process.env.NODE_ENV !== 'test' &&
+      (!process.env.BRIDGE_CLIENT_ID || !process.env.BRIDGE_CLIENT_SECRET)
+    ) {
       throw new Error('Bridge API credentials are required');
     }
-    this.clientId = process.env.BRIDGE_CLIENT_ID;
-    this.clientSecret = process.env.BRIDGE_CLIENT_SECRET;
+    this.clientId = process.env.BRIDGE_CLIENT_ID || 'dummy-client-id';
+    this.clientSecret =
+      process.env.BRIDGE_CLIENT_SECRET || 'dummy-client-secret';
   }
 
   private getBaseHeaders() {
@@ -70,14 +76,14 @@ class BridgeApiClient {
       'Client-Id': this.clientId,
       'Client-Secret': this.clientSecret,
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      Accept: 'application/json',
     };
   }
 
   private getAuthHeaders(accessToken: string) {
     return {
       ...this.getBaseHeaders(),
-      'Authorization': `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     };
   }
 
@@ -97,7 +103,9 @@ class BridgeApiClient {
         console.error('Response status:', error.response?.status);
         console.error('Response data:', error.response?.data);
       }
-      throw new Error(`Failed to create Bridge user: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create Bridge user: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -117,7 +125,9 @@ class BridgeApiClient {
         console.error('Response status:', error.response?.status);
         console.error('Response data:', error.response?.data);
       }
-      throw new Error(`Failed to authenticate Bridge user: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to authenticate Bridge user: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -145,18 +155,17 @@ class BridgeApiClient {
         console.error('Response data:', error.response?.data);
         console.error('Request headers:', error.config?.headers);
       }
-      throw new Error(`Failed to create Bridge connect session: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create Bridge connect session: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   async getItems(accessToken: string): Promise<BridgeItemsResponse> {
     try {
-      const response = await axios.get(
-        `${BRIDGE_API_BASE}/aggregation/items`,
-        {
-          headers: this.getAuthHeaders(accessToken),
-        }
-      );
+      const response = await axios.get(`${BRIDGE_API_BASE}/aggregation/items`, {
+        headers: this.getAuthHeaders(accessToken),
+      });
       return response.data;
     } catch (error) {
       console.error('Error fetching Bridge items:', error);
@@ -164,12 +173,15 @@ class BridgeApiClient {
     }
   }
 
-  async getAccounts(accessToken: string, itemId?: string): Promise<BridgeAccountsResponse> {
+  async getAccounts(
+    accessToken: string,
+    itemId?: string
+  ): Promise<BridgeAccountsResponse> {
     try {
-      const url = itemId 
+      const url = itemId
         ? `${BRIDGE_API_BASE}/aggregation/accounts?item_id=${itemId}`
         : `${BRIDGE_API_BASE}/aggregation/accounts`;
-      
+
       const response = await axios.get(url, {
         headers: this.getAuthHeaders(accessToken),
       });
@@ -183,12 +195,9 @@ class BridgeApiClient {
   // Health check method to test API connectivity
   async testConnection(): Promise<boolean> {
     try {
-      const response = await axios.get(
-        `${BRIDGE_API_BASE}/providers`,
-        {
-          headers: this.getBaseHeaders(),
-        }
-      );
+      const response = await axios.get(`${BRIDGE_API_BASE}/providers`, {
+        headers: this.getBaseHeaders(),
+      });
       return response.status === 200;
     } catch (error) {
       console.error('Bridge API connection test failed:', error);

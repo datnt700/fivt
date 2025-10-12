@@ -134,6 +134,34 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          # Database
+          DATABASE_URL: 'file:./test.db'
+          # Auth
+          AUTH_SECRET: 'test-secret-for-github-actions'
+          NEXTAUTH_URL: 'http://localhost:3000'
+          # Bridge API (dummy values for build)
+          BRIDGE_CLIENT_ID: 'dummy-client-id'
+          BRIDGE_CLIENT_SECRET: 'dummy-client-secret'
+          # Powens API (dummy values for build)
+          POWENS_CLIENT_ID: 'dummy-powens-client-id'
+          POWENS_CLIENT_SECRET: 'dummy-powens-client-secret'
+          POWENS_PARTNER_PASSWORD: 'dummy-powens-password'
+          POWENS_API_BASE: 'https://sandbox.biapi.pro'
+          # Callback URLs
+          BRIDGE_CALLBACK_URL: 'http://localhost:3000/api/bridge/callback'
+          POWENS_CALLBACK_URL: 'http://localhost:3000/api/powens/callback'
+          # Email service
+          RESEND_API_KEY: 'dummy-resend-key'
+          AUTH_RESEND_FROM: 'test@example.com'
+          # Google OAuth (dummy values for build)
+          AUTH_GOOGLE_ID: 'dummy-google-client-id'
+          AUTH_GOOGLE_SECRET: 'dummy-google-client-secret'
+          # Other APIs
+          OPENAI_API_KEY: 'dummy-openai-key'
+          # Vercel
+          VERCEL_PROJECT_PRODUCTION_URL: 'localhost:3000'
+          PORT: '3000'
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

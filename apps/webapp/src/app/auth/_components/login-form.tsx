@@ -1,7 +1,7 @@
 'use client';
 
 import { MagicLinkSignIn } from './magic-link-signin';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { LanguageSwitcher } from '@/components/theme';
 import { signInWithGoogle } from '@/lib/auth-actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,10 +9,9 @@ import { Button } from '@/components/ui/button';
 
 export function LoginForm(props: React.ComponentProps<'div'>) {
   const t = useTranslations('auth');
-  const locale = useLocale();
   
   const handleGoogleSignIn = () => {
-    signInWithGoogle(locale);
+    signInWithGoogle();
   };
   
   return (

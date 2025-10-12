@@ -1,10 +1,10 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 
 import { LoginForm } from '../_components';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 import React from 'react';
+import { auth } from '@/auth';
 import { getLocale } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 
 export default async function LoginPage() {
   const [session, locale] = await Promise.all([auth(), getLocale()]);

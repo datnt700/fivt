@@ -16,6 +16,14 @@ export const COMMON_ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
   
+  // Profile routes
+  PROFILE: {
+    SETUP: '/profile/setup',
+    VIEW: '/profile',
+    EDIT: '/profile/edit',
+    RESULTS: '/profile/results',
+  },
+  
   // API routes - common
   API: {
     AUTH: '/api/auth',
@@ -61,6 +69,6 @@ export function isAuthRoute(pathname: string): boolean {
  * Helper function to check if a route is protected
  */
 export function isProtectedRoute(pathname: string): boolean {
-  const protectedPaths = ['/dashboard', '/banking', '/transactions', '/chatbot'];
+  const protectedPaths = ['/dashboard', '/banking', '/transactions', '/chatbot', '/profile'];
   return protectedPaths.some(path => pathname.startsWith(path));
 }

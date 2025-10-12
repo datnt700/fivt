@@ -1,7 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { Command, ArrowLeftRight, BotMessageSquare } from 'lucide-react';
+import {
+  Command,
+  ArrowLeftRight,
+  BotMessageSquare,
+  LayoutDashboard,
+  PiggyBank,
+} from 'lucide-react';
 import { NavItems } from './nav-items';
 import { NavUser } from './nav-user';
 import {
@@ -29,11 +35,23 @@ export function AdminSidebar({
   ...props
 }: AppSidebarProps) {
   const tTransaction = useTranslations('transactions');
+  const tNavigation = useTranslations('navigation');
+  const tBudget = useTranslations('budget');
   const navItems = [
+    {
+      name: tNavigation('dashboard'),
+      url: '/dashboard',
+      icon: LayoutDashboard,
+    },
     {
       name: tTransaction('title'),
       url: '/transactions',
       icon: ArrowLeftRight,
+    },
+    {
+      name: tBudget('title'),
+      url: '/budget',
+      icon: PiggyBank,
     },
     {
       name: 'Chatbot',

@@ -8,13 +8,15 @@ export function RecipeCard({ data }: { data ?: z.infer<typeof RecipeFinancialSch
     if (!data ) return null;
     return (
         <Card className="w-full max-w-2xl mx-auto">
-            <CardHeader>
-                <CardTitle className="text-2xl font-bold">
-                    {data.title || "Financial Advice"}
-                </CardTitle>
-            </CardHeader>
+            {data.title && (
+                <CardHeader className="pb-4">
+                    <CardTitle className="text-2xl font-bold">
+                        {data.title}
+                    </CardTitle>
+                </CardHeader>
+            )}
 
-            <CardContent className="grid gap-6">
+            <CardContent className={`grid gap-6 ${data.title ? 'pt-0' : 'pt-6'}`}>
                 {/* Description */}
                 {data.description && (
                     <p className="text-gray-700">{data.description}</p>
