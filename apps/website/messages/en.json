@@ -1,0 +1,67 @@
+{
+  "Header": {
+    "home": "HOME",
+    "about": "ABOUT",
+    "services": "SERVICES",
+    "contact": "CONTACT",
+    "pricing": "PRICING",
+    "blog": "BLOG",
+    "login": "LOG IN",
+    "signup": "SIGN UP"
+  },
+  "Features": {
+    "features": "FEATURES",
+    "understandF": "Understand your portfolio allocation",
+    "desUnderstandF": "Take your analysis a step further with our portfolio review.",
+    "updateF": "Get weekly updates about your performance",
+    "desUpdateF": "Take your analysis a step further with our portfolio review.",
+    "trackF": "Track your dividends",
+    "desTrackF": "Analyze your projected annual dividend income, view upcoming dividend payments, and track your real dividend history.",
+    "identifyF": "Identify hidden fees for all your investments",
+    "desIdentifyF": "Uncover hidden costs, save the performance of your investments.",
+    "manageF": "Manage your cashflow & organize your finances",
+    "desManageF": "Control your spending to maximize your savings rate.",
+    "predictF": "Predict when will be your Financial Freedom",
+    "desPredictF": "Discover the value of your wealth in 30 years and plan your financial independence."
+  },
+  "Pricing": {
+    "Pricing": "PRICING",
+    "getStarterBtn": "Get Started",
+    "starterCard": "Starter",
+    "premiumCard": "Premium",
+    "vipCard": "VIP",
+    "perMonth": "Per month, billed annually",
+    "plan": "The base plan includes:",
+    "billRemindersFeature": "Bill & Due Date Reminders",
+    "billRemindersDescription": "Automated notifications to remind tenants of upcoming or overdue rent payments, improving rent collection efficiency.",
+    "documentVaultFeature": "Financial Document Vault",
+    "documentVaultDescription": "Store and organize your receipts, invoices, bank statements, and contracts in one place, easy to find and reference.",
+    "goalsAndTasksFeature": "Financial Goals & Tasks",
+    "goalsAndTasksDescription": "Set savings goals, track your progress, and manage personal finance-related tasks.",
+    "accountConnectionsFeature": "Account Connections & Notifications",
+    "accountConnectionsDescription": "Link your bank/investment accounts to sync real-time transactions, receive balance change and unusual spending notifications.",
+    "financeContactsFeature": "Financial Contacts Book",
+    "financeContactsDescription": "Store beneficiary, transfer recipient, service provider, and bank information for quick, accurate payments."
+  },
+  "Contact": {
+    "title": "Native integrations with your banks and tools",
+    "description": "Cloud-based, easy-to-use personal finance app. Link accounts, track spending, budget smarter, and maximize savings to reach your goals faster.",
+    "nameInput": "Your Name *",
+    "emailInput": "Email *",
+    "phoneInput": "Phone Number",
+    "noteInput": "Add a Note",
+    "demoButton": "Request a Demo"
+  },
+  "Footer": {
+    "about": "ABOUT US",
+    "feature": "FEATURES",
+    "propertyType": "PROPERTY TYPE",
+    "portfolios": "PORTFOLIOS",
+    "pricing": "PRICING",
+    "description": "Cloud-based and easy-to-use property management software. Stay on top of your business and maximize ROI with our end-to-end solution."
+  },
+  "NotFoundPage": {
+    "title": "404 - Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist."
+  }
+}

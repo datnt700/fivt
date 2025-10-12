@@ -1,0 +1,79 @@
+@use '@/app/components/ui/common/styles/breakpoints' as bp;
+
+.itemDetail {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  max-width: 100%;
+  gap: 0.5rem;
+  align-items: center;
+  transition: transform ease-out 0.3s;
+  overflow: hidden;
+  &:hover {
+    //transform: scale(1.1);
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+    @media screen and (min-width: bp.$bp-md) {
+      text-align: left;
+    }
+  }
+
+  .featuresDescription {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+
+    @media screen and (min-width: bp.$bp-md) {
+      text-align: left;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .descriptionTitle {
+      font-weight: 700;
+      font-size: 2rem;
+      font-family: 'EB Garamond', serif;
+
+      @media screen and (min-width: bp.$bp-md) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .descriptionDetail {
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      color: var(--dark-5);
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* số dòng tối đa */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.icon {
+  justify-content: flex-start;
+  color: var(--main-color);
+
+  .light {
+    color: var(--light);
+  }
+}
