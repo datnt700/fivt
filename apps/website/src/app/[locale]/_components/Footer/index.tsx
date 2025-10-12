@@ -2,6 +2,8 @@ import React from 'react';
 import { Content } from '@/components/Layout/Content';
 import { Layout } from '@/components/Layout';
 import { AppWindow } from 'lucide-react';
+import Image from 'next/image';
+import logo from '@/app/_assets/images/logo.png';
 
 const Footer = () => {
   return (
@@ -11,7 +13,11 @@ const Footer = () => {
           <div className="w-full px-3 py-4">
             <div className="flex flex-col gap-2.5 mb-8.5 md:flex-row md:gap-14">
               <div className="flex flex-col gap-10 md:w-[40%]">
-                <h1 className="font-bold text-4xl">FIVT</h1>
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className="w-[100] cursor-pointer"
+                />
                 {/* <p className={styles.description}>{t('description')}</p>
                 <p className={styles.address}>
                   417 Lafayette Street, 7th Floor
@@ -48,7 +54,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="text-center mb-3">
-              <p>@2024 REVT. All Rights Reserved.</p>
+              <p>@2024 FIVT. All Rights Reserved.</p>
             </div>
           </div>
         </section>

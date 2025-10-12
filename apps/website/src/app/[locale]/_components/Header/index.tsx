@@ -142,7 +142,7 @@ export const Header = () => {
                       className="
                   inline-block
                   border-b border-gray-200
-                  [background-image:linear-gradient(transparent,transparent),linear-gradient(var(--color-primary),var(--color-primary))]
+                  [background-image:linear-gradient(transparent,transparent),linear-gradient(var(--color-orange-500),var(--color-orange-500))]
                   [background-size:0_3px]
                   [background-position:0_100%]
                   bg-no-repeat
@@ -191,7 +191,7 @@ export const Header = () => {
                   className="
               group relative inline-flex items-center justify-center
               rounded-full px-5 py-2
-              bg-primary text-white
+              bg-orange-500 text-white
               overflow-hidden
               "
                 >
@@ -212,7 +212,7 @@ export const Header = () => {
                 group-hover:text-white
                 text-white
                 flex
-                items-center justify-center
+                items-center justify-center 
                 "
                   >
                     Sign in
@@ -225,7 +225,7 @@ export const Header = () => {
               <div className="hidden md:block">
                 <label className="relative inline-block w-16 h-8 cursor-pointer">
                   <input type="checkbox" className="peer sr-only" />
-                  <span className="absolute inset-0 rounded-full bg-primary dark:bg-neutral-700" />
+                  <span className="absolute inset-0 rounded-full bg-gray-300 dark:bg-neutral-700" />
                   <Moon
                     className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4
                 text-neutral-900 dark:text-neutral-100

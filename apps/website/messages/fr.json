@@ -1,6 +1,55 @@
 {
-    "features":
-    {
-        "feature": "FONCTIONNALITÉ"
-    }
+  "Features": {
+    "features": "FONCTIONNALITÉ",
+    "understandF": "Comprenez la répartition de votre portefeuille",
+    "desUnderstandF": "Allez plus loin dans votre analyse grâce à notre revue de portefeuille.",
+    "updateF": "Recevez des mises à jour hebdomadaires sur vos performances",
+    "desUpdateF": "Allez plus loin dans votre analyse grâce à notre revue de portefeuille.",
+    "trackF": "Suivez vos dividendes",
+    "desTrackF": "Analysez votre revenu annuel prévisionnel en dividendes, consultez les prochains paiements et suivez votre historique réel.",
+    "identifyF": "Identifiez les frais cachés de tous vos investissements",
+    "desIdentifyF": "Détectez les coûts cachés et améliorez la performance de vos investissements.",
+    "manageF": "Gérez votre trésorerie et organisez vos finances",
+    "desManageF": "Contrôlez vos dépenses pour maximiser votre taux d’épargne.",
+    "predictF": "Prédisez le moment de votre liberté financière",
+    "desPredictF": "Découvrez la valeur de votre patrimoine dans 30 ans et planifiez votre indépendance financière."
+  },
+  "Pricing": {
+    "Pricing": "TARIFS",
+    "getStarterBtn": "Démarrer",
+    "starterCard": "Forfait de base",
+    "premiumCard": "Prime",
+    "vipCard": "VIP",
+    "perMonth": "Par mois, facturé annuellement",
+    "plan": "Le plan de base comprend :",
+    "billRemindersFeature": "Rappels de paiement",
+    "billRemindersDescription": "Notifications automatisées pour rappeler aux locataires les paiements de loyer à venir ou en retard, améliorant ainsi l'efficacité de la collecte des loyers.",
+    "documentVaultFeature": "Entrepôt de documents financiers",
+    "documentVaultDescription": "Stockez et organisez vos reçus, factures, relevés bancaires et contrats en un seul endroit, faciles à trouver et à référencer.",
+    "goalsAndTasksFeature": "Objectifs et tâches financiers",
+    "goalsAndTasksDescription": "Fixez-vous des objectifs d'épargne, suivez vos progrès et gérez vos tâches financières personnelles.",
+    "accountConnectionsFeature": "Connexion au compte et notifications",
+    "accountConnectionsDescription": "Liez vos comptes bancaires/d'investissement pour synchroniser vos transactions en temps réel, recevoir des notifications de changement de solde et de dépenses inhabituelles.",
+    "financeContactsFeature": "Carnet de contacts financiers",
+    "financeContactsDescription": "Stockez les informations du bénéficiaire, du destinataire du virement, du prestataire de services et de la banque pour des paiements rapides et précis."
+  },
+  "Contact": {
+    "title": "Intégrations natives avec vos banques et outils",
+    "description": "Application de gestion financière personnelle basée sur le cloud et facile à utiliser. Liez des comptes, suivez les dépenses, budgétez plus intelligemment et maximisez les économies pour atteindre vos objectifs plus rapidement.",
+    "nameInput": "Votre nom *",
+    "emailInput": "E-mail *",
+    "phoneInput": "Numéro de téléphone",
+    "noteInput": "Notez votre message",
+    "demoButton": "Demander une démo"
+  },
+  "Footer": {
+    "about": "À Propos",
+    "pricing": "TARIFS",
+    "contact": "Contact",
+    "description": "Logiciel de gestion immobilière basé sur le cloud et facile à utiliser. Gardez le contrôle de votre entreprise et maximisez le retour sur investissement grâce à notre solution de bout en bout."
+  },
+  "NotFoundPage": {
+    "title": "404 - Page non trouvée",
+    "description": "Désolé, la page que vous recherchez n'existe pas."
+  }
 }

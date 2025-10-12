@@ -1,6 +1,57 @@
 {
-    "features":
-    {
-        "feature": "CHỨC NĂNG"
-    }
+  "Features": {
+    "features": "CHỨC NĂNG",
+    "understandF": "Hiểu rõ cách phân bổ danh mục đầu tư của bạn",
+    "desUnderstandF": "Phân tích chuyên sâu hơn với bản đánh giá danh mục đầu tư của chúng tôi.",
+    "updateF": "Nhận cập nhật hàng tuần về hiệu suất đầu tư của bạn",
+    "desUpdateF": "Phân tích chuyên sâu hơn với bản đánh giá danh mục đầu tư của chúng tôi.",
+    "trackF": "Theo dõi cổ tức của bạn",
+    "desTrackF": "Phân tích thu nhập cổ tức hàng năm dự kiến, xem các khoản thanh toán sắp tới và theo dõi lịch sử cổ tức thực tế.",
+    "identifyF": "Xác định các khoản phí ẩn trong tất cả các khoản đầu tư của bạn",
+    "desIdentifyF": "Phát hiện chi phí ẩn và cải thiện hiệu suất đầu tư của bạn.",
+    "manageF": "Quản lý dòng tiền và tổ chức tài chính cá nhân",
+    "desManageF": "Kiểm soát chi tiêu để tối đa hóa tỷ lệ tiết kiệm của bạn.",
+    "predictF": "Dự đoán thời điểm bạn đạt được Tự do Tài chính",
+    "desPredictF": "Khám phá giá trị tài sản của bạn trong 30 năm tới và lập kế hoạch cho sự độc lập tài chính."
+  },
+  "Pricing": {
+    "Pricing": "BẢNG GIÁ",
+    "getStarterBtn": "Bắt đầu ngay",
+    "starterCard": "Gói Cơ bản",
+    "premiumCard": "Gói Cao cấp",
+    "vipCard": "Gói VIP",
+    "perMonth": "Tính theo tháng, thanh toán hàng năm",
+    "plan": "Gói cơ bản bao gồm:",
+    "billRemindersFeature": "Nhắc nhở hóa đơn & kỳ hạn",
+    "billRemindersDescription": "Tự động nhắc lịch thanh toán hóa đơn, thẻ tín dụng, khoản vay và đăng ký định kỳ để tránh trễ hạn và phí phạt.",
+    "documentVaultFeature": "Kho chứng từ tài chính",
+    "documentVaultDescription": "Lưu trữ và sắp xếp biên lai, hóa đơn, sao kê ngân hàng và hợp đồng ở một nơi, dễ tìm kiếm và tra cứu.",
+    "goalsAndTasksFeature": "Mục tiêu & công việc tài chính",
+    "goalsAndTasksDescription": "Đặt mục tiêu tiết kiệm, theo dõi tiến độ và quản lý việc cần làm liên quan đến tài chính cá nhân.",
+    "accountConnectionsFeature": "Kết nối tài khoản & thông báo",
+    "accountConnectionsDescription": "Liên kết tài khoản ngân hàng/đầu tư để đồng bộ giao dịch thời gian thực, nhận thông báo thay đổi số dư và chi tiêu bất thường.",
+    "financeContactsFeature": "Sổ liên hệ tài chính",
+    "financeContactsDescription": "Lưu thông tin người thụ hưởng, người nhận chuyển khoản, nhà cung cấp dịch vụ và ngân hàng để thanh toán nhanh, chính xác."
+  },
+  "Contact": {
+    "title": "Kết nối trực tiếp với ngân hàng và công cụ bạn dùng",
+    "description": "Ứng dụng quản lý tài chính cá nhân trên nền tảng đám mây, dễ sử dụng. Liên kết tài khoản, theo dõi chi tiêu, lập ngân sách và tối ưu hóa tiết kiệm để đạt mục tiêu nhanh hơn.",
+    "nameInput": "Họ và tên *",
+    "emailInput": "Email *",
+    "phoneInput": "Số điện thoại",
+    "noteInput": "Thêm ghi chú",
+    "demoButton": "Yêu cầu bản demo"
+  },
+  "Footer": {
+    "about": "VỀ CHÚNG TÔI",
+    "feature": "TÍNH NĂNG",
+    "propertyType": "LOẠI TÀI SẢN",
+    "portfolios": "DANH MỤC",
+    "pricing": "BẢNG GIÁ",
+    "description": "Phần mềm quản lý tài sản trên nền tảng đám mây, dễ sử dụng. Giúp bạn nắm bắt hoạt động kinh doanh và tối đa hóa lợi nhuận với giải pháp toàn diện của chúng tôi."
+  },
+  "NotFoundPage": {
+    "title": "404 - Không tìm thấy trang",
+    "description": "Xin lỗi, trang bạn đang tìm kiếm không tồn tại."
+  }
 }

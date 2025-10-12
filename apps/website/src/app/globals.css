@@ -2,7 +2,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-site-title: "EB Garamond", serif;
+  --font-site-title: 'EB Garamond', serif;
   --color-title: #333333;
 }
 
@@ -36,9 +36,9 @@ body {
     Arial,
     Helvetica,
     sans-serif;
-  
 }
 
 h1 {
   font-weight: 700;
+  font-family: 'EB Garamond', serif;
 }

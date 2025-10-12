@@ -9,37 +9,37 @@ import styles from './index.module.scss';
 import { PricingCard } from './PricingCard';
 
 export const Pricing = () => {
-  // const t = useTranslations('Pricing');
+  const t = useTranslations('Pricing');
 
   const pricingData = [
     {
-      title: "t('starterCard')",
+      title: t('starterCard'),
       price: '1',
       features: [
-        "t('paymentReminderFeature')",
-        "t('fileManagementFeature')",
-        "t('CommunicationWithTenantsFeature')",
-        "t('addressBookFeature')",
+        t('billRemindersFeature'),
+        t('documentVaultFeature'),
+        t('goalsAndTasksFeature'),
       ],
     },
     {
-      title: "t('premiumCard')",
+      title: t('premiumCard'),
       price: '2',
       features: [
-        "t('paymentReminderFeature')",
-        "t('fileManagementFeature')",
-        "t('CommunicationWithTenantsFeature')",
-        "t('addressBookFeature')",
+        t('billRemindersFeature'),
+        t('documentVaultFeature'),
+        t('goalsAndTasksFeature'),
+        t('accountConnectionsFeature'),
       ],
     },
     {
-      title: "t('vipCard')",
+      title: t('vipCard'),
       price: '5',
       features: [
-        "t('paymentReminderFeature')",
-        "t('fileManagementFeature')",
-        "t('CommunicationWithTenantsFeature')",
-        "t('addressBookFeature')",
+        t('billRemindersFeature'),
+        t('documentVaultFeature'),
+        t('goalsAndTasksFeature'),
+        t('accountConnectionsFeature'),
+        t('financeContactsFeature'),
       ],
     },
   ];
@@ -49,7 +49,7 @@ export const Pricing = () => {
         <section id="pricing">
           <div className={styles.wrapper}>
             <div className={styles.pricingTitle}>
-              <p className={styles.text}>Pricing</p>
+              <p className={styles.text}>{t('Pricing')}</p>
             </div>
             <div className={styles.pricingWrapper}>
               {pricingData.map(item => (

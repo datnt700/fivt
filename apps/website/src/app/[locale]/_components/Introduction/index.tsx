@@ -37,7 +37,7 @@ export const Introduction = () => {
   return (
     <Layout>
       <Content>
-        <section className="grid gap-5 md:w-[600px] lg:w-full mx-auto lg:grid-cols-2">
+        <section className="grid gap-5 md:w-[600px] mt-10 lg:w-full mx-auto lg:grid-cols-2">
           <div className="flex flex-col gap-5 text-center items-center">
             <h1 className={styles.title}>
               Control Your Cash. Level Up Your Life.
@@ -55,7 +55,7 @@ export const Introduction = () => {
                 <Card key={i}>
                   <Icon source={item.icon} />
                   <div className="">
-                    <h2 className="">{item.title}</h2>
+                    <h2 className={styles.title}>{item.title}</h2>
                   </div>
                 </Card>
               ))}

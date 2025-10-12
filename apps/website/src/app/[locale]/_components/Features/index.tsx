@@ -23,38 +23,38 @@ interface Feature {
 }
 
 export const Features = () => {
-  // const t = useTranslations('Features');
+  const t = useTranslations('Features');
 
   const featureData: Feature[] = [
     {
       icon: <IconBrandMastercard size={80} />,
-      title: "t('paymentReminderFeature')",
-      description: "t('paymentReminderFeature')",
+      title: t('understandF'),
+      description: t('desUnderstandF'),
     },
     {
       icon: <IconFileAnalytics size={80} />,
-      title: '2',
-      description: "t('paymentReminderFeature')",
+      title: t('updateF'),
+      description: t('desUpdateF'),
     },
     {
       icon: <IconAddressBook size={80} />,
-      title: '3',
-      description: "t('paymentReminderFeature')",
+      title: t('trackF'),
+      description: t('desTrackF'),
     },
     {
       icon: <IconBrandHipchat size={80} />,
-      title: '4',
-      description: "t('paymentReminderFeature')",
+      title: t('identifyF'),
+      description: t('desIdentifyF'),
     },
     {
       icon: <IconSubtask size={80} />,
-      title: '5',
-      description: "t('paymentReminderFeature')",
+      title: t('manageF'),
+      description: t('desManageF'),
     },
     {
       icon: <IconPaperclip size={80} />,
-      title: '6',
-      description: "t('paymentReminderFeature')",
+      title: t('predictF'),
+      description: t('desPredictF'),
     },
   ];
   return (
@@ -63,9 +63,7 @@ export const Features = () => {
         <section id="features">
           <div className={styles.wrapper}>
             <div className={styles.introductionFeature}>
-              <span className={styles.text}>
-                {"t('paymentReminderFeature')"}
-              </span>
+              <span className={styles.text}>{t('features')}</span>
             </div>
             <div className={styles.features}>
               <div className={styles.featuresItem}>

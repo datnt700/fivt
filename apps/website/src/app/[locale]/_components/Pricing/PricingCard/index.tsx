@@ -15,7 +15,7 @@ export const PricingCard = ({
   price,
   features,
 }: PricingComponentProps) => {
-  // const t = useTranslations('Pricing');
+  const t = useTranslations('Pricing');
 
   return (
     <Card key={title} className={styles.pricingComponent}>
@@ -32,17 +32,19 @@ export const PricingCard = ({
                 </div>
               </div>
               <div className={styles.billedMonthly}>
-                <p> {"t('perMonth')"}</p>
+                <p> {t('perMonth')}</p>
               </div>
             </div>
-            <Button>{"t('getStarterBtn')"}</Button>
-            <div className={styles.featureList}>
+            <Button className="!bg-orange-500 !rounded-sm">
+              {t('getStarterBtn')}
+            </Button>
+            <ul className={styles.featureList}>
               {features.map((feature, index) => (
-                <ul key={index} className={styles.featureItem}>
-                  <li className={styles.text}>{feature}</li>
-                </ul>
+                <li key={index} className={styles.text}>
+                  {feature}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
