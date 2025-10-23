@@ -33,7 +33,11 @@ export function useCreatePost() {
   return useMutation({
     mutationFn: (data: CreatePostFormValues) => postService.createPost(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts', locale] });
+      // Invalidate all posts queries regardless of params
+      queryClient.invalidateQueries({
+        queryKey: ['posts', locale],
+        exact: false,
+      });
     },
   });
 }
@@ -51,8 +55,14 @@ export function useUpdatePost() {
       data: UpdatePostFormValues;
     }) => postService.updatePost(postId, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts', locale] });
-      queryClient.invalidateQueries({ queryKey: ['post', locale] });
+      queryClient.invalidateQueries({
+        queryKey: ['posts', locale],
+        exact: false,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['post', locale],
+        exact: false,
+      });
     },
   });
 }
@@ -64,7 +74,10 @@ export function useDeletePost() {
   return useMutation({
     mutationFn: (postId: string) => postService.deletePost(postId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts', locale] });
+      queryClient.invalidateQueries({
+        queryKey: ['posts', locale],
+        exact: false,
+      });
     },
   });
 }
@@ -82,8 +95,14 @@ export function useVotePost() {
       voteType: 'UPVOTE' | 'DOWNVOTE';
     }) => postService.votePost(postId, voteType),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', locale] });
-      queryClient.invalidateQueries({ queryKey: ['posts', locale] });
+      queryClient.invalidateQueries({
+        queryKey: ['post', locale],
+        exact: false,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['posts', locale],
+        exact: false,
+      });
     },
   });
 }

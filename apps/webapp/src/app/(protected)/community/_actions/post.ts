@@ -23,7 +23,15 @@ export async function createPost(data: unknown) {
       return { success: false, error: 'Unauthorized' };
     }
 
-    const validated = createPostSchema.parse(data);
+    const validationResult = createPostSchema.safeParse(data);
+    if (!validationResult.success) {
+      const errorMessages = validationResult.error.errors
+        .map(err => err.message)
+        .join(', ');
+      return { success: false, error: errorMessages };
+    }
+
+    const validated = validationResult.data;
     const userId = session.user.id;
 
     // Generate slug

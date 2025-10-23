@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select';
 import { useCreatePost } from '../_hooks/use-posts';
 import { Loader2, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface CreatePostModalProps {
   open: boolean;
@@ -45,11 +46,21 @@ export function CreatePostModal({ open, onClose }: CreatePostModalProps) {
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
+      toast.error(tCommon('error'), {
+        description: 'Please fill in all required fields',
+      });
+      return;
+    }
+
+    if (content.trim().length < 10) {
+      toast.error(tCommon('error'), {
+        description: t('post.minCharacters', { count: 10 }),
+      });
       return;
     }
 
     try {
-      await createPost.mutateAsync({
+      const result = await createPost.mutateAsync({
         title: title.trim(),
         content: content.trim(),
         excerpt: excerpt.trim() || undefined,
@@ -58,18 +69,47 @@ export function CreatePostModal({ open, onClose }: CreatePostModalProps) {
         status,
       });
 
-      // Reset form
-      setTitle('');
-      setContent('');
-      setExcerpt('');
-      setCoverImage('');
-      setTags([]);
-      setTagInput('');
-      setStatus('PUBLISHED');
+      console.log('Post created:', result);
 
-      onClose();
+      if (result.success) {
+        toast.success(tCommon('success'), {
+          description: t('post.createSuccess'),
+        });
+
+        // Reset form
+        setTitle('');
+        setContent('');
+        setExcerpt('');
+        setCoverImage('');
+        setTags([]);
+        setTagInput('');
+        setStatus('PUBLISHED');
+
+        onClose();
+      } else {
+        // Parse validation errors if they're JSON
+        let errorMessage = result.error || 'Failed to create post';
+        try {
+          const errors = JSON.parse(result.error || '[]');
+          if (Array.isArray(errors) && errors.length > 0) {
+            errorMessage = errors
+              .map((e: { message: string }) => e.message)
+              .join(', ');
+          }
+        } catch {
+          // If not JSON, use as-is
+        }
+
+        toast.error(tCommon('error'), {
+          description: errorMessage,
+        });
+      }
     } catch (error) {
       console.error('Failed to create post:', error);
+      toast.error(tCommon('error'), {
+        description:
+          error instanceof Error ? error.message : 'Failed to create post',
+      });
     }
   };
 

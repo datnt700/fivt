@@ -37,6 +37,7 @@
     "locked": "Locked",
     "viewCount": "{count} views",
     "createPost": "Create Post",
+    "createSuccess": "Post created successfully!",
     "createDescription": "Share your knowledge, questions and ideas with the community",
     "minCharacters": "Minimum {count} characters",
     "editPost": "Edit Post",
