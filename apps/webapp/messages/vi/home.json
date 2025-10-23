@@ -1,0 +1,21 @@
+{
+  "title": "Chào mừng đến với Fivt",
+  "subtitle": "Người bạn đồng hành thông minh cho việc quản lý tài chính tốt hơn",
+  "getStarted": "Bắt đầu",
+  "learnMore": "Tìm hiểu thêm",
+  "features": {
+    "title": "Tính năng",
+    "ai": {
+      "title": "Lời khuyên được hỗ trợ bởi AI",
+      "description": "Nhận các khuyến nghị tài chính cá nhân hóa được hỗ trợ bởi AI tiên tiến"
+    },
+    "secure": {
+      "title": "An toàn & Riêng tư",
+      "description": "Dữ liệu tài chính của bạn được mã hóa và bảo vệ bằng bảo mật tiêu chuẩn ngành"
+    },
+    "multilingual": {
+      "title": "Hỗ trợ Đa ngôn ngữ",
+      "description": "Có sẵn bằng tiếng Anh, tiếng Việt và tiếng Pháp để truy cập toàn cầu"
+    }
+  }
+}

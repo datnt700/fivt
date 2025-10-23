@@ -33,7 +33,7 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
   - AI: `OPENAI_API_KEY`
   - Do NOT hardcode; reference via `process.env.*`
 - **Host/port logic**: `apps/webapp/src/config.ts` picks production host via `VERCEL_PROJECT_PRODUCTION_URL`, fallback `http://localhost:3000`.
-- **MANDATORY i18n**: next-intl with routing config (`src/i18n/routing.ts`) using `localePrefix: 'never'` strategy (no URL prefixes). ALWAYS use `useTranslations()` hook for all user-facing text. Message keys must exist in `messages/en.json`, `messages/fr.json`, `messages/vi.json`. Locale detection via `src/i18n/request.ts`.
+- **MANDATORY i18n**: next-intl with modular translation structure. Routing config (`src/i18n/routing.ts`) using `localePrefix: 'never'` strategy (no URL prefixes). ALWAYS use `useTranslations()` hook for all user-facing text. Message keys organized in modular files under `messages/{locale}/` directories (e.g., `messages/en/common.json`, `messages/en/community.json`, etc.). Locale detection via `src/i18n/request.ts` which imports all modules and merges them. Three supported locales: en, fr, vi.
 
 ### 4. Authentication Pattern
 
@@ -116,9 +116,8 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 2. Define/extend schema in `apps/webapp/prisma/schema.prisma`; run `pnpm prisma migrate dev --name add_<feature>` inside webapp.
 3. Create module structure in `src/app/(protected)/(dashboard)/<feature>` OR `src/app/(protected)/<feature>` with `_actions`, `_hooks`, `_services`, `_components`, `_validations` folders as needed.
 4. Export server actions in `<feature>/_actions/<entity>.ts` following auth + validation + return pattern.
-5. **MANDATORY**: Add i18n message keys to all three locale files (`messages/en.json`, `messages/fr.json`, `messages/vi.json`) and use `useTranslations()` in components.
+5. **MANDATORY**: Add i18n message keys to all three locale module files in `messages/{locale}/` directories and use `useTranslations()` in components. If adding a new module, create the JSON file in all three locales (en, fr, vi) and add the import to `src/i18n/request.ts`.
 6. Run tests to verify implementation matches TDD specifications.
-7. Run tests to verify implementation matches TDD specifications.
 
 ### 11. Safe Change Guidelines (Project-Specific)
 
@@ -141,8 +140,10 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 
 - Auth file: `apps/webapp/src/auth.ts`
 - I18n config: `apps/webapp/src/i18n/routing.ts` + `request.ts`
+- I18n messages: `apps/webapp/messages/{locale}/` directories with modular JSON files
 - Server actions: `apps/webapp/src/actions/*`
 - Prisma schema: `apps/webapp/prisma/schema.prisma`
+- Database: Docker Compose at root (`docker-compose.yml`) - PostgreSQL on localhost:5432
 - Turbo tasks: `turbo.json`
 - Module pattern: `(route)/_components|_hooks|_services|_validations|_types|_utils`
 - Extensions example: `extensions/_hooks/use-extensions.ts`, `extensions/_services/extension-service.ts`

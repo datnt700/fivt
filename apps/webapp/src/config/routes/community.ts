@@ -1,6 +1,6 @@
 /**
  * Community module routes
- * All routes related to community features (posts, comments, groups)
+ * All routes related to community features (posts, comments, tags)
  */
 
 export const COMMUNITY_ROUTES = {
@@ -14,12 +14,6 @@ export const COMMUNITY_ROUTES = {
   CREATE_POST: '/community/posts/create',
   EDIT_POST: '/community/posts/[slug]/edit',
 
-  // Group routes
-  GROUPS: '/community/groups',
-  GROUP_DETAIL: '/community/groups/[slug]',
-  CREATE_GROUP: '/community/groups/create',
-  GROUP_SETTINGS: '/community/groups/[slug]/settings',
-
   // User routes
   USER_POSTS: '/community/users/[userId]/posts',
   USER_COMMENTS: '/community/users/[userId]/comments',
@@ -29,8 +23,6 @@ export const COMMUNITY_ROUTES = {
     POSTS: '/api/community/posts',
     POST_DETAIL: '/api/community/posts/[slug]',
     POST_COMMENTS: '/api/community/posts/[postId]/comments',
-    GROUPS: '/api/community/groups',
-    GROUP_DETAIL: '/api/community/groups/[slug]',
     TAGS: '/api/community/tags',
   },
 } as const;
@@ -39,15 +31,8 @@ export const COMMUNITY_ROUTES = {
  * Helper functions for community routes
  */
 
-export function getPostDetailRoute(slug: string, groupSlug?: string): string {
-  if (groupSlug) {
-    return `/community/groups/${groupSlug}/posts/${slug}`;
-  }
+export function getPostDetailRoute(slug: string): string {
   return `/community/posts/${slug}`;
-}
-
-export function getGroupDetailRoute(slug: string): string {
-  return `/community/groups/${slug}`;
 }
 
 export function getUserPostsRoute(userId: string): string {

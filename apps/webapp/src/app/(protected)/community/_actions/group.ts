@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import {
   createGroupSchema,
   updateGroupSchema,
-} from '@/app/(protected)/(dashboard)/community/_validations/group-schema';
+} from '../_validations/group-schema';
 import { revalidatePath } from 'next/cache';
 
 function generateSlug(name: string): string {

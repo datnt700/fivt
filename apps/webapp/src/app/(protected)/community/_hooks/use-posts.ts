@@ -6,11 +6,7 @@ import type {
   UpdatePostFormValues,
 } from '../_validations/post-schema';
 
-export function usePosts(params?: {
-  groupId?: string;
-  userId?: string;
-  status?: string;
-}) {
+export function usePosts(params?: { userId?: string; status?: string }) {
   const locale = useLocale();
 
   return useQuery({
@@ -20,12 +16,12 @@ export function usePosts(params?: {
   });
 }
 
-export function usePost(slug: string, groupSlug?: string) {
+export function usePost(slug: string) {
   const locale = useLocale();
 
   return useQuery({
-    queryKey: ['post', locale, slug, groupSlug],
-    queryFn: () => postService.getPost(slug, groupSlug),
+    queryKey: ['post', locale, slug],
+    queryFn: () => postService.getPost(slug),
     staleTime: 5 * 60 * 1000,
   });
 }

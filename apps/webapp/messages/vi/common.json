@@ -1,0 +1,19 @@
+{
+  "loading": "Đang tải...",
+  "error": "Lỗi",
+  "success": "Thành công",
+  "save": "Lưu",
+  "cancel": "Hủy",
+  "delete": "Xóa",
+  "edit": "Chỉnh sửa",
+  "close": "Đóng",
+  "back": "Quay lại",
+  "next": "Tiếp theo",
+  "previous": "Trước",
+  "search": "Tìm kiếm",
+  "filter": "Lọc",
+  "clear": "Xóa",
+  "submit": "Gửi",
+  "confirm": "Xác nhận",
+  "characters": "ký tự"
+}

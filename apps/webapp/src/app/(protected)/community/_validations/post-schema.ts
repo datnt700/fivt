@@ -8,7 +8,6 @@ export const createPostSchema = z.object({
   content: z.string().min(10, 'Content must be at least 10 characters'),
   excerpt: z.string().max(500).optional(),
   coverImage: z.string().url().optional().or(z.literal('')),
-  groupId: z.string().uuid().optional(),
   tags: z.array(z.string()).max(10, 'Maximum 10 tags allowed').optional(),
   status: z.enum(['DRAFT', 'PUBLISHED']).default('PUBLISHED'),
 });

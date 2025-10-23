@@ -1,0 +1,8 @@
+{
+  "pageNotFound": "Page not found",
+  "serverError": "Internal server error",
+  "unauthorized": "Unauthorized access",
+  "forbidden": "Access forbidden",
+  "tryAgain": "Try again",
+  "goHome": "Go to homepage"
+}

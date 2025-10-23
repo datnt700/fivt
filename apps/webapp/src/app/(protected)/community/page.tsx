@@ -1,7 +1,7 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -12,14 +12,14 @@ import {
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { usePosts } from './_hooks/use-posts';
-import { useGroups } from './_hooks/use-groups';
-import { MessageSquare, Users, TrendingUp, PlusCircle } from 'lucide-react';
-import type { Post, Group } from './_types';
+import { MessageSquare, Tag, TrendingUp, PlusCircle } from 'lucide-react';
+import type { Post } from './_types';
+import { CreatePostModal } from './_components/create-post-modal';
 
 export default function CommunityPage() {
   const t = useTranslations('community');
   const { data: posts, isLoading: postsLoading } = usePosts();
-  const { data: groups, isLoading: groupsLoading } = useGroups();
+  const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -27,22 +27,14 @@ export default function CommunityPage() {
         <div>
           <h1 className="text-4xl font-bold mb-2">{t('title')}</h1>
           <p className="text-muted-foreground">
-            {t('feed')} • {t('posts')} • {t('groups')}
+            {t('feed')} • {t('posts')} • {t('tags')}
           </p>
         </div>
         <div className="flex gap-2">
-          <Link href="/community/posts/create">
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              {t('createPost')}
-            </Button>
-          </Link>
-          <Link href="/community/groups/create">
-            <Button variant="outline">
-              <Users className="mr-2 h-4 w-4" />
-              {t('createGroup')}
-            </Button>
-          </Link>
+          <Button onClick={() => setIsCreatePostModalOpen(true)}>
+            <PlusCircle className="mr-2 h-4 w-4" />
+            {t('createPost')}
+          </Button>
         </div>
       </div>
 
@@ -62,13 +54,13 @@ export default function CommunityPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('groups')}</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">{t('tags')}</CardTitle>
+            <Tag className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{groups?.length || 0}</div>
+            <div className="text-2xl font-bold">-</div>
             <p className="text-xs text-muted-foreground">
-              {t('stats.activeGroups')}
+              {t('stats.totalTags')}
             </p>
           </CardContent>
         </Card>
@@ -93,7 +85,7 @@ export default function CommunityPage() {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="feed">{t('feed')}</TabsTrigger>
           <TabsTrigger value="posts">{t('posts')}</TabsTrigger>
-          <TabsTrigger value="groups">{t('groups')}</TabsTrigger>
+          <TabsTrigger value="tags">{t('tags')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="feed" className="mt-6">
@@ -154,49 +146,24 @@ export default function CommunityPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="groups" className="mt-6">
+        <TabsContent value="tags" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t('groups')}</CardTitle>
-              <CardDescription>{t('groupsDescription')}</CardDescription>
+              <CardTitle>{t('tags')}</CardTitle>
+              <CardDescription>{t('tagsDescription')}</CardDescription>
             </CardHeader>
             <CardContent>
-              {groupsLoading ? (
-                <p>{t('loadingGroups')}</p>
-              ) : groups && groups.length > 0 ? (
-                <div className="grid gap-4 md:grid-cols-2">
-                  {groups.map((group: Group) => (
-                    <Card key={group.id}>
-                      <CardHeader>
-                        <CardTitle className="text-base">
-                          {group.name}
-                        </CardTitle>
-                        <CardDescription>{group.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>
-                            {t('group.members', {
-                              count: group._count?.members || 0,
-                            })}
-                          </span>
-                          <span>
-                            {t('group.posts', {
-                              count: group._count?.posts || 0,
-                            })}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-muted-foreground">{t('group.noGroups')}</p>
-              )}
+              <p className="text-muted-foreground">{t('tag.noTags')}</p>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Create Post Modal */}
+      <CreatePostModal
+        open={isCreatePostModalOpen}
+        onClose={() => setIsCreatePostModalOpen(false)}
+      />
     </div>
   );
 }

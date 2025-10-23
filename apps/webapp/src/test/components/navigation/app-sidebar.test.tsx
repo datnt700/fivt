@@ -7,6 +7,7 @@ const mockTranslations = {
   'transactions.title': 'Transactions',
   'navigation.dashboard': 'Dashboard',
   'budget.title': 'Budget Tracking',
+  'community.title': 'Community',
 };
 
 vi.mock('next-intl', () => ({
@@ -267,7 +268,7 @@ describe('AdminSidebar', () => {
     render(<AdminSidebar />);
 
     const navItems = screen.getAllByTestId('nav-item');
-    expect(navItems).toHaveLength(5);
+    expect(navItems).toHaveLength(6);
 
     // First item should be Dashboard
     expect(navItems[0]).toHaveTextContent('Dashboard');
@@ -288,5 +289,9 @@ describe('AdminSidebar', () => {
     // Fifth item should be Extensions
     expect(navItems[4]).toHaveTextContent('title');
     expect(navItems[4]).toHaveTextContent('/extensions');
+
+    // Sixth item should be Community
+    expect(navItems[5]).toHaveTextContent('Community');
+    expect(navItems[5]).toHaveTextContent('/community');
   });
 });

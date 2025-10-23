@@ -1,0 +1,13 @@
+{
+  "home": "Home",
+  "about": "About",
+  "contact": "Contact",
+  "login": "Login",
+  "logout": "Logout",
+  "profile": "Profile",
+  "settings": "Settings",
+  "banking": "Banking",
+  "chatbot": "AI Assistant",
+  "transactions": "Transactions",
+  "dashboard": "Dashboard"
+}

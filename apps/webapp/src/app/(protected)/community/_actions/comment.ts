@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import {
   createCommentSchema,
   updateCommentSchema,
-} from '@/app/(protected)/(dashboard)/community/_validations/comment-schema';
+} from '../_validations/comment-schema';
 import { revalidatePath } from 'next/cache';
 
 export async function createComment(data: unknown) {

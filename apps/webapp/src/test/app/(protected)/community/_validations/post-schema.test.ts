@@ -24,7 +24,6 @@ describe('Post Schema Validation', () => {
           content: 'This is a test post content with enough characters.',
           excerpt: 'Short excerpt',
           coverImage: 'https://example.com/image.jpg',
-          groupId: '550e8400-e29b-41d4-a716-446655440000',
           tags: ['tech', 'finance'],
           status: 'PUBLISHED' as const,
         };

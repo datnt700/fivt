@@ -2,7 +2,7 @@ import { ThemeToggler, LanguageSwitcher } from '@/components/theme';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Home, Users, Tag, TrendingUp } from 'lucide-react';
+import { Home, Tag, TrendingUp } from 'lucide-react';
 
 export default async function CommunityLayout({
   children,
@@ -30,13 +30,6 @@ export default async function CommunityLayout({
               >
                 <Home className="inline-block mr-1 h-4 w-4" />
                 Feed
-              </Link>
-              <Link
-                href="/community/groups"
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-              >
-                <Users className="inline-block mr-1 h-4 w-4" />
-                Groups
               </Link>
               <Link
                 href="/community/tags"

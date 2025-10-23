@@ -4,26 +4,17 @@ CREATE TYPE "public"."PostStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED', 'DE
 -- CreateEnum
 CREATE TYPE "public"."VoteType" AS ENUM ('UPVOTE', 'DOWNVOTE');
 
--- DropIndex
-DROP INDEX "public"."Service_type_idx";
+-- DropIndex (conditional - only if exists)
+DROP INDEX IF EXISTS "public"."Service_type_idx";
 
--- DropIndex
-DROP INDEX "public"."UserSubscription_serviceId_idx";
+-- DropIndex (conditional - only if exists)
+DROP INDEX IF EXISTS "public"."UserSubscription_serviceId_idx";
 
--- DropIndex
-DROP INDEX "public"."UserSubscription_status_idx";
+-- DropIndex (conditional - only if exists)
+DROP INDEX IF EXISTS "public"."UserSubscription_status_idx";
 
--- DropIndex
-DROP INDEX "public"."UserSubscription_userId_idx";
-
--- AlterTable
-ALTER TABLE "public"."Service" ALTER COLUMN "updatedAt" DROP DEFAULT;
-
--- AlterTable
-ALTER TABLE "public"."SubscriptionPlan" ALTER COLUMN "updatedAt" DROP DEFAULT;
-
--- AlterTable
-ALTER TABLE "public"."UserSubscription" ALTER COLUMN "updatedAt" DROP DEFAULT;
+-- DropIndex (conditional - only if exists)
+DROP INDEX IF EXISTS "public"."UserSubscription_userId_idx";
 
 -- CreateTable
 CREATE TABLE "public"."Group" (

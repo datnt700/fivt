@@ -1,0 +1,21 @@
+{
+  "title": "Welcome to Fivt",
+  "subtitle": "Your intelligent financial companion for better money management",
+  "getStarted": "Get Started",
+  "learnMore": "Learn More",
+  "features": {
+    "title": "Features",
+    "ai": {
+      "title": "AI-Powered Advice",
+      "description": "Get personalized financial recommendations powered by advanced AI"
+    },
+    "secure": {
+      "title": "Secure & Private",
+      "description": "Your financial data is encrypted and protected with industry-standard security"
+    },
+    "multilingual": {
+      "title": "Multilingual Support",
+      "description": "Available in English, Vietnamese, and French for global accessibility"
+    }
+  }
+}

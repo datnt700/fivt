@@ -12,7 +12,6 @@ export interface Post {
   isPinned: boolean;
   isLocked: boolean;
   userId: string;
-  groupId?: string | null;
   publishedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -21,11 +20,6 @@ export interface Post {
     name?: string | null;
     image?: string | null;
   };
-  group?: {
-    id: string;
-    name: string;
-    slug: string;
-  } | null;
   tags?: Array<{
     tag: {
       id: string;
@@ -58,22 +52,6 @@ export interface Comment {
   _count?: {
     replies: number;
     votes: number;
-  };
-}
-
-export interface Group {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string | null;
-  icon?: string | null;
-  banner?: string | null;
-  isPrivate: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  _count?: {
-    members: number;
-    posts: number;
   };
 }
 

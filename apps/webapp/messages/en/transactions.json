@@ -1,0 +1,43 @@
+{
+  "name": "Transaction",
+  "title": "Transactions",
+  "bankTransactions": "Bank Transactions",
+  "manualTransactions": "Manual Transactions",
+  "transactionHistory": "Transaction History",
+  "subtitle": "View your bank transactions from Powens for the selected month",
+  "manualSubtitle": "Transactions you've created manually for tracking purposes",
+  "addManualTitle": "Add Manual Transaction",
+  "addManualSubtitle": "Create a manual transaction record for tracking purposes",
+  "dateFilter": "Filter by date",
+  "amount": "Amount",
+  "description": "Description",
+  "category": "Category",
+  "nameType": "Type",
+  "selectType": "Select type",
+  "selectMonth": "Select month",
+  "type": {
+    "income": "Income",
+    "expense": "Expense"
+  },
+  "addTransaction": "Add Transaction",
+  "editTransaction": "Edit Transaction",
+  "deleteTransaction": "Delete Transaction",
+  "noTransactions": "No transactions found for the selected date.",
+  "noManualTransactions": "No manual transactions",
+  "noManualTransactionsDesc": "You haven't created any manual transactions yet.",
+  "noBankTransactions": "No transactions found",
+  "noBankTransactionsDesc": "No bank transactions were found for the selected month.",
+  "loadingTransactions": "Loading transactions...",
+  "errorLoadingTransactions": "Error loading transactions. Please try again.",
+  "failedToLoadManual": "Failed to load manual transactions",
+  "connectBankAccount": "Connect Bank Account",
+  "refresh": "Refresh",
+  "summary": {
+    "totalTransactions": "Total Transactions",
+    "totalIncome": "Total Income",
+    "totalExpenses": "Total Expenses",
+    "netAmount": "Net Amount",
+    "transactionsCount": "{count} transactions"
+  },
+  "manual": "Manual"
+}

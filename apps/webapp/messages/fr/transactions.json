@@ -1,0 +1,43 @@
+{
+  "name": "Transaction",
+  "title": "Transactions",
+  "bankTransactions": "Transactions Bancaires",
+  "manualTransactions": "Transactions Manuelles",
+  "transactionHistory": "Historique des Transactions",
+  "subtitle": "Consultez vos transactions bancaires de Powens pour le mois sélectionné",
+  "manualSubtitle": "Transactions que vous avez créées manuellement pour le suivi",
+  "addManualTitle": "Ajouter une Transaction Manuelle",
+  "addManualSubtitle": "Créer un enregistrement de transaction manuelle pour le suivi",
+  "dateFilter": "Filtrer par date",
+  "amount": "Montant",
+  "description": "Description",
+  "category": "Catégorie",
+  "nameType": "Type",
+  "selectType": "Sélectionner le type",
+  "selectMonth": "Sélectionner le mois",
+  "type": {
+    "income": "Revenu",
+    "expense": "Dépense"
+  },
+  "addTransaction": "Ajouter une Transaction",
+  "editTransaction": "Modifier la Transaction",
+  "deleteTransaction": "Supprimer la Transaction",
+  "noTransactions": "Aucune transaction trouvée pour la date sélectionnée.",
+  "noManualTransactions": "Aucune transaction manuelle",
+  "noManualTransactionsDesc": "Vous n'avez pas encore créé de transactions manuelles.",
+  "noBankTransactions": "Aucune transaction trouvée",
+  "noBankTransactionsDesc": "Aucune transaction bancaire trouvée pour le mois sélectionné.",
+  "loadingTransactions": "Chargement des transactions...",
+  "errorLoadingTransactions": "Erreur lors du chargement des transactions. Veuillez réessayer.",
+  "failedToLoadManual": "Échec du chargement des transactions manuelles",
+  "connectBankAccount": "Connecter un Compte Bancaire",
+  "refresh": "Actualiser",
+  "summary": {
+    "totalTransactions": "Total des Transactions",
+    "totalIncome": "Total des Revenus",
+    "totalExpenses": "Total des Dépenses",
+    "netAmount": "Montant Net",
+    "transactionsCount": "{count} transactions"
+  },
+  "manual": "Manuel"
+}

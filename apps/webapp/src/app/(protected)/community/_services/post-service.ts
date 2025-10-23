@@ -8,13 +8,8 @@ import type {
  * Service layer for post-related operations
  */
 
-export async function getPosts(params?: {
-  groupId?: string;
-  userId?: string;
-  status?: string;
-}) {
+export async function getPosts(params?: { userId?: string; status?: string }) {
   const query = new URLSearchParams();
-  if (params?.groupId) query.append('groupId', params.groupId);
   if (params?.userId) query.append('userId', params.userId);
   if (params?.status) query.append('status', params.status);
 
@@ -25,9 +20,8 @@ export async function getPosts(params?: {
   return response.json();
 }
 
-export async function getPost(slug: string, groupSlug?: string) {
-  const query = groupSlug ? `?groupSlug=${groupSlug}` : '';
-  const response = await fetch(`/api/community/posts/${slug}${query}`);
+export async function getPost(slug: string) {
+  const response = await fetch(`/api/community/posts/${slug}`);
   if (!response.ok) {
     throw new Error('Failed to fetch post');
   }

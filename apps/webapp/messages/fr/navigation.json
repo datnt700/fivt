@@ -1,0 +1,13 @@
+{
+  "home": "Accueil",
+  "about": "À propos",
+  "contact": "Contact",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "profile": "Profil",
+  "settings": "Paramètres",
+  "banking": "Services Bancaires",
+  "chatbot": "Assistant IA",
+  "transactions": "Transactions",
+  "dashboard": "Tableau de bord"
+}

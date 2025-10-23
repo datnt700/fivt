@@ -1,0 +1,9 @@
+{
+  "noCategories": "No categories available.",
+  "loadingCategories": "Loading categories...",
+  "errorLoadingCategories": "Error loading categories. Please try again.",
+  "addCategory": "Add Category",
+  "editCategory": "Edit Category",
+  "deleteCategory": "Delete Category",
+  "selected": "Select or create category"
+}

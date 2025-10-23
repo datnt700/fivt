@@ -1,0 +1,9 @@
+{
+  "title": "Fivt Assistant",
+  "subtitle": "Get personalized financial advice and strategies",
+  "placeholder": "Ask me about your financial goals, budgeting, investing, or any money-related questions...",
+  "send": "Send",
+  "thinking": "AI is thinking...",
+  "error": "Sorry, I encountered an error. Please try again.",
+  "welcomeMessage": "Hello! I'm your Fivt assistant. How can I help you with your financial goals today?"
+}

@@ -4,12 +4,43 @@ A modern Turborepo monorepo with Next.js applications, comprehensive testing, an
 
 ## Quick Start
 
-1. Install dependencies:
+### 1. Start the Database
+
 ```sh
+# Start PostgreSQL with Docker
+docker-compose up -d
+
+# Verify it's running
+docker-compose ps
+```
+
+### 2. Setup Environment
+
+```sh
+cd apps/webapp
+
+# Copy environment template
+cp .env.example .env.local
+
+# Edit .env.local with your credentials (DATABASE_URL is already set for Docker)
+```
+
+### 3. Run Database Migrations
+
+```sh
+cd apps/webapp
+pnpm prisma migrate dev
+```
+
+### 4. Install Dependencies
+
+```sh
+# From root directory
 pnpm install
 ```
 
-2. Start development (from webapp directory):
+### 5. Start Development
+
 ```sh
 cd apps/webapp
 
@@ -20,20 +51,14 @@ cd apps/webapp
 ./scripts/dev.sh dev
 ```
 
-3. Run full workflow validation:
-```sh
-# Windows (PowerShell)
-.\scripts\dev.ps1 all
-
-# Unix/Linux/macOS
-./scripts/dev.sh all
-```
+See [DOCKER.md](./DOCKER.md) for detailed database setup and troubleshooting.
 
 ## Development Scripts
 
 The `webapp` includes convenient development scripts for common workflows:
 
 ### Windows (PowerShell)
+
 ```powershell
 # From apps/webapp directory
 .\scripts\dev.ps1 [command]
@@ -51,6 +76,7 @@ The `webapp` includes convenient development scripts for common workflows:
 ```
 
 ### Unix/Linux/macOS
+
 ```bash
 # From apps/webapp directory
 ./scripts/dev.sh [command]

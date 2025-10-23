@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import {
   createPostSchema,
   updatePostSchema,
-} from '@/app/(protected)/(dashboard)/community/_validations/post-schema';
+} from '../_validations/post-schema';
 import { revalidatePath } from 'next/cache';
 
 function generateSlug(title: string): string {
@@ -31,24 +31,14 @@ export async function createPost(data: unknown) {
     let slug = baseSlug;
     let counter = 1;
 
-    // Ensure unique slug within the group (or global if no group)
+    // Ensure unique slug
     while (
       await prisma.post.findFirst({
-        where: { slug, groupId: validated.groupId || null },
+        where: { slug },
       })
     ) {
       slug = `${baseSlug}-${counter}`;
       counter++;
-    }
-
-    // Verify group exists if groupId provided
-    if (validated.groupId) {
-      const group = await prisma.group.findUnique({
-        where: { id: validated.groupId },
-      });
-      if (!group) {
-        return { success: false, error: 'Group not found' };
-      }
     }
 
     // Create post with tags
@@ -61,7 +51,6 @@ export async function createPost(data: unknown) {
         coverImage: validated.coverImage || null,
         status: validated.status,
         userId,
-        groupId: validated.groupId || null,
         publishedAt: validated.status === 'PUBLISHED' ? new Date() : null,
         tags: validated.tags
           ? {
@@ -86,16 +75,12 @@ export async function createPost(data: unknown) {
       },
       include: {
         user: { select: { id: true, name: true, image: true } },
-        group: { select: { id: true, name: true, slug: true } },
         tags: { include: { tag: true } },
         _count: { select: { comments: true, votes: true } },
       },
     });
 
     revalidatePath('/community');
-    if (validated.groupId) {
-      revalidatePath(`/community/groups/${validated.groupId}`);
-    }
 
     return { success: true, data: post };
   } catch (error) {

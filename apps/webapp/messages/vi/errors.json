@@ -1,0 +1,8 @@
+{
+  "pageNotFound": "Không tìm thấy trang",
+  "serverError": "Lỗi máy chủ nội bộ",
+  "unauthorized": "Truy cập không được phép",
+  "forbidden": "Truy cập bị cấm",
+  "tryAgain": "Thử lại",
+  "goHome": "Về trang chủ"
+}

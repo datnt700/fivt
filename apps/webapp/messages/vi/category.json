@@ -1,0 +1,10 @@
+{
+  "noCategories": "Không có danh mục nào.",
+  "selected": "Chọn hoặc tạo danh mục",
+  "noCategory": "Không có danh mục",
+  "loadingCategories": "Đang tải danh mục...",
+  "errorLoadingCategories": "Lỗi khi tải danh mục. Vui lòng thử lại.",
+  "addCategory": "Thêm danh mục",
+  "editCategory": "Chỉnh sửa danh mục",
+  "deleteCategory": "Xóa danh mục"
+}

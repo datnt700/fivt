@@ -46,13 +46,13 @@ describe('Post Service', () => {
       expect(result).toEqual(mockPosts);
     });
 
-    it('should fetch posts with groupId filter', async () => {
+    it('should fetch posts with userId filter', async () => {
       const mockPosts = [
         {
           id: 'post-1',
-          title: 'Group Post',
-          slug: 'group-post',
-          groupId: 'group-123',
+          title: 'User Post',
+          slug: 'user-post',
+          userId: 'user-123',
         },
       ];
 
@@ -61,10 +61,10 @@ describe('Post Service', () => {
         json: async () => mockPosts,
       } as Response);
 
-      const result = await postService.getPosts({ groupId: 'group-123' });
+      const result = await postService.getPosts({ userId: 'user-123' });
 
       expect(global.fetch).toHaveBeenCalledWith(
-        '/api/community/posts?groupId=group-123'
+        '/api/community/posts?userId=user-123'
       );
       expect(result).toEqual(mockPosts);
     });
@@ -102,13 +102,12 @@ describe('Post Service', () => {
       } as Response);
 
       await postService.getPosts({
-        groupId: 'group-123',
         userId: 'user-456',
         status: 'DRAFT',
       });
 
       expect(global.fetch).toHaveBeenCalledWith(
-        '/api/community/posts?groupId=group-123&userId=user-456&status=DRAFT'
+        '/api/community/posts?userId=user-456&status=DRAFT'
       );
     });
 
@@ -141,26 +140,6 @@ describe('Post Service', () => {
 
       expect(global.fetch).toHaveBeenCalledWith(
         '/api/community/posts/test-post'
-      );
-      expect(result).toEqual(mockPost);
-    });
-
-    it('should fetch a post with groupSlug filter', async () => {
-      const mockPost = {
-        id: 'post-1',
-        title: 'Group Post',
-        slug: 'group-post',
-      };
-
-      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
-        ok: true,
-        json: async () => mockPost,
-      } as Response);
-
-      const result = await postService.getPost('group-post', 'my-group');
-
-      expect(global.fetch).toHaveBeenCalledWith(
-        '/api/community/posts/group-post?groupSlug=my-group'
       );
       expect(result).toEqual(mockPost);
     });
