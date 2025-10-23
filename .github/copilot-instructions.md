@@ -1,26 +1,39 @@
 ## FIVT Monorepo – AI Agent Working Guide
 
-Purpose: Enable an AI coding agent to contribute productively and safely within ~1 minute. Focus on what is unique here (Turborepo + Next.js 15 App Router, Prisma, Auth, i18n, financial domain models, custom scripts).
+Purpose: Enable an AI coding agent to contribute productively and safely within ~1 minute. Focus on what is unique here (Turborepo + Next.js 15 App Router, Prisma, Auth, i18n, financial domain models, subscription system, modular architecture).
 
 ### 1. Repository & Architecture Overview
 
-- Monorepo managed by Turborepo (`turbo.json`). Apps: `apps/webapp` (primary product), `apps/docs` (docs site). Shared packages: `packages/ui` (React components), `packages/eslint-config`, `packages/typescript-config`.
-- Tech Stack: Next.js 15 (App Router, React 19), TypeScript, Prisma (PostgreSQL), NextAuth v5 beta (magic link + Google), next-intl for i18n, Vitest (unit), Playwright (e2e), Tailwind CSS v4, Radix UI primitives + shadcn/ui components, React Query for data fetching / caching, OpenAI integration for financial chatbot.
-- Domain Models (Prisma): Users, Accounts (OAuth), Sessions, Categories, Transactions, Bridge*/Powens* financial aggregation entities (external banking providers). See `apps/webapp/prisma/schema.prisma` for authoritative schema.
+- **Monorepo Structure**: Managed by Turborepo (`turbo.json`). Apps: `apps/webapp` (primary product), `apps/docs` (docs site). Shared packages: `packages/ui` (React components), `packages/eslint-config`, `packages/typescript-config`.
+- **Tech Stack**: Next.js 15 (App Router, React 19), TypeScript, Prisma (PostgreSQL), NextAuth v5 beta (magic link + Google), next-intl for i18n, Vitest (unit), Playwright (e2e), Tailwind CSS v4, Radix UI primitives + shadcn/ui components, React Query for data fetching/caching, OpenAI integration for financial chatbot.
+- **Domain Models** (Prisma schema): Users, Accounts (OAuth), Sessions, Categories, Transactions, Bridge*/Powens* financial aggregation entities (external banking providers), Subscription system (Service, UserSubscription, SubscriptionPlan). See `apps/webapp/prisma/schema.prisma` for authoritative schema.
+- **Package Manager**: pnpm@9 required (Node >=18). Workspace configuration in `pnpm-workspace.yaml`.
 
 ### 2. Execution & Core Workflows
 
-- Install (root): `pnpm install` (Node >=18, pnpm@9). Postinstall in webapp runs `prisma generate`.
-- Dev (root aggregate): `pnpm dev` → `turbo run dev` (not cached). Typically focus on webapp: run from `apps/webapp`: `pnpm dev` (Turbopack, port 3000).
-- Build all: `pnpm build` (turbo). Each task inherits env constraints defined in `turbo.json`.
-- Unit tests: `pnpm test:unit` (Vitest) inside `apps/webapp` or `pnpm test:unit` at root (turbo pipeline). E2E: `pnpm test:e2e` (requires built app & Playwright browsers).
-- Type checking: `pnpm check-types` (tsc --noEmit) or integrated in scripts.
+- **Install** (root): `pnpm install` (Node >=18, pnpm@9 required). Postinstall in webapp runs `prisma generate`.
+- **Dev Server**: From `apps/webapp`: `pnpm dev` (Turbopack on port 3000). Or root: `pnpm dev` (runs all apps, not cached).
+- **Build**: Root: `pnpm build` (turbo builds all). Each task inherits env constraints from `turbo.json`.
+- **Tests**:
+  - Unit: `pnpm test:unit` (Vitest) - from webapp or root (turbo pipeline)
+  - E2E: `pnpm test:e2e` (Playwright, requires `^build` dependency)
+  - Coverage: `pnpm test:coverage` (V8 provider, 80% thresholds)
+  - Watch: `pnpm test:watch` (uncached, persistent)
+- **Type Checking**: `pnpm check-types` (tsc --noEmit, all packages).
+- **Linting**: `pnpm lint` (ESLint with `--max-warnings 0`).
+- **Clean**: `pnpm clean` (removes `.next`, `.turbo`, uncached).
 
 ### 3. Environment & Configuration
 
-- Critical env vars surfaced in `turbo.json` task `env`/`globalEnv`: Auth (`AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, magic link RESEND*), Database (`DATABASE_URL`), External Banking (`BRIDGE\_*`, `POWENS\__`+`POWENS_API_BASE`), Deployment (`VERCEL_PROJECT_PRODUCTION_URL`, `NEXTAUTH_URL`). Do NOT hardcode; reference via `process.env._`.
-- Host/port logic: `apps/webapp/src/config.ts` picks production host via `VERCEL_PROJECT_PRODUCTION_URL`, fallback `http://localhost:3000`.
-- **MANDATORY i18n**: next-intl with routing config (`src/i18n/routing.ts`) using `localePrefix: 'never'` strategy (no URL prefixes). ALWAYS use `useTranslations()` hook for all user-facing text in components and pages. Message keys should be added to `messages/en.json`, `messages/fr.json`, `messages/vi.json`. Locale detection handled automatically via `src/i18n/request.ts`.
+- **Critical env vars** in `turbo.json` task `env`/`globalEnv`:
+  - Auth: `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `RESEND_API_KEY`, `AUTH_RESEND_FROM`
+  - Database: `DATABASE_URL`
+  - External Banking: `BRIDGE_*`, `POWENS_*`, `POWENS_API_BASE`
+  - Deployment: `VERCEL_PROJECT_PRODUCTION_URL`, `NEXTAUTH_URL`
+  - AI: `OPENAI_API_KEY`
+  - Do NOT hardcode; reference via `process.env.*`
+- **Host/port logic**: `apps/webapp/src/config.ts` picks production host via `VERCEL_PROJECT_PRODUCTION_URL`, fallback `http://localhost:3000`.
+- **MANDATORY i18n**: next-intl with routing config (`src/i18n/routing.ts`) using `localePrefix: 'never'` strategy (no URL prefixes). ALWAYS use `useTranslations()` hook for all user-facing text. Message keys must exist in `messages/en.json`, `messages/fr.json`, `messages/vi.json`. Locale detection via `src/i18n/request.ts`.
 
 ### 4. Authentication Pattern
 
@@ -57,22 +70,22 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 
 ### 7a. Route-Scoped Modular Structure (Underscore Folders)
 
-- Feature / route segments under `apps/webapp/src/app/(protected)/(dashboard)/<feature>` use collocated underscore-prefixed folders to separate concerns:
+- Feature / route segments under `apps/webapp/src/app/(protected)/(dashboard)/<feature>` OR `apps/webapp/src/app/(protected)/<feature>` use collocated underscore-prefixed folders to separate concerns:
+  - `_actions`: Server actions with `'use server'` directive (e.g., `post.ts`, `comment.ts`). Auth via `auth()`, validate inputs, return `{ success, data/error }` shape. Keep module-specific actions colocated.
   - `_components`: Presentational + small stateful UI pieces (e.g., `create-transaction-form.tsx`, `powens-link.tsx`). Avoid business logic here.
   - `_hooks`: React Query + state hooks wrapping services (`use-transaction.ts`, `use-categories.ts`, `use-profile.ts`). Each mutation/query maps 1:1 to a service call and handles cache invalidation.
-  - `_services`: Thin API/client layer (e.g., `transaction-service.ts`, `category-service.ts`) performing fetch/server action invocation + minimal shaping. No React imports.
+  - `_services`: Thin API/client layer (e.g., `transaction-service.ts`, `category-service.ts`) performing fetch/server action invocation + minimal shaping. No React imports. Import from `../_actions/*` NOT global `@/actions/*`.
   - `_validations`: Zod schemas & inferred TS types (`transaction-schema.ts`). Keep naming `<entity>-schema.ts` and export both schema + `type`.
   - `_types`: Shared local domain types for that module (e.g., `Transaction`, `MonthOption`, `PowensLinkProps`). Prefer importing Prisma enums directly instead of duplicating.
   - `_utils`: Pure helpers referencing `_types` (e.g., date/month mapping utilities) – must stay side-effect free.
-- Import order preference inside module code: external libs → shared packages (`@repo/ui`) → cross-module imports → local module folders (`../_types`, `../_services/...`) → same-folder relatives.
+- Import order preference inside module code: external libs → shared packages (`@repo/ui`) → cross-module imports → local module folders (`../_types`, `../_services/...`, `../_actions/...`) → same-folder relatives.
 - When adding a new feature, replicate this structure; only create folders actually needed (avoid empty placeholders).
 - Cross-module sharing: if logic becomes generic (used in >1 feature), promote to `src/lib` (utilities) or `packages/ui` (visual component) instead of reaching across feature boundaries.
-- Keep server actions OUT of `_services` (they live globally in `src/actions`); services call them via fetch or direct import if server-only.
-- **Modular Architecture Example**: The `extensions` module exemplifies this pattern:
-  - `_hooks/use-extensions.ts`: React Query hooks for extension management (`useUserSubscriptions`, `useSubscribeToService`)
-  - `_services/extension-service.ts`: API client functions for extension operations (`extensionService.getUserExtensions()`)
-  - `_components/extensions-manager.tsx`: Main UI component importing from local `../_hooks/use-extensions`
-  - Import pattern: `import { useUserSubscriptions } from '../_hooks/use-extensions'` NOT global hooks
+- **Server Actions Location**: For features with custom layouts (outside dashboard), keep actions IN the module as `_actions/`. For dashboard features, either colocate or use global `src/actions/` (legacy pattern being phased out).
+- **Modular Architecture Examples**:
+  - **Community module** (full-width, no sidebar): `(protected)/community/_actions/post.ts`, `_hooks/use-posts.ts`, `_services/post-service.ts` - fully self-contained
+  - **Extensions module** (dashboard sidebar): `(dashboard)/extensions/_hooks/use-extensions.ts`, `_services/extension-service.ts` - imports from colocated structure
+  - Import pattern: `import { createPost } from '../_actions/post'` NOT `@/actions/community/post`
 
 ### 8. Testing Conventions
 
@@ -99,11 +112,13 @@ Purpose: Enable an AI coding agent to contribute productively and safely within 
 
 ### 10. Adding New Features (Example Workflow)
 
-1. Define/extend schema in `apps/webapp/prisma/schema.prisma`; run `pnpm prisma migrate dev --name add_<feature>` inside webapp.
-2. Export server action in `src/actions/<feature>.ts` following auth + validation + return pattern.
-3. Create UI component(s) in `apps/webapp/src/components/...` or shared `packages/ui` if generic.
-4. **MANDATORY**: Add i18n message keys to all three locale files (`messages/en.json`, `messages/fr.json`, `messages/vi.json`) and use `useTranslations()` in components.
-5. **MANDATORY**: Write tests FIRST using TDD/BDD approach in `src/test/` folder (mirroring `src/` structure) covering component props, user interactions, and i18n message rendering.
+1. **MANDATORY**: Write tests FIRST using TDD/BDD approach in `src/test/` folder (mirroring `src/` structure).
+2. Define/extend schema in `apps/webapp/prisma/schema.prisma`; run `pnpm prisma migrate dev --name add_<feature>` inside webapp.
+3. Create module structure in `src/app/(protected)/(dashboard)/<feature>` OR `src/app/(protected)/<feature>` with `_actions`, `_hooks`, `_services`, `_components`, `_validations` folders as needed.
+4. Export server actions in `<feature>/_actions/<entity>.ts` following auth + validation + return pattern.
+5. **MANDATORY**: Add i18n message keys to all three locale files (`messages/en.json`, `messages/fr.json`, `messages/vi.json`) and use `useTranslations()` in components.
+6. Run tests to verify implementation matches TDD specifications.
+7. Run tests to verify implementation matches TDD specifications.
 
 ### 11. Safe Change Guidelines (Project-Specific)
 

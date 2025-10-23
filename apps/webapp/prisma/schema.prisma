@@ -27,6 +27,12 @@ model User {
   powensUser     PowensUser?
   powensAccounts PowensAccount[]
   subscriptions UserSubscription[]
+  posts         Post[]
+  comments      Comment[]
+  postVotes     PostVote[]
+  commentVotes  CommentVote[]
+  groupMemberships GroupMember[]
+  moderatedGroups GroupModerator[]
 }
 
 model Account {
@@ -230,4 +236,166 @@ model SubscriptionPlan {
   features        String[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+// Community system models
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  DELETED
+}
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
+
+model Group {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String?
+  icon        String?
+  banner      String?
+  isPrivate   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  posts       Post[]
+  members     GroupMember[]
+  moderators  GroupModerator[]
+  
+  @@index([slug])
+}
+
+model GroupMember {
+  id        String   @id @default(uuid())
+  userId    String
+  groupId   String
+  joinedAt  DateTime @default(now())
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, groupId])
+  @@index([groupId])
+}
+
+model GroupModerator {
+  id          String   @id @default(uuid())
+  userId      String
+  groupId     String
+  assignedAt  DateTime @default(now())
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, groupId])
+  @@index([groupId])
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  color     String?
+  createdAt DateTime @default(now())
+  
+  posts PostTag[]
+  
+  @@index([slug])
+}
+
+model Post {
+  id          String     @id @default(uuid())
+  title       String
+  slug        String
+  content     String     @db.Text
+  excerpt     String?
+  coverImage  String?
+  status      PostStatus @default(PUBLISHED)
+  viewCount   Int        @default(0)
+  isPinned    Boolean    @default(false)
+  isLocked    Boolean    @default(false)
+  userId      String
+  groupId     String?
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group    Group?      @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  comments Comment[]
+  tags     PostTag[]
+  votes    PostVote[]
+  
+  @@unique([slug, groupId])
+  @@index([userId])
+  @@index([groupId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model PostTag {
+  id     String @id @default(uuid())
+  postId String
+  tagId  String
+  
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  
+  @@unique([postId, tagId])
+  @@index([tagId])
+}
+
+model Comment {
+  id              String    @id @default(uuid())
+  content         String    @db.Text
+  postId          String
+  userId          String
+  parentId        String?
+  isDeleted       Boolean   @default(false)
+  deletedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post         Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent       Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies      Comment[]     @relation("CommentReplies")
+  votes        CommentVote[]
+  
+  @@index([postId])
+  @@index([userId])
+  @@index([parentId])
+  @@index([createdAt])
+}
+
+model PostVote {
+  id        String   @id @default(uuid())
+  userId    String
+  postId    String
+  voteType  VoteType
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, postId])
+  @@index([postId])
+}
+
+model CommentVote {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String
+  voteType  VoteType
+  createdAt DateTime @default(now())
+  
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, commentId])
+  @@index([commentId])
 }

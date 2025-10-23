@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   PiggyBank,
   Puzzle,
+  Users,
 } from 'lucide-react';
 import { NavItems } from './nav-items';
 import { NavUser } from './nav-user';
@@ -39,6 +40,7 @@ export function AdminSidebar({
   const tNavigation = useTranslations('navigation');
   const tBudget = useTranslations('budget');
   const tExtensions = useTranslations('extensions');
+  const tCommunity = useTranslations('community');
   const navItems = [
     {
       name: tNavigation('dashboard'),
@@ -64,6 +66,11 @@ export function AdminSidebar({
       name: tExtensions('title'),
       url: '/extensions',
       icon: Puzzle,
+    },
+    {
+      name: tCommunity('title'),
+      url: '/community',
+      icon: Users,
     },
   ];
 
