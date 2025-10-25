@@ -17,7 +17,80 @@
     "submit": "Submit",
     "confirm": "Confirm"
   },
+  "roadmap": {
+    "title": "Financial Roadmap",
+    "step": "Step",
+    "next": "Next Step",
+    "previous": "Previous Step",
+    "submit": "Submit",
+    "stepqna": {
+      "A": {
+        "title": "A. Introduction & Personal Goals (WHAT)",
+        "description": "Let’s start simple — what do you want to focus on right now in your financial life?",
+        "focusLabel": "What do you want to focus on right now in your financial life?",
+        "options": {
+          "saving": "Saving more money",
+          "debt": "Paying off debt",
+          "investing": "Investing",
+          "spending": "Optimizing your spending habits"
+        }
+      },
+      "B": {
+        "title": "B. Basic Financial Info (WHERE YOU ARE NOW)",
+        "description": "Thanks! To make your roadmap fit you better, I just need to know a few basics.",
+        "incomeSource": "What’s your main source of income?",
+        "incomeStability": "Would you say your income is mostly stable or changes each month?",
+        "incomeRange": "Roughly how much do you make each month?"
+      },
+      "C": {
+        "title": "C. Custom Branching",
+        "saving": {
+          "title": "Saving habits",
+          "questions": {
+            "trackSpending": "Do you currently track your spending?",
+            "setBudget": "Do you follow a set budget for each category (like food, transport, fun)?",
+            "monthlySavings": "On average, how much are you able to save every month?"
+          }
+        },
+        "debt": {
+          "title": "Debt management",
+          "questions": {
+            "hasDebt": "Do you currently have any debts or loans?",
+            "debtEnd": "If yes, when do you think you’ll finish paying them off?",
+            "monthlyDebtPayment": "About how much do you pay each month toward your debts?"
+          }
+        },
+        "investing": {
+          "title": "Investing journey",
+          "questions": {
+            "hasInvested": "Have you ever invested before?",
+            "riskUnderstanding": "How would you describe your understanding of investment risks?",
+            "investmentGoal": "Do you have a specific investment goal in mind? (e.g., build long-term wealth, retire early, buy a house, etc.)"
+          },
+          "options": {
+            "none": "I don’t really understand them yet",
+            "basic": "I know the basics",
+            "advanced": "I understand them well and already invest"
+          }
+        },
+        "spending": {
+          "title": "Spending optimization",
+          "questions": {
+            "spendingDrivers": "What usually influences your spending decisions? (emotions, plans, habits, social situations…)",
+            "overspendingSituations": "In what kind of situations do you usually go over budget?",
+            "overspendingFeelings": "When you overspend, how does that make you feel?"
+          }
+        }
+      },
+      "D": {
+        "title": "D. Motivation (WHY)",
+        "financialChallenge": "What’s been the hardest part of reaching your financial goals so far?",
+        "motivation": "Write one strong reason or personal motto that keeps you motivated to improve your finances."
+      }
+    }
+  },
   "navigation": {
+    "roadmap": "Roadmap",
     "home": "Home",
     "about": "About",
     "contact": "Contact",

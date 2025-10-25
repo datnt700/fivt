@@ -18,6 +18,7 @@
     "confirm": "Xác nhận"
   },
   "navigation": {
+    "roadmap": "Lộ trình",
     "home": "Trang chủ",
     "about": "Giới thiệu",
     "contact": "Liên hệ",
@@ -29,6 +30,87 @@
     "chatbot": "Trợ lý AI",
     "transactions": "Giao dịch",
     "dashboard": "Bảng điều khiển"
+  },
+  "roadmap": {
+    "title": "Lộ trình Tài chính Cá nhân",
+    "subtitle": "Hướng dẫn từng bước để đạt được Mục tiêu Tài chính của bạn",
+    "startButton": "Bắt đầu Lộ trình",
+    "step": {
+      "next": "Bước tiếp theo",
+      "previous": "Bước trước",
+      "complete": "Hoàn thành Lộ trình"
+    },
+    "stepqna": {
+      "A": {
+        "title": "A. Giới thiệu & Mục tiêu cá nhân (WHAT)",
+        "description": "Bắt đầu đơn giản nhé — hiện tại bạn muốn tập trung vào điều gì trong cuộc sống tài chính của mình?",
+        "focusLabel": "Bạn muốn tập trung vào điều gì trong cuộc sống tài chính của mình?",
+        "options": {
+          "saving": "Tiết kiệm nhiều hơn",
+          "debt": "Trả nợ",
+          "investing": "Đầu tư",
+          "spending": "Tối ưu hóa thói quen chi tiêu"
+        }
+      },
+      "B": {
+        "title": "B. Thông tin tài chính cơ bản (WHERE YOU ARE NOW)",
+        "description": "Cảm ơn bạn! Để mình có thể xây dựng lộ trình phù hợp hơn, hãy cho mình biết vài thông tin cơ bản nhé.",
+        "incomeSource": "Nguồn thu nhập chính của bạn là gì? (ví dụ: lương, làm tự do, bán thời gian, trợ cấp sinh viên…)",
+        "incomeStability": "Thu nhập của bạn có ổn định hay thay đổi theo từng tháng?",
+        "incomeRange": "Trung bình bạn kiếm được bao nhiêu mỗi tháng?"
+      },
+      "C": {
+        "title": "C. Câu hỏi tùy theo mục tiêu",
+        "saving": {
+          "title": "Thói quen tiết kiệm",
+          "questions": {
+            "trackSpending": "Bạn có theo dõi chi tiêu của mình không?",
+            "setBudget": "Bạn có đặt ngân sách cho từng nhóm (ăn uống, đi lại, giải trí…) không?",
+            "monthlySavings": "Trung bình bạn tiết kiệm được bao nhiêu mỗi tháng?"
+          }
+        },
+        "debt": {
+          "title": "Quản lý nợ",
+          "questions": {
+            "hasDebt": "Hiện tại bạn có đang có khoản nợ hoặc vay nào không?",
+            "debtEnd": "Nếu có, bạn dự đoán khi nào sẽ trả xong?",
+            "monthlyDebtPayment": "Trung bình bạn trả bao nhiêu tiền nợ mỗi tháng?"
+          }
+        },
+        "investing": {
+          "title": "Hành trình đầu tư",
+          "questions": {
+            "hasInvested": "Bạn đã từng đầu tư trước đây chưa?",
+            "riskUnderstanding": "Bạn hiểu thế nào về rủi ro trong đầu tư?",
+            "investmentGoal": "Mục tiêu đầu tư cụ thể của bạn là gì? (ví dụ: tích lũy tài sản, nghỉ hưu sớm, mua nhà, v.v.)"
+          },
+          "options": {
+            "none": "Tôi chưa thật sự hiểu rõ về đầu tư",
+            "basic": "Tôi biết những điều cơ bản",
+            "advanced": "Tôi hiểu rõ và đã từng đầu tư"
+          }
+        },
+        "spending": {
+          "title": "Tối ưu hóa chi tiêu",
+          "questions": {
+            "spendingDrivers": "Điều gì thường ảnh hưởng đến quyết định chi tiêu của bạn? (cảm xúc, kế hoạch, thói quen, xã hội…)",
+            "overspendingSituations": "Trong những tình huống nào bạn thường chi tiêu vượt ngân sách?",
+            "overspendingFeelings": "Bạn cảm thấy thế nào khi chi tiêu quá mức?"
+          }
+        }
+      },
+      "D": {
+        "title": "D. Cảm xúc & Động lực (WHY)",
+        "financialChallenge": "Khó khăn lớn nhất khiến bạn chưa đạt được mục tiêu tài chính là gì?",
+        "motivation": "Hãy viết ra một lý do mạnh mẽ hoặc câu nói truyền cảm hứng khiến bạn muốn cải thiện tài chính cá nhân."
+      }
+    },
+    "completion": {
+      "title": "Chúc mừng! Bạn đã hoàn thành Lộ trình Tài chính Cá nhân.",
+      "description": "Dựa trên câu trả lời của bạn, chúng tôi đã tạo một kế hoạch tài chính cá nhân hóa để giúp bạn đạt được mục tiêu của mình.",
+      "viewPlan": "Xem Kế hoạch Tài chính của Tôi",
+      "restart": "Bắt đầu lại Lộ trình"
+    }
   },
   "auth": {
     "title": "Đăng nhập vào tài khoản của bạn",
