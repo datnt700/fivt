@@ -34,7 +34,6 @@ export default function StepForm({
   const renderQuestions = activeBranch
     ? activeBranch.questions
     : questions || [];
-  console.log('Rendering questions:', renderQuestions);
   return (
     <div className="space-y-4">
       {renderQuestions.map(q => {

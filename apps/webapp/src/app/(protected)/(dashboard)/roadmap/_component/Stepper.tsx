@@ -10,15 +10,16 @@ interface StepperProps {
 
 const Stepper: React.FC<StepperProps> = ({ steps, activeStep }) => {
   const totalSteps = steps.length;
-  const width = `${(100 / (totalSteps - 1)) * (activeStep - 1)}%`;
-
+  const width =
+    activeStep < 5 ? `${(100 / (totalSteps - 1)) * (activeStep - 1)}%` : '100%';
+  console.log('Stepper render:', { steps, activeStep, width });
   return (
     <div className="mx-auto w-full max-w-3xl px-4">
       <div className="before:transform-y-1/2 relative flex justify-between before:absolute before:top-1/2 before:left-0 before:h-1 before:w-full before:bg-slate-200">
         {steps.map(({ step, label }) => (
           <div className="relative z-10" key={step}>
             <div
-              className={`flex size-16 items-center justify-center rounded-full border-2 border-zinc-200 bg-white transition-all delay-200 ease-in ${
+              className={`flex size-14 md:size-16 items-center justify-center rounded-full border-2 border-zinc-200 bg-white transition-all delay-200 ease-in ${
                 activeStep >= step ? 'border-slate-400' : ''
               }`}
             >

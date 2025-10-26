@@ -10,7 +10,7 @@ export function useFinancialRoadmapSteps(): Step[] {
       id: 'A',
       label: t('stepqna.A.title'),
       title: t('stepqna.A.title'),
-      description: t('A.description'),
+      description: t('stepqna.A.description'),
       questions: [
         {
           id: 'focus',
