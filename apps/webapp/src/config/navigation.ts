@@ -46,6 +46,12 @@ export const MAIN_NAVIGATION: NavigationItem[] = [
     requiresAuth: true,
   },
   {
+    label: 'navigation.roadmap',
+    href: FLAT_ROUTES.ROADMAP,
+    icon: 'map',
+    requiresAuth: true,
+  },
+  {
     label: 'nav.chatbot',
     href: FLAT_ROUTES.CHATBOT,
     icon: 'chat',

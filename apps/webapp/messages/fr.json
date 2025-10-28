@@ -18,6 +18,7 @@
     "confirm": "Confirmer"
   },
   "navigation": {
+    "roadmap": "Feuille de route",
     "home": "Accueil",
     "about": "À propos",
     "contact": "Contact",
@@ -29,6 +30,75 @@
     "chatbot": "Assistant IA",
     "transactions": "Transactions",
     "dashboard": "Tableau de bord"
+  },
+  "roadmap": {
+    "title": "Feuille de route financière",
+    "subtitle": "Suivez ces étapes pour améliorer votre santé financière",
+    "stepqna": {
+      "A": {
+        "title": "A. Introduction et Objectifs personnels (WHAT)",
+        "description": "Commençons simplement — sur quoi voulez-vous vous concentrer en ce moment dans votre vie financière ?",
+        "focusLabel": "Sur quoi voulez-vous vous concentrer dans votre vie financière actuelle ?",
+        "options": {
+          "saving": "Économiser plus d’argent",
+          "debt": "Rembourser les dettes",
+          "investing": "Investir",
+          "spending": "Optimiser vos habitudes de dépenses"
+        }
+      },
+      "B": {
+        "title": "B. Informations financières de base (WHERE YOU ARE NOW)",
+        "description": "Merci ! Pour que votre plan soit mieux adapté, j’ai besoin de quelques informations de base.",
+        "incomeSource": "Quelle est votre principale source de revenus ? (salaire, freelance, emploi à temps partiel, allocation étudiante…)",
+        "incomeStability": "Diriez-vous que vos revenus sont stables ou varient d’un mois à l’autre ?",
+        "incomeRange": "Environ combien gagnez-vous par mois ?"
+      },
+      "C": {
+        "title": "C. Questions personnalisées selon votre objectif",
+        "saving": {
+          "title": "Habitudes d’épargne",
+          "questions": {
+            "trackSpending": "Suivez-vous actuellement vos dépenses ?",
+            "setBudget": "Avez-vous un budget défini pour chaque catégorie (alimentation, transport, loisirs…) ?",
+            "monthlySavings": "En moyenne, combien parvenez-vous à économiser chaque mois ?"
+          }
+        },
+        "debt": {
+          "title": "Gestion des dettes",
+          "questions": {
+            "hasDebt": "Avez-vous actuellement des dettes ou des prêts ?",
+            "debtEnd": "Si oui, quand pensez-vous les avoir entièrement remboursés ?",
+            "monthlyDebtPayment": "Combien payez-vous environ chaque mois pour vos dettes ?"
+          }
+        },
+        "investing": {
+          "title": "Parcours d’investissement",
+          "questions": {
+            "hasInvested": "Avez-vous déjà investi auparavant ?",
+            "riskUnderstanding": "Comment décririez-vous votre compréhension des risques liés à l’investissement ?",
+            "investmentGoal": "Avez-vous un objectif d’investissement précis ? (ex. : construire un patrimoine, prendre une retraite anticipée, acheter une maison, etc.)"
+          },
+          "options": {
+            "none": "Je ne comprends pas encore très bien les risques",
+            "basic": "J’en connais les bases",
+            "advanced": "Je comprends bien les risques et j’investis déjà"
+          }
+        },
+        "spending": {
+          "title": "Optimisation des dépenses",
+          "questions": {
+            "spendingDrivers": "Qu’est-ce qui influence le plus vos décisions de dépenses ? (émotions, habitudes, contexte social…)",
+            "overspendingSituations": "Dans quelles situations dépensez-vous généralement plus que prévu ?",
+            "overspendingFeelings": "Comment vous sentez-vous lorsque vous dépensez trop ?"
+          }
+        }
+      },
+      "D": {
+        "title": "D. Motivation (WHY)",
+        "financialChallenge": "Quelle est la plus grande difficulté que vous rencontrez pour atteindre vos objectifs financiers ?",
+        "motivation": "Écrivez une raison forte ou une phrase personnelle qui vous motive à améliorer votre situation financière."
+      }
+    }
   },
   "auth": {
     "title": "Connectez-vous à votre compte",

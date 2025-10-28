@@ -10,12 +10,14 @@ export * from './common';
 export * from './banking';
 export * from './transactions';
 export * from './chat';
+export * from './roadmap';
 
 // Re-export everything as a single object for convenience
 import { COMMON_ROUTES } from './common';
 import { BANKING_ROUTES } from './banking';
 import { TRANSACTIONS_ROUTES } from './transactions';
 import { CHAT_ROUTES } from './chat';
+import { ROADMAP_ROUTES } from './roadmap';
 
 /**
  * Master routes object containing all application routes
@@ -25,6 +27,7 @@ export const ROUTES = {
   BANKING: BANKING_ROUTES,
   TRANSACTIONS: TRANSACTIONS_ROUTES,
   CHAT: CHAT_ROUTES,
+  ROADMAP: ROADMAP_ROUTES,
 } as const;
 
 /**
@@ -36,54 +39,55 @@ export const FLAT_ROUTES = {
   DASHBOARD: COMMON_ROUTES.DASHBOARD,
   LOGIN: COMMON_ROUTES.AUTH.LOGIN,
   LOGOUT: COMMON_ROUTES.AUTH.LOGOUT,
-  
+
   // Profile
   PROFILE_SETUP: COMMON_ROUTES.PROFILE.SETUP,
   PROFILE_VIEW: COMMON_ROUTES.PROFILE.VIEW,
   PROFILE_EDIT: COMMON_ROUTES.PROFILE.EDIT,
   PROFILE_RESULTS: COMMON_ROUTES.PROFILE.RESULTS,
-  
+
   // Banking
   BANKING: BANKING_ROUTES.INDEX,
   BANKING_POWENS: BANKING_ROUTES.POWENS,
   BANKING_ERROR: BANKING_ROUTES.ERROR,
-  
+
   // Transactions
   TRANSACTIONS: TRANSACTIONS_ROUTES.INDEX,
   TRANSACTIONS_LIST: TRANSACTIONS_ROUTES.LIST,
-  
+
   // Chat
   CHATBOT: CHAT_ROUTES.INDEX,
   CHAT: CHAT_ROUTES.CHAT,
+
+  // Roadmap
+  ROADMAP: ROADMAP_ROUTES.INDEX,
 } as const;
 
 /**
  * Route utilities
  */
-export { 
-  getLocalizedRoute, 
-  isApiRoute, 
-  isAuthRoute, 
-  isProtectedRoute 
+export {
+  getLocalizedRoute,
+  isApiRoute,
+  isAuthRoute,
+  isProtectedRoute,
 } from './common';
 
-export { 
-  getBankingAccountRoute, 
-  isBankingRoute, 
-  isBankingApiRoute 
+export {
+  getBankingAccountRoute,
+  isBankingRoute,
+  isBankingApiRoute,
 } from './banking';
 
-export { 
+export {
   getTransactionDetailRoute,
   getTransactionsByCategoryRoute,
   isTransactionRoute,
-  isTransactionApiRoute 
+  isTransactionApiRoute,
 } from './transactions';
 
-export { 
-  getChatSessionRoute, 
-  isChatRoute, 
-  isChatApiRoute 
-} from './chat';
+export { getChatSessionRoute, isChatRoute, isChatApiRoute } from './chat';
+
+export { isRoadmapRoute, isRoadmapApiRoute } from './roadmap';
 
 export { RouteValidator, RouteBreadcrumbs } from './utils';
