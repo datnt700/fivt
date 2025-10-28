@@ -5,27 +5,44 @@ import { useFinancialRoadmapSteps } from './_data/index';
 import StepForm from './_component/StepForm';
 import Stepper from './_component/Stepper';
 import { Button } from '@/components/ui/button';
+import SubmissionResult from './_component/SubmissionResult';
+import SubmitButton from './_component/SubmitButton';
+
+type Roadmap = {
+  title?: string;
+  summary?: string;
+  steps?: Array<{
+    title?: string;
+    description?: string;
+    actionItems?: string[];
+    expectedWeeks?: number;
+  }>;
+};
+
+type SubmitResult = {
+  roadmap?: Roadmap;
+  raw?: string;
+  error?: string;
+};
 
 export default function FinancialWizard() {
   const [activeStep, setActiveStep] = useState(1);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
+  const [result, setResult] = useState<SubmitResult | null>(null);
   const steps = useFinancialRoadmapSteps();
 
+  // Debug logging
   useEffect(() => {
-    console.log('Active step changed to:', activeStep);
-  }, [activeStep]);
+    console.log('Current activeStep:', activeStep);
+    console.log('Current result:', result);
+  }, [activeStep, result]);
 
-  // Ensure all hooks are called before any early returns or conditions
-  const handleChange = (id: string, value: unknown) => {
-    setAnswers(prev => ({ ...prev, [id]: value }));
-  };
+  // Show submission result if we have result data
+  if (result) {
+    return <SubmissionResult data={result} />;
+  }
 
-  const stepperSteps = steps.map((step, index) => ({
-    step: index + 1,
-    label: step.label,
-  }));
-
-  // Safety check: ensure activeStep is within bounds
+  // Safety check for currentStep
   const safeActiveStep = Math.max(1, Math.min(activeStep, steps.length));
   const currentStep = steps[safeActiveStep - 1];
 
@@ -53,6 +70,12 @@ export default function FinancialWizard() {
       const value = answers[q.id];
       return value !== undefined && value !== '' && value !== null;
     });
+
+  const stepperSteps = steps.map((step, index) => ({
+    step: index + 1,
+    label: step.label,
+  }));
+
   return (
     <div className="space-y-8 flex flex-col gap-10 p-4">
       <Stepper steps={stepperSteps} activeStep={activeStep} />
@@ -63,7 +86,9 @@ export default function FinancialWizard() {
           questions={currentStep.questions ?? []}
           branches={currentStep.branches ?? []}
           answers={answers}
-          onChange={handleChange}
+          onChange={(id, value) => {
+            setAnswers(prev => ({ ...prev, [id]: value }));
+          }}
         />
 
         <div className="flex justify-between mt-6">
@@ -77,9 +102,8 @@ export default function FinancialWizard() {
             <SubmitButton
               disabled={!allAnswered}
               answers={answers}
-              setActiveStep={setActiveStep}
-              onSuccess={() => {
-                /* optionally navigate to result page or show toast */
+              onResult={submitResult => {
+                setResult(submitResult);
               }}
             />
           ) : (
@@ -91,147 +115,62 @@ export default function FinancialWizard() {
             </Button>
           )}
         </div>
-        {/* Result area will appear after submission */}
-        <SubmissionResult />
       </div>
     </div>
   );
 }
 
-type RoadmapShape = {
-  title?: string;
-  summary?: string;
-  steps?: Array<{
-    title?: string;
-    description?: string;
-    actionItems?: string[];
-    expectedWeeks?: number;
-  }>;
-};
+// function SubmitButton({
+//   disabled,
+//   answers,
+//   setActiveStep,
+//   onResult,
+// }: {
+//   disabled?: boolean;
+//   answers: Record<string, unknown>;
+//   setActiveStep?: (updater: (s: number) => number) => void;
+//   onResult: (res: SubmitResult) => void;
+// }) {
+//   const [loading, setLoading] = React.useState(false);
 
-function SubmissionResult() {
-  const [result, setResult] = React.useState<RoadmapShape | null>(null);
-  const [raw, setRaw] = React.useState<string | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
+//   const handleSubmit = async () => {
+//     if (disabled || loading) return;
+//     setLoading(true);
+//     try {
+//       const payload = {
+//         answers: Object.entries(answers).map(([questionId, answer]) => ({
+//           questionId,
+//           answer: String(answer ?? ''),
+//         })),
+//         locale:
+//           typeof navigator !== 'undefined'
+//             ? navigator.language?.slice(0, 2)
+//             : 'en',
+//       };
 
-  // The API returns JSON; the SubmitButton will dispatch a custom event with results
-  React.useEffect(() => {
-    function handler(e: Event) {
-      const detail = (
-        e as CustomEvent<{
-          roadmap?: RoadmapShape | null;
-          raw?: string;
-          error?: string;
-        }>
-      ).detail;
-      if (detail?.error) {
-        setError(detail.error);
-        setResult(null);
-        setRaw(detail.raw ?? null);
-      } else {
-        setResult(detail?.roadmap ?? null);
-        setRaw(detail?.raw ?? null);
-        setError(null);
-      }
-    }
-    window.addEventListener('fivt:roadmap:result', handler as EventListener);
-    return () =>
-      window.removeEventListener(
-        'fivt:roadmap:result',
-        handler as EventListener
-      );
-  }, []);
+//       const res = await fetch('/api/roadmap', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(payload),
+//       });
+//       const json = await res.json();
 
-  if (!result && !raw && !error) return null;
+//       if (json.error) {
+//         onResult({ error: json.error, raw: json.raw, roadmap: undefined });
+//       } else {
+//         onResult({ roadmap: json.roadmap, raw: json.raw, error: undefined });
+//         setActiveStep?.(s => s + 1); // chuyển sang màn result (vì isComplete = true)
+//       }
+//     } catch (e: any) {
+//       onResult({ error: e.message });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
-  return (
-    <div className="mt-6 p-4 border rounded">
-      {error && <div className="text-red-600">{error}</div>}
-      {result ? (
-        <div>
-          <h3 className="font-semibold">{result.title}</h3>
-          <p className="text-sm mb-2">{result.summary}</p>
-          <ol className="list-decimal pl-5">
-            {result.steps?.map((s, i: number) => (
-              <li key={i} className="mb-2">
-                <strong>{s.title}</strong>
-                <p>{s.description}</p>
-                {s.actionItems?.length ? (
-                  <ul className="list-disc pl-5">
-                    {s.actionItems.map((a: string, j: number) => (
-                      <li key={j}>{a}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </li>
-            ))}
-          </ol>
-        </div>
-      ) : (
-        <pre className="whitespace-pre-wrap">{raw}</pre>
-      )}
-    </div>
-  );
-}
-
-function SubmitButton({
-  disabled,
-  answers,
-  onSuccess,
-  setActiveStep,
-}: {
-  disabled?: boolean;
-  answers: Record<string, unknown>;
-  onSuccess?: () => void;
-  setActiveStep?: (stepUpdater: (step: number) => number) => void;
-}) {
-  const [loading, setLoading] = React.useState(false);
-
-  const handleSubmit = async () => {
-    if (disabled || loading) return;
-    setLoading(true);
-    try {
-      const payload = {
-        answers: Object.entries(answers).map(([questionId, answer]) => ({
-          questionId,
-          answer: String(answer ?? ''),
-        })),
-        locale:
-          typeof navigator !== 'undefined'
-            ? navigator.language?.slice(0, 2)
-            : 'en',
-      };
-
-      const res = await fetch('/api/roadmap', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const json = await res.json();
-      const detail = json.error
-        ? { error: json.error, raw: json.raw }
-        : { roadmap: json.roadmap, raw: json.raw };
-
-      // Dispatch a window event so SubmissionResult can pick it up (keeps wiring minimal)
-      window.dispatchEvent(new CustomEvent('fivt:roadmap:result', { detail }));
-      if (!json.error) {
-        if (setActiveStep) setActiveStep(s => s + 1);
-        if (onSuccess) onSuccess();
-      }
-    } catch (err) {
-      window.dispatchEvent(
-        new CustomEvent('fivt:roadmap:result', {
-          detail: { error: (err as Error).message },
-        })
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <Button disabled={!!disabled || loading} onClick={handleSubmit}>
-      {loading ? 'Generating…' : 'Submit'}
-    </Button>
-  );
-}
+//   return (
+//     <Button disabled={!!disabled || loading} onClick={handleSubmit}>
+//       {loading ? 'Generating…' : 'Submit'}
+//     </Button>
+//   );
+// }

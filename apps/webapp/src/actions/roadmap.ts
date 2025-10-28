@@ -82,7 +82,7 @@ Only output valid JSON (no additional commentary).`;
 
     const client = getOpenAIClient();
     const response = await client.chat.completions.create({
-      model: 'gpt-3.5-turbo', // or your available model
+      model: 'gpt-3.5-turbo', 
       messages: [
         {
           role: 'system',
